@@ -1,82 +1,199 @@
 <template>
-    <div>
-        <vue-good-table :columns="columns" :rows="rows" />
-    </div>
+    <b-form-row
+        class="commercial-rates-filters align-items-center justify-content-end"
+    >
+        <b-col cols="12">
+            <app-breadcrumb />
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <vue-select
+                    :options="zipcodes"
+                    v-model="filter.zipcode"
+                    placeholder="Zip Code"
+                ></vue-select>
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <vue-select
+                    :options="commodities"
+                    v-model="filter.commodities"
+                    placeholder="Commodity"
+                ></vue-select>
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <vue-select
+                    :options="states"
+                    v-model="filter.states"
+                    placeholder="States"
+                ></vue-select>
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <vue-select
+                    :options="utilities"
+                    v-model="filter.utilities"
+                    placeholder="Utilities"
+                ></vue-select>
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <vue-select
+                    :options="zones"
+                    v-model="filter.zones"
+                    placeholder="Zones"
+                ></vue-select>
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <vue-select
+                    :options="rateClasses"
+                    v-model="filter.rateClasses"
+                    placeholder="Rate Classes"
+                ></vue-select>
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <vue-select
+                    :options="dSizeRCode"
+                    v-model="filter.dSizeRCode"
+                    placeholder="D. Size / R. Code"
+                ></vue-select>
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <b-form-input
+                    type="text"
+                    v-model="filter.startMonth"
+                    placeholder="Start Month"
+                />
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <b-form-input
+                    type="text"
+                    v-model="filter.annualVolume"
+                    placeholder="Annual Volumne"
+                />
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <vue-select
+                    :options="prices"
+                    v-model="filter.fixedPrice"
+                    placeholder="Fixed Price"
+                ></vue-select>
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <b-form-input
+                    type="text"
+                    v-model="filter.brokerFee"
+                    placeholder="Broker Fee"
+                />
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <b-form-group>
+                <b-form-input
+                    type="text"
+                    v-model="filter.currentRate"
+                    placeholder="Current Rate"
+                />
+            </b-form-group>
+        </b-col>
+        <b-col cols="6" sm="4" md="3" lg="2">
+            <button type="submit" class="btn btn-primary w-100">
+                <feather-icon icon="SearchIcon" />
+                <span class="ml-1">Start Search</span>
+            </button>
+        </b-col>
+    </b-form-row>
 </template>
 
 <script>
-import "vue-good-table/dist/vue-good-table.css";
-import { VueGoodTable } from "vue-good-table";
+import AppBreadcrumb from "@core/layouts/components/AppBreadcrumb.vue";
+import { VueSelect } from "vue-select";
+import "vue-select/dist/vue-select.css";
+import {
+    BRow,
+    BCol,
+    BForm,
+    BFormRow,
+    BFormGroup,
+    BFormInput,
+} from "bootstrap-vue";
+import { ref } from "@vue/composition-api";
 export default {
     data() {
-        return {
-            columns: [
-                {
-                    label: "Name",
-                    field: "name",
-                },
-                {
-                    label: "Age",
-                    field: "age",
-                    type: "number",
-                },
-                {
-                    label: "Created On",
-                    field: "createdAt",
-                    type: "date",
-                    dateInputFormat: "yyyy-MM-dd",
-                    dateOutputFormat: "MMM do yy",
-                },
-                {
-                    label: "Percent",
-                    field: "score",
-                    type: "percentage",
-                },
-            ],
-            rows: [
-                { id: 1, name: "John", age: 20, createdAt: "", score: 0.03343 },
-                {
-                    id: 2,
-                    name: "Jane",
-                    age: 24,
-                    createdAt: "2011-10-31",
-                    score: 0.03343,
-                },
-                {
-                    id: 3,
-                    name: "Susan",
-                    age: 16,
-                    createdAt: "2011-10-30",
-                    score: 0.03343,
-                },
-                {
-                    id: 4,
-                    name: "Chris",
-                    age: 55,
-                    createdAt: "2011-10-11",
-                    score: 0.03343,
-                },
-                {
-                    id: 5,
-                    name: "Dan",
-                    age: 40,
-                    createdAt: "2011-10-21",
-                    score: 0.03343,
-                },
-                {
-                    id: 6,
-                    name: "John",
-                    age: 20,
-                    createdAt: "2011-10-31",
-                    score: 0.03343,
-                },
-            ],
-        };
+        return {};
     },
     components: {
-        VueGoodTable,
+        BRow,
+        BCol,
+        BForm,
+        BFormRow,
+        BFormGroup,
+        BFormInput,
+        VueSelect,
+        AppBreadcrumb,
+    },
+    setup() {
+        const filter = ref({
+            zipcode: "",
+            commodities: "",
+            states: "",
+            utilities: "",
+            zones: "",
+            rateClasses: "",
+            dSizeRCode: "",
+            startMonth: "",
+            annualVolume: "",
+            fixedPrice: "",
+            brokerFee: "",
+            currentRate: "",
+        });
+        const zipcodes = ["834798", "645331", "567323", "478563"];
+        const commodities = ["Option A", "Option B", "Option C", "Option D"];
+        const states = ["Option A", "Option B", "Option C", "Option D"];
+        const utilities = ["Option A", "Option B", "Option C", "Option D"];
+        const zones = ["Option A", "Option B", "Option C", "Option D"];
+        const rateClasses = ["Option A", "Option B", "Option C", "Option D"];
+        const dSizeRCode = ["Option A", "Option B", "Option C", "Option D"];
+        const prices = ["Option A", "Option B", "Option C", "Option D"];
+
+        return {
+            filter,
+            zipcodes,
+            commodities,
+            states,
+            utilities,
+            zones,
+            rateClasses,
+            dSizeRCode,
+            prices,
+        };
     },
 };
 </script>
-
-<style lang="scss"></style>
+<style lang="scss">
+.commercial-rates-filters {
+    .form-group {
+        .vs__dropdown-toggle {
+            padding: 3px 0 7px;
+            border: 1px solid #d8d6de;
+        }
+    }
+}
+</style>

@@ -2,17 +2,17 @@
 const routes = [
 
     {
-        path: 'commercial',
-        name: 'commercial',
-        component: () => import('@/views/commercial/Index.vue'),
+        path: 'customers',
+        name: 'customers',
+        component: () => import('@/views/customers/Index.vue'),
         meta: {
-            pageTitle: 'Commercial Rates',
+            pageTitle: 'Customers',
             resource: 'all',
-            action: 'commercial-view',
+            action: 'customers-view',
             auth: true,
             breadcrumb: [
                 {
-                    text: 'Commercial Rates',
+                    text: 'Customers Rates',
                     active: true,
                 },
             ],

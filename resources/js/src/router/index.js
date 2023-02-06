@@ -10,6 +10,8 @@ import invoicesRoutes from './invoices'
 import ordersRoutes from './orders'
 import usersRoutes from './users'
 import commercialRoutes from './commercial'
+import customerRoutes from './customers'
+import contractsRoutes from './contracts'
 
 // routes
 
@@ -35,6 +37,8 @@ const router = new Router({
         ...invoicesRoutes,
         ...usersRoutes,
         ...AccountRoutes,
+        ...customerRoutes,
+        ...contractsRoutes,
         ...commercialRoutes,
         ...generalRoutes,
       ],

@@ -57,6 +57,8 @@ class AuthController extends Controller
                         'password-view',
                         'my-account-view',
                         'commercial-view',
+                        'customers-view',
+                        'contracts-view',
                         'users-view',
                         'users-edit',
                         'users-add',

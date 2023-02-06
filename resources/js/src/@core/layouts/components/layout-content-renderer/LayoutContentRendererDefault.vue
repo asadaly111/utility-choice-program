@@ -12,9 +12,9 @@
             class="content-wrapper"
             :class="contentWidth === 'boxed' ? 'container p-0' : null"
         >
-            <slot name="breadcrumb">
+            <!-- <slot name="breadcrumb">
                 <app-breadcrumb />
-            </slot>
+            </slot> -->
             <div class="content-body">
                 <transition :name="routerTransition" mode="out-in">
                     <slot />
@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import AppBreadcrumb from "@core/layouts/components/AppBreadcrumb.vue";
+// import AppBreadcrumb from "@core/layouts/components/AppBreadcrumb.vue";
 import useAppConfig from "@core/app-config/useAppConfig";
 
 export default {
     components: {
-        AppBreadcrumb,
+        // AppBreadcrumb,
     },
     setup() {
         const { routerTransition, contentWidth } = useAppConfig();
