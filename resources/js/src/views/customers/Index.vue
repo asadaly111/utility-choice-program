@@ -1,10 +1,44 @@
 <template>
     <div>
+        <b-row>
+            <b-col cols="12" md>
+                <app-breadcrumb />
+            </b-col>
+            <b-col cols="6" md="auto">
+                <button
+                    class="btn btn-primary"
+                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                    v-b-modal.add-customer-modal
+                >
+                    <feather-icon icon="PlusIcon"></feather-icon>
+                    <span class="ml-1">Add Customer</span>
+                </button>
+                <button class="btn btn-primary">
+                    <feather-icon icon="FolderPlusIcon"></feather-icon>
+                    <span class="ml-1">Import Customers</span>
+                </button>
+            </b-col>
+        </b-row>
         <vue-good-table
             :columns="columns"
             :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
             :rows="rows"
             max-height="80vh"
+            :pagination-options="{
+                enabled: true,
+                mode: 'records',
+                perPage: 50,
+                position: 'top',
+                perPageDropdown: [20, 30, 40, 50],
+                dropdownAllowAll: false,
+                setCurrentPage: 2,
+                nextLabel: 'Next',
+                prevLabel: 'Prev',
+                rowsPerPageLabel: 'Rows per page',
+                ofLabel: 'of',
+                pageLabel: 'page', // for 'pages' mode
+                allLabel: 'All',
+            }"
         >
             <!-- <template slot="table-header-row" slot-scope="props">
                 <span v-if="props.column.field == 'actions'">
@@ -21,10 +55,463 @@
                 <div v-if="props.column.field === 'actions'"></div>
             </template>
         </vue-good-table>
+        <!-- modal -->
+        <b-modal
+            id="add-customer-modal"
+            ref="add-customer-popup"
+            title="Create New Customer"
+            ok-title="Save Customer"
+            cancel-variant="outline-secondary"
+            @show="resetModal"
+            @hidden="resetModal"
+            @ok="handleOk"
+            centered
+        >
+            <validation-observer ref="simpleRules">
+                <b-form ref="form" @submit.stop.prevent="handleSubmit">
+                    <b-row>
+                        <b-col md="6" lg="4">
+                            <b-form-group label="Document">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required|integer"
+                                    name="Document"
+                                >
+                                    <b-form-file
+                                        type="file"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                    ></b-form-file>
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="First Name">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="First Name"
+                                >
+                                    <b-form-input
+                                        v-model="form.name"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="First Name"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Last Name">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Last Name"
+                                >
+                                    <b-form-input
+                                        v-model="form.name"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="Last Name"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Title">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Title"
+                                >
+                                    <vue-select
+                                        v-model="form.title"
+                                        :options="titles"
+                                        placeholder="Title"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col
+                            md="6"
+                            lg="4"
+                            v-for="(phoneNum, index) in form.phoneNumbers"
+                            :key="phoneNum.id"
+                        >
+                            <b-form-group label="Phone Number">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required|integer"
+                                    :name="'Phone Number' + index"
+                                >
+                                    <b-input-group>
+                                        <b-input-group-prepend>
+                                            <b-form-select
+                                                :options="[
+                                                    {
+                                                        text: 'Mobile',
+                                                        value: 'Mobile',
+                                                    },
+                                                    {
+                                                        text: 'Office',
+                                                        value: 'Office',
+                                                    },
+                                                ]"
+                                                v-model="phoneNum.type"
+                                            >
+                                            </b-form-select>
+                                        </b-input-group-prepend>
+                                        <b-form-input
+                                            v-model="phoneNum.value"
+                                            :state="
+                                                errors.length > 0 ? false : null
+                                            "
+                                            placeholder="Phone Number"
+                                        ></b-form-input>
+                                        <button
+                                            v-if="index == 0"
+                                            type="button"
+                                            class="btn btn-sm btn-form-action btn-primary"
+                                            @click.prevent="
+                                                addPhoneNumber(
+                                                    form.phoneNumbers[
+                                                        form.phoneNumbers
+                                                            .length - 1
+                                                    ].id + 1
+                                                )
+                                            "
+                                        >
+                                            <feather-icon
+                                                icon="PlusIcon"
+                                                size="16"
+                                            ></feather-icon>
+                                        </button>
+                                        <button
+                                            v-else
+                                            type="button"
+                                            class="btn btn-sm btn-form-action btn-primary"
+                                            @click.prevent="
+                                                removePhoneNumber(phoneNum.id)
+                                            "
+                                        >
+                                            <feather-icon
+                                                icon="XIcon"
+                                                size="16"
+                                            ></feather-icon>
+                                        </button>
+                                    </b-input-group>
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Business Name">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Business Name"
+                                >
+                                    <b-form-input
+                                        v-model="form.businessName"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="Business Name"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Doing Business As">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Doing Business As"
+                                >
+                                    <b-form-input
+                                        v-model="form.doingBusinessAs"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="Doing Business As"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Business Type">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Business Type"
+                                >
+                                    <vue-select
+                                        v-model="form.businessType"
+                                        :options="businessTypes"
+                                        placeholder="Business Type"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="EIN">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="EIN"
+                                >
+                                    <b-form-input
+                                        v-model="form.ein"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="EIN"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Industry">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Industry"
+                                >
+                                    <vue-select
+                                        v-model="form.industry"
+                                        :options="industries"
+                                        placeholder="Industry"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Tax Exempt">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Tax Exempt"
+                                >
+                                    <b-form-checkbox
+                                        v-model="form.taxexempt"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="Tax Exempt"
+                                        ><p class="d-block text-danger">
+                                            You will be required to upload a
+                                            state Tax Exemption document
+                                        </p></b-form-checkbox
+                                    >
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Address 1">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Address 1"
+                                >
+                                    <b-form-input
+                                        v-model="form.address1"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="address1"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Address 2">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Address 2"
+                                >
+                                    <b-form-input
+                                        v-model="form.address2"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="Address 2"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="City">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="City"
+                                >
+                                    <vue-select
+                                        v-model="form.city"
+                                        :options="cities"
+                                        placeholder="City"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="State">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="State"
+                                >
+                                    <vue-select
+                                        v-model="form.state"
+                                        :options="states"
+                                        placeholder="State"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Zip">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    name="Zip"
+                                    rules="required"
+                                >
+                                    <b-form-input
+                                        v-model="form.zip"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="Zip"
+                                    />
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" md="6" lg="4">
+                            <b-form-group label="Billing Address">
+                                <validation-provider
+                                    #default="{ errors }"
+                                    rules="required"
+                                    name="Billing Address"
+                                >
+                                    <b-form-checkbox
+                                        v-model="form.billingAddress"
+                                        :state="
+                                            errors.length > 0 ? false : null
+                                        "
+                                        placeholder="Billing Address"
+                                        ><p class="text-danger">
+                                            Check if billing address different
+                                            than business address
+                                        </p></b-form-checkbox
+                                    >
+                                    <small class="text-danger">{{
+                                        errors[0]
+                                    }}</small>
+                                </validation-provider>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                </b-form>
+            </validation-observer>
+        </b-modal>
     </div>
 </template>
 
 <script>
+import AppBreadcrumb from "@core/layouts/components/AppBreadcrumb.vue";
+
+import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { required, email, integer, min } from "@validations";
+
+import "vue-select/dist/vue-select.css";
+import { VueSelect } from "vue-select";
+
+import Ripple from "vue-ripple-directive";
+import {
+    BRow,
+    BCol,
+    BModal,
+    VBModal,
+    BFormGroup,
+    BFormInput,
+    BFormCheckbox,
+    BListGroup,
+    BInputGroup,
+    BInputGroupText,
+    BFormFile,
+    BFormSelect,
+    BInputGroupPrepend,
+    BListGroupItem,
+    BForm,
+    BButton,
+} from "bootstrap-vue";
 import "vue-good-table/dist/vue-good-table.css";
 import { VueGoodTable } from "vue-good-table";
 export default {
@@ -352,30 +839,164 @@ export default {
                 { id: 91 },
                 { id: 92 },
             ],
+            form: {
+                phoneNumbers: [{ id: 1, type: "Office", value: "" }],
+            },
+            cities: ["City 1", "City 2", "City 3", "City 4", "City 5"],
+            states: ["State 1", "State 2", "State 3", "State 4", "State 5"],
+            titles: ["Owner", "Principal", "Partner", "Vice President", "CEO"],
+            businessTypes: [
+                "Corporation",
+                "Limited Liability Company",
+                "Partnership",
+                "Individual",
+            ],
+            industries: [
+                "Real Estate",
+                "Information",
+                "Arts",
+                "Entertainment",
+                "Construction",
+                "Corporate Management",
+                "Education Services",
+                "Agriculture",
+                "Other",
+                "Government",
+                "Finance",
+                "Energy",
+                "Healthcare",
+                "Hospitality",
+                "Manufacturing",
+                "Retail Trade",
+                "Wholesale Trade",
+            ],
         };
     },
+    directives: {
+        "b-modal": VBModal,
+        Ripple,
+    },
     components: {
+        ValidationProvider,
+        ValidationObserver,
+        AppBreadcrumb,
+        BFormFile,
         VueGoodTable,
+        BRow,
+        BCol,
+        BInputGroupText,
+        BListGroup,
+        BFormCheckbox,
+        BInputGroup,
+        BFormSelect,
+        BInputGroupPrepend,
+        VueSelect,
+        BListGroupItem,
+        BModal,
+        BFormGroup,
+        BFormInput,
+        BForm,
+        BButton,
+    },
+    methods: {
+        resetModal() {
+            this.name = "";
+            this.nameState = null;
+        },
+        addPhoneNumber(id) {
+            this.form.phoneNumbers.push({ id: id, type: "Office", value: "" });
+        },
+        removePhoneNumber(id) {
+            this.form.phoneNumbers = this.form.phoneNumbers.filter((obj) => {
+                return obj.id != id;
+            });
+        },
+        handleOk(bvModalEvt) {
+            bvModalEvt.preventDefault();
+            this.handleSubmit();
+        },
+        handleSubmit() {
+            this.$refs.simpleRules.validate().then((success) => {
+                if (success) {
+                    // eslint-disable-next-line
+                    alert("form submitted!");
+                } else {
+                    return;
+                }
+            });
+        },
     },
 };
 </script>
 <style lang="scss">
-.vgt-table {
-    thead {
-        position: sticky;
-        top: 0;
+.vgt-wrap {
+    .vgt-table {
+        thead {
+            position: sticky;
+            top: 0;
+        }
+        th {
+            font-size: 12px;
+            input {
+                font-size: 12px;
+            }
+            select {
+                font-size: 12px;
+            }
+        }
+        td {
+            font-size: 12px;
+            img {
+                max-width: 150px;
+                max-height: 50px;
+            }
+            .action-buttons {
+                .action-btn {
+                    font-size: 20px;
+                    padding: 5px;
+                }
+            }
+        }
     }
-    th {
-        font-size: 12px;
-        input {
+    .vgt-wrap__footer {
+        padding: 10px;
+        .footer__row-count {
+            form {
+                display: inline-flex;
+                align-items: center;
+            }
+            .footer__row-count__label {
+                font-size: 13px;
+            }
+            .footer__row-count__select {
+                font-size: 12px;
+            }
+            &::after {
+                border-width: 4px;
+            }
+        }
+        .footer__navigation__page-info {
             font-size: 12px;
         }
-        select {
+        .footer__navigation__page-btn span {
             font-size: 12px;
         }
     }
-    td {
-        font-size: 12px;
+}
+
+#add-customer-modal .modal-dialog {
+    max-width: 1000px;
+    .form-group {
+        .vs__dropdown-toggle {
+            padding: 3px 0 7px;
+            border: 1px solid #d8d6de;
+        }
+        .btn-form-action {
+            padding: 5px;
+        }
+        small {
+            font-size: 10px;
+        }
     }
 }
 </style>
