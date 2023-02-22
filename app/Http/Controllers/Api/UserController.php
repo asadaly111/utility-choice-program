@@ -21,7 +21,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
         $users = User::query()
             ->search($request->q)
             ->applyFilters($request)
@@ -139,5 +138,4 @@ class UserController extends Controller
 
         return $users;
     }
-
 }
