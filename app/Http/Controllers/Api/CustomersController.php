@@ -19,14 +19,12 @@ class CustomersController extends Controller
     public function index(Request $request)
     {
         $customers = Customer::query()
-            ->search($request->q)
-            ->applyFilters($request)
-            ->when($request->perPage, function ($query, $perPage) {
-                return $query->paginate($perPage);
-            }, function ($query) {
-                return $query->get();
-            });
-
+        ->applyFilters($request)
+        ->when($request->perPage, function ($query, $perPage) {
+            return $query->paginate($perPage);
+        }, function ($query) {
+            return $query->get();
+        });
         return CustomerResource::collection($customers);
     }
 
@@ -38,7 +36,6 @@ class CustomersController extends Controller
      */
     public function store(CustomerStoreRequest $request)
     {
-        return Customer::all();
         // if ($request->hasFile('document')) {
             $file = $request->file('document');
             $document = Storage::disk('public')->put('documents', $file);

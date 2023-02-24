@@ -31,7 +31,7 @@ class CustomerStoreRequest extends FormRequest
             'email' => 'required|email',
             'phone.*.id' => 'nullable',
             'phone.*.type' => 'nullable',
-            'phone.*.value' => 'required|integer',
+            'phone.*.value' => 'required',
             'business_name' => 'required',
             'doing_business_as' => 'required',
             'business_type' => 'required',
@@ -44,6 +44,10 @@ class CustomerStoreRequest extends FormRequest
             'city' => 'required',
             'zip' => 'required',
             'billing_address_option' => 'required',
+            'billing_address' => 'nullable',
+            'billing_state' => 'nullable',
+            'billing_city' => 'nullable',
+            'billing_zip' => 'nullable',
         ];
     }
 }

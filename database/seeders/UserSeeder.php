@@ -18,25 +18,28 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
-            'email_verified_at' => now(),
+            'phone' => '+1 (305) 603-2252',
+            'password' => 'password',
             'role' => 'admin',
-            'password' => 'password'
+            'email_verified_at' => now(),
         ]);
 
         User::create([
             'name' => 'Sean',
             'email' => 'client@gmail.com',
-            'email_verified_at' => now(),
+            'phone' => '+1 (305) 603-2252',
+            'password' => 'password',
             'role' => 'agent',
-            'password' => 'password'
+            'email_verified_at' => now(),
         ]);
 
         User::create([
             'name' => 'David',
             'email' => 'employee@gmail.com',
-            'email_verified_at' => now(),
+            'phone' => '+1 (305) 603-2252',
+            'password' => 'password',
             'role' => 'agent',
-            'password' => 'password'
+            'email_verified_at' => now(),
         ]);
     }
 }

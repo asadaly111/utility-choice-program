@@ -14,7 +14,7 @@
         <button
           class="btn btn-primary"
           v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-          v-b-modal.add-customer-modal
+          @click="isModalActive = true"
         >
           <feather-icon icon="PlusIcon" />
           <span class="ml-1">Add Customer</span>
@@ -28,16 +28,16 @@
     <vue-good-table
       :columns="columns"
       :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
-      :rows="rows"
+      :rows="customers"
       max-height="80vh"
       :pagination-options="{
         enabled: true,
         mode: 'records',
-        perPage: 50,
+        perPage: perPage,
         position: 'top',
-        perPageDropdown: [20, 30, 40, 50],
+        perPageDropdown: perPageOptions,
         dropdownAllowAll: false,
-        setCurrentPage: 2,
+        setCurrentPage: currentPage,
         nextLabel: 'Next',
         prevLabel: 'Prev',
         rowsPerPageLabel: 'Rows per page',
@@ -50,10 +50,49 @@
         slot="table-row"
         slot-scope="props"
       >
-        <!-- Column: Name -->
+        <div v-if="props.column.field === 'actions'">
+          <b-dropdown
+            variant="link"
+            no-caret
+          >
 
-        <!-- Column: Action -->
-        <div v-if="props.column.field === 'actions'" />
+            <template #button-content>
+              <feather-icon
+                icon="MoreVerticalIcon"
+                size="16"
+                class="align-middle text-body"
+              />
+            </template>
+            <b-dropdown-item
+              @click="isModalActive = true"
+              v-if="$can('users-edit', 'all')"
+            >
+              <feather-icon icon="EditIcon" />
+              <span class="align-middle ml-50">Edit</span>
+            </b-dropdown-item>
+            <b-dropdown-item
+              @click="confirmDelete(props.row.id)"
+            >
+              <feather-icon
+                icon="TrashIcon"
+              />
+              <span class="align-middle ml-50">Delete</span>
+            </b-dropdown-item>
+
+          </b-dropdown>
+        </div>
+
+        <span v-if="props.column.field === 'phone'">
+          <span
+            style="display:block"
+            v-for="(val, index) in props.row.phone"
+            :key="index"
+          >{{ val.value }}</span>
+        </span>
+        <span v-else>
+          {{ props.formattedRow[props.column.field] }}
+        </span>
+
       </template>
     </vue-good-table>
     <!-- modal -->
@@ -64,9 +103,10 @@
       title="Create New Customer"
       :hide-footer="true"
       cancel-variant="outline-secondary"
-      @show="resetModal"
-      @hidden="resetModal"
       centered
+      :visible="isModalActive"
+      @close="isModalActive = false"
+      @hide="isModalActive = false"
     >
       <validation-observer
         #default="{ handleSubmit }"
@@ -425,6 +465,7 @@
                       errors.length > 0 ? false : null
                     "
                     placeholder="Tax Exempt"
+                    value="1"
                   ><p>
                     You will be required to upload a
                     state Tax Exemption document
@@ -569,12 +610,119 @@
             >
               <b-form-group label="Billing Address">
                 <b-form-checkbox
+                  @input="showBilling"
                   v-model="formData.billing_address_option"
                   placeholder="Billing Address"
+                  value="1"
                 ><p>
                   Check if billing address different
                   than business address
                 </p></b-form-checkbox>
+              </b-form-group>
+            </b-col>
+
+            <b-col
+              v-if="isBillingActive"
+              cols="12"
+              md="6"
+              lg="4"
+            >
+              <b-form-group label="Billing Address">
+                <validation-provider
+                  #default="{ errors }"
+                  rules="required"
+                  name="Billing Address"
+                >
+                  <b-form-input
+                    v-model="formData.billing_address"
+                    :state="
+                      errors.length > 0 ? false : null
+                    "
+                    placeholder="Billing Address"
+                  />
+                  <small class="text-danger">{{
+                    errors[0]
+                  }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+
+            <b-col
+              v-if="isBillingActive"
+              cols="12"
+              md="6"
+              lg="4"
+            >
+              <b-form-group label="Billing State">
+                <validation-provider
+                  #default="{ errors }"
+                  rules="required"
+                  name="Billing State"
+                >
+                  <vue-select
+                    v-model="formData.billing_state"
+                    :options="statesOptions"
+                    :reduce="state => state.name"
+                    label="name"
+                    placeholder="State"
+                    @input="filterBillingCities"
+                  />
+                  <small class="text-danger">{{
+                    errors[0]
+                  }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+
+            <b-col
+              v-if="isBillingActive"
+              cols="12"
+              md="6"
+              lg="4"
+            >
+              <b-form-group label="Billing City">
+                <validation-provider
+                  #default="{ errors }"
+                  rules="required"
+                  name="Billing City"
+                >
+                  <vue-select
+                    v-model="formData.billing_city"
+                    :options="billingCitiesFilteredObjects"
+                    :reduce="city => city.name"
+                    label="name"
+                    placeholder="City"
+                  />
+                  <small class="text-danger">{{
+                    errors[0]
+                  }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+
+            <b-col
+              v-if="isBillingActive"
+              cols="12"
+              md="6"
+              lg="4"
+            >
+              <b-form-group label="Billing Zip">
+                <validation-provider
+                  #default="{ errors }"
+                  rules="required"
+                  name="Billing Zip"
+                >
+                  <b-form-input
+                    v-model="formData.billing_zip"
+                    :state="
+                      errors.length > 0 ? false : null
+                    "
+                    placeholder="Zip"
+                  />
+                  <small class="text-danger">{{
+                    errors[0]
+                  }}</small>
+                </validation-provider>
               </b-form-group>
             </b-col>
           </b-row>
@@ -596,7 +744,7 @@
 </template>
 
 <script>
-import { ref, watch } from '@vue/composition-api'
+import { ref, onMounted } from '@vue/composition-api'
 import AppBreadcrumb from '@core/layouts/components/AppBreadcrumb.vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { VueGoodTable } from 'vue-good-table'
@@ -614,17 +762,20 @@ import {
   VBModal,
   BFormGroup,
   BFormInput,
-  BFormCheckbox,
   BInputGroup,
   BFormFile,
   BFormSelect,
-  BInputGroupPrepend,
   BButton,
   BForm,
+  BDropdown,
+  BFormCheckbox,
+  BDropdownItem,
+  BInputGroupPrepend,
 } from 'bootstrap-vue'
 import {
   required, email, integer, min,
 } from '@validations'
+import { emit } from 'process'
 
 export default {
   data() {
@@ -644,8 +795,17 @@ export default {
           },
         },
         {
-          label: 'Name',
-          field: 'name',
+          label: 'First Name',
+          field: 'first_name',
+          width: '200px',
+          filterOptions: {
+            enabled: true,
+            placeholder: 'Name',
+          },
+        },
+        {
+          label: 'Last Name',
+          field: 'last_name',
           width: '200px',
           filterOptions: {
             enabled: true,
@@ -672,27 +832,27 @@ export default {
         },
         {
           label: 'Business Name',
-          field: 'businessname',
+          field: 'business_name',
           width: '200px',
           filterOptions: {
             enabled: true,
-            placeholder: 'Select',
-            filterDropdownItems: ['Business 1', 'Business 2'],
+            placeholder: 'Business Name',
+            // filterDropdownItems: ['Business 1', 'Business 2'],
           },
         },
         {
           label: 'Doing Business As',
-          field: 'doingbusinessas',
+          field: 'doing_business_as',
           width: '220px',
           filterOptions: {
             enabled: true,
-            placeholder: 'Select',
-            filterDropdownItems: ['Seller', 'Distributor'],
+            placeholder: 'Doing Business As',
+            // filterDropdownItems: ['Seller', 'Distributor'],
           },
         },
         {
           label: 'Business Type',
-          field: 'businesstype',
+          field: 'business_type',
           width: '200px',
           filterOptions: {
             enabled: true,
@@ -722,16 +882,29 @@ export default {
             enabled: true,
             placeholder: 'Industry',
             filterDropdownItems: [
-              'Corporation',
-              'Limited Liability Company',
-              'Partnership',
-              'Individual',
+              'Real Estate',
+              'Information',
+              'Arts',
+              'Entertainment',
+              'Construction',
+              'Corporate Management',
+              'Education Services',
+              'Agriculture',
+              'Other',
+              'Government',
+              'Finance',
+              'Energy',
+              'Healthcare',
+              'Hospitality',
+              'Manufacturing',
+              'Retail Trade',
+              'Wholesale Trade',
             ],
           },
         },
         {
           label: 'Tax Excempt',
-          field: 'taxexempt',
+          field: 'tax_exempt',
           width: '200px',
           filterOptions: {
             enabled: true,
@@ -741,11 +914,29 @@ export default {
         },
         {
           label: 'Address',
-          field: 'address',
+          field: 'address1',
           width: '200px',
           filterOptions: {
             enabled: true,
             placeholder: 'Address',
+          },
+        },
+        {
+          label: 'Address',
+          field: 'address2',
+          width: '200px',
+          filterOptions: {
+            enabled: true,
+            placeholder: 'Address',
+          },
+        },
+        {
+          label: 'State',
+          field: 'state',
+          width: '200px',
+          filterOptions: {
+            enabled: true,
+            placeholder: 'State',
           },
         },
         {
@@ -758,22 +949,8 @@ export default {
           },
         },
         {
-          label: 'State',
-          field: 'state',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'State',
-            filterDropdownItems: [
-              'Ohio',
-              'Missouri',
-              'Pennsylvania',
-            ],
-          },
-        },
-        {
           label: 'Billing Address',
-          field: 'billingaddress',
+          field: 'billing_address',
           width: '200px',
           filterOptions: {
             enabled: true,
@@ -781,8 +958,17 @@ export default {
           },
         },
         {
+          label: 'Billing State',
+          field: 'billing_state',
+          width: '200px',
+          filterOptions: {
+            enabled: true,
+            placeholder: 'Billing State',
+          },
+        },
+        {
           label: 'Billing City',
-          field: 'billingcity',
+          field: 'billing_city',
           width: '200px',
           filterOptions: {
             enabled: true,
@@ -790,26 +976,12 @@ export default {
           },
         },
         {
-          label: 'Billing State',
-          field: 'billingstate',
+          label: 'Billing Zip',
+          field: 'billing_zip',
           width: '200px',
           filterOptions: {
             enabled: true,
-            placeholder: 'Billing State',
-            filterDropdownItems: [
-              'South Carolina',
-              'Texas',
-              'New York',
-            ],
-          },
-        },
-        {
-          label: 'B.Zip',
-          field: 'bzip',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'B.Zip',
+            placeholder: 'Billing Zip',
           },
         },
         {
@@ -841,120 +1013,26 @@ export default {
             ],
           },
         },
-        {
-          label: 'Flags',
-          field: 'flags',
-          width: '100px',
-        },
-        {
-          label: 'E/G/Q/C',
-          field: 'egqc',
-          type: 'date',
-          dateInputFormat: 'yyyy-MM-dd',
-          dateOutputFormat: 'MMM do yy',
-          width: '150px',
-        },
+        // {
+        //   label: 'Flags',
+        //   field: 'flags',
+        //   width: '100px',
+        // },
+        // {
+        //   label: 'E/G/Q/C',
+        //   field: 'egqc',
+        //   type: 'date',
+        //   dateInputFormat: 'yyyy-MM-dd',
+        //   dateOutputFormat: 'MMM do yy',
+        //   width: '150px',
+        // },
         {
           label: 'Actions',
           field: 'actions',
           width: '250px',
         },
       ],
-      rows: [
-        { id: 0 },
-        { id: 1 },
-        { id: 2 },
-        { id: 3 },
-        { id: 4 },
-        { id: 5 },
-        { id: 6 },
-        { id: 7 },
-        { id: 8 },
-        { id: 9 },
-        { id: 10 },
-        { id: 11 },
-        { id: 12 },
-        { id: 13 },
-        { id: 14 },
-        { id: 15 },
-        { id: 16 },
-        { id: 17 },
-        { id: 18 },
-        { id: 19 },
-        { id: 20 },
-        { id: 21 },
-        { id: 22 },
-        { id: 23 },
-        { id: 24 },
-        { id: 25 },
-        { id: 26 },
-        { id: 27 },
-        { id: 28 },
-        { id: 29 },
-        { id: 30 },
-        { id: 31 },
-        { id: 32 },
-        { id: 33 },
-        { id: 34 },
-        { id: 35 },
-        { id: 36 },
-        { id: 37 },
-        { id: 38 },
-        { id: 39 },
-        { id: 40 },
-        { id: 41 },
-        { id: 42 },
-        { id: 43 },
-        { id: 44 },
-        { id: 45 },
-        { id: 46 },
-        { id: 47 },
-        { id: 48 },
-        { id: 49 },
-        { id: 50 },
-        { id: 51 },
-        { id: 52 },
-        { id: 53 },
-        { id: 54 },
-        { id: 55 },
-        { id: 56 },
-        { id: 57 },
-        { id: 58 },
-        { id: 59 },
-        { id: 60 },
-        { id: 61 },
-        { id: 62 },
-        { id: 63 },
-        { id: 64 },
-        { id: 65 },
-        { id: 66 },
-        { id: 67 },
-        { id: 68 },
-        { id: 69 },
-        { id: 70 },
-        { id: 71 },
-        { id: 72 },
-        { id: 73 },
-        { id: 74 },
-        { id: 75 },
-        { id: 76 },
-        { id: 77 },
-        { id: 78 },
-        { id: 79 },
-        { id: 80 },
-        { id: 81 },
-        { id: 82 },
-        { id: 83 },
-        { id: 84 },
-        { id: 85 },
-        { id: 86 },
-        { id: 87 },
-        { id: 88 },
-        { id: 89 },
-        { id: 90 },
-        { id: 91 },
-        { id: 92 },
-      ],
+      //   rows: [{ id: 1, name: 'taha' }],
       titles: [
         'Owner',
         'Principal',
@@ -989,7 +1067,7 @@ export default {
       ],
     }
   },
-  setup(props, { emit }) {
+  setup(_, context) {
     const formInitialState = {
       document: null,
       first_name: '',
@@ -1008,6 +1086,10 @@ export default {
       city: '',
       zip: '',
       billing_address_option: '',
+      billing_address: '',
+      billing_state: '',
+      billing_city: '',
+      billing_zip: '',
     }
 
     const formPhoneInitialState = {
@@ -1022,13 +1104,30 @@ export default {
 
     const {
       busy,
+      perPage,
+      customers,
       respResult,
+      currentPage,
       storeCustomer,
+      deleteCustomer,
+      fetchCustomers,
+      perPageOptions,
     } = useCustomers()
 
+    onMounted(() => {
+      fetchCustomers()
+    })
+
+    const isBillingActive = ref(false)
+    const isModalActive = ref(false)
     const citiesFilteredObjects = ref([])
+    const billingCitiesFilteredObjects = ref([])
     const formData = ref({ ...formInitialState })
     const phone = ref({ ...formPhoneInitialState })
+
+    const showBilling = item => {
+      isBillingActive.value = item
+    }
 
     const addPhoneNumber = id => {
       phone.value.phone_number.push({ id, type: 'Mobile', value: '' })
@@ -1039,6 +1138,15 @@ export default {
 
     const filterCities = state => {
       citiesFilteredObjects.value = citiesOptions.filter(obj => obj.state_name === state)
+    }
+
+    const filterBillingCities = state => {
+      billingCitiesFilteredObjects.value = citiesOptions.filter(obj => obj.state_name === state)
+    }
+
+    const resetform = () => {
+      formData.value = JSON.parse(JSON.stringify(formInitialState))
+      phone.value.phone_number = JSON.parse(JSON.stringify(formPhoneInitialState))
     }
 
     const onSubmit = async () => {
@@ -1060,6 +1168,10 @@ export default {
       data.append('city', formData.value.city)
       data.append('zip', formData.value.zip)
       data.append('billing_address_option', formData.value.billing_address_option)
+      data.append('billing_address', formData.value.billing_address)
+      data.append('billing_state', formData.value.billing_state)
+      data.append('billing_city', formData.value.billing_city)
+      data.append('billing_zip', formData.value.billing_zip)
 
       for (let index = 0; index < phone.value.phone_number.length; index++) {
         data.append(`phone[${index}][id]`, phone.value.phone_number[index].id)
@@ -1069,21 +1181,52 @@ export default {
 
       await storeCustomer(data)
       if (respResult.value.status === 200) {
-        emit('refetch-data')
+        isModalActive.value = false
+        resetform()
       }
+    }
+
+    const deleteCustomerConfirmed = async id => {
+      await deleteCustomer(id)
+      if (respResult.value.status === 200) {
+        fetchCustomers()
+      }
+    }
+
+    const confirmDelete = async id => {
+      context.root.$bvModal
+        .msgBoxConfirm('Please confirm that you want to delete customer.', {
+          title: 'Please Confirm',
+          size: 'sm',
+        })
+        .then(value => {
+          if (value) {
+            deleteCustomerConfirmed(id)
+          }
+        })
     }
 
     return {
       busy,
       phone,
+      perPage,
       formData,
       onSubmit,
+      customers,
+      currentPage,
+      showBilling,
       filterCities,
       citiesOptions,
+      isModalActive,
       statesOptions,
+      confirmDelete,
       addPhoneNumber,
+      perPageOptions,
+      isBillingActive,
       removePhoneNumber,
+      filterBillingCities,
       citiesFilteredObjects,
+      billingCitiesFilteredObjects,
     }
   },
   directives: {
@@ -1106,14 +1249,10 @@ export default {
     BModal,
     BFormGroup,
     BFormInput,
+    BDropdown,
+    BDropdownItem,
     BButton,
     BForm,
-  },
-  methods: {
-    resetModal() {
-      this.name = ''
-      this.nameState = null
-    },
   },
 }
 </script>
