@@ -1,15 +1,15 @@
 <template>
   <b-modal
+    centered
     size="lg"
     id="add-customer-modal"
     ref="add-customer-popup"
     title="Create New Customer"
     :hide-footer="true"
     cancel-variant="outline-secondary"
-    centered
-    :visible="isModalActive"
-    @close="isModalActive = false"
-    @hide="isModalActive = false"
+    :visible="isAddCustomerActive"
+    @close="$emit('update:is-add-customer-active', false)"
+    @hide="$emit('update:is-add-customer-active', false)"
   >
     <validation-observer
       #default="{ handleSubmit }"
@@ -305,7 +305,7 @@
             <b-form-group label="EIN">
               <validation-provider
                 #default="{ errors }"
-                rules="required"
+                rules="required|integer"
                 name="EIN"
               >
                 <b-form-input
@@ -627,6 +627,17 @@
         <!-- Form Actions -->
         <div class="d-flex mt-2 m-2 justify-content-end">
           <b-button
+            type="button"
+            size="sm"
+            class="mr-2"
+            variant="outline-secondary"
+            @click="
+              $emit('update:is-add-customer-active', false)
+            "
+          >
+            Cancel
+          </b-button>
+          <b-button
             variant="primary"
             type="submit"
           >
@@ -674,9 +685,41 @@ export default {
       email,
       integer,
       min,
+      titles: [
+        'Owner',
+        'Principal',
+        'Partner',
+        'Vice President',
+        'CEO',
+      ],
+      businessTypes: [
+        'Corporation',
+        'Limited Liability Company',
+        'Partnership',
+        'Individual',
+      ],
+      industries: [
+        'Real Estate',
+        'Information',
+        'Arts',
+        'Entertainment',
+        'Construction',
+        'Corporate Management',
+        'Education Services',
+        'Agriculture',
+        'Other',
+        'Government',
+        'Finance',
+        'Energy',
+        'Healthcare',
+        'Hospitality',
+        'Manufacturing',
+        'Retail Trade',
+        'Wholesale Trade',
+      ],
     }
   },
-  setup() {
+  setup(props, { emit }) {
     const formInitialState = {
       document: null,
       first_name: '',
@@ -718,7 +761,6 @@ export default {
     } = useCustomers()
 
     const isBillingActive = ref(false)
-    const isModalActive = ref(false)
     const citiesFilteredObjects = ref([])
     const billingCitiesFilteredObjects = ref([])
     const formData = ref({ ...formInitialState })
@@ -780,7 +822,8 @@ export default {
 
       await storeCustomer(data)
       if (respResult.value.status === 200) {
-        isModalActive.value = false
+        emit('update:is-add-customer-active', false)
+        emit('refetch-data')
         resetform()
       }
     }
@@ -793,7 +836,6 @@ export default {
       showBilling,
       filterCities,
       citiesOptions,
-      isModalActive,
       statesOptions,
       addPhoneNumber,
       isBillingActive,
@@ -822,6 +864,16 @@ export default {
     BForm,
     BCol,
     BRow,
+  },
+  model: {
+    prop: 'isAddCustomerActive',
+    event: 'update:is-add-customer-active',
+  },
+  props: {
+    isAddCustomerActive: {
+      type: Boolean,
+      required: true,
+    },
   },
 }
 </script>

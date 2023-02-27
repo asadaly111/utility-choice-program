@@ -4,10 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\ForgotPasswordController;
-use App\Http\Controllers\Api\CustomersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::apiResources([
         'users' => UserController::class,
-        'customers' => CustomersController::class,
+        'customers' => CustomerController::class,
     ]);
 
     Route::get('/dashboard/statistics', [DashboardController::class, 'statistics'])->name('dashboard.statistics');

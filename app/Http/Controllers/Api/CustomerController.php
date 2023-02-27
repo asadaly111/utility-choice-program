@@ -8,8 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\CustomerResource;
 use App\Http\Requests\CustomerStoreRequest;
+use App\Http\Requests\CustomerUpdateRequest;
 
-class CustomersController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -68,9 +69,22 @@ class CustomersController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(CustomerUpdateRequest $request, Customer $customer)
     {
+        dd($request->validated());
 
+        if ($request->hasFile('document')) {
+            $file = $request->file('document');
+            $document = Storage::disk('public')->put('documents', $file);
+        }
+
+        Customer::create(array_merge($request->validated(), [
+            'document' => $document,
+        ]));
+
+        return response()->json([
+            'message' => 'Customer successfully created.',
+        ], 200);
     }
 
     /**

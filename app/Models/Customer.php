@@ -65,13 +65,13 @@ class Customer extends Model
         });
     }
 
-    public function getTaxExemptAttribute($value)
-    {
-        if($value){
-            return 'Yes';
-        }
-        return 'No';
-    }
+    // public function getTaxExemptAttribute($value)
+    // {
+    //     if($value){
+    //         return 'Yes';
+    //     }
+    //     return 'No';
+    // }
 
     public function getNameAttribute()
     {

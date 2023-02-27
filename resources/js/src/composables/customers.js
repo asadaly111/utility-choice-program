@@ -48,10 +48,12 @@ export default function useCustomers() {
   const updateCustomer = async customerData => {
     try {
       busy.value = true
+      console.log(customerData)
       const response = await axios.put(route('customers.update', customerData.id), customerData)
       respResult.value = response
       toast.success(response.data.message)
     } catch (error) {
+      console.log(error)
       if (error.response.status === 422) {
         errors.value = error.response.data.errors
       }
