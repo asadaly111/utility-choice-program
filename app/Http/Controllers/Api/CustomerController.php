@@ -69,21 +69,24 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(CustomerUpdateRequest $request, Customer $customer)
+    public function update(CustomerUpdateRequest $request, $id)
     {
-        dd($request->validated());
-
+        $customer = Customer::find($id);
         if ($request->hasFile('document')) {
+            Storage::delete(storage_path('public/documents'.$customer->document));
+            Storage::disk('public')->delete($customer->document);
             $file = $request->file('document');
             $document = Storage::disk('public')->put('documents', $file);
+        }else{
+            $document = $customer->document;
         }
 
-        Customer::create(array_merge($request->validated(), [
+        Customer::where('id',$id)->update(array_merge($request->validated(), [
             'document' => $document,
         ]));
 
         return response()->json([
-            'message' => 'Customer successfully created.',
+            'message' => 'Customer successfully updated.',
         ], 200);
     }
 

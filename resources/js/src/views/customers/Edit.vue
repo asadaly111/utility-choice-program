@@ -820,6 +820,7 @@ export default {
       data.append('billing_state', formData.value.billing_state)
       data.append('billing_city', formData.value.billing_city)
       data.append('billing_zip', formData.value.billing_zip)
+      data.append('_method', 'PUT')
 
       for (let index = 0; index < phone.value.phone_number.length; index++) {
         data.append(`phone[${index}][id]`, phone.value.phone_number[index].id)
@@ -827,7 +828,7 @@ export default {
         data.append(`phone[${index}][value]`, phone.value.phone_number[index].value)
       }
 
-      await updateCustomer(data)
+      await updateCustomer(data, props.customerData.id)
       if (respResult.value.status === 200) {
         emit('update:is-edit-customer-active', false)
         emit('refetch-data')

@@ -36,10 +36,18 @@
       </b-col>
     </b-row>
     <vue-good-table
-      :columns="columns"
-      :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
-      :rows="customers"
+      mode="remote"
+      @on-page-change="onPageChange"
+      @on-per-page-change="onPerPageChange"
+      @on-column-filter="onColumnFilter"
       max-height="80vh"
+      :columns="tableColumns"
+      :total-rows="totalRecords"
+      :rows="customers"
+      :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+      :sort-options="{
+        enabled: false,
+      }"
       :pagination-options="{
         enabled: true,
         mode: 'records',
@@ -133,287 +141,6 @@ export default {
       email,
       integer,
       min,
-      columns: [
-        {
-          label: 'ID',
-          field: 'id',
-          width: '100px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'ID',
-          },
-        },
-        {
-          label: 'First Name',
-          field: 'first_name',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Name',
-          },
-        },
-        {
-          label: 'Last Name',
-          field: 'last_name',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Name',
-          },
-        },
-        {
-          label: 'Email',
-          field: 'email',
-          width: '180px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Email',
-          },
-        },
-        {
-          label: 'Phone',
-          field: 'phone',
-          width: '180px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Phone',
-          },
-        },
-        {
-          label: 'Business Name',
-          field: 'business_name',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Business Name',
-            // filterDropdownItems: ['Business 1', 'Business 2'],
-          },
-        },
-        {
-          label: 'Doing Business As',
-          field: 'doing_business_as',
-          width: '220px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Doing Business As',
-            // filterDropdownItems: ['Seller', 'Distributor'],
-          },
-        },
-        {
-          label: 'Business Type',
-          field: 'business_type',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Business Type',
-            filterDropdownItems: [
-              'Corporation',
-              'Limited Liability Company',
-              'Partnership',
-              'Individual',
-            ],
-          },
-        },
-        {
-          label: 'EIN',
-          field: 'ein',
-          width: '150px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'EIN',
-          },
-        },
-        {
-          label: 'Industry',
-          field: 'industry',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Industry',
-            filterDropdownItems: [
-              'Real Estate',
-              'Information',
-              'Arts',
-              'Entertainment',
-              'Construction',
-              'Corporate Management',
-              'Education Services',
-              'Agriculture',
-              'Other',
-              'Government',
-              'Finance',
-              'Energy',
-              'Healthcare',
-              'Hospitality',
-              'Manufacturing',
-              'Retail Trade',
-              'Wholesale Trade',
-            ],
-          },
-        },
-        {
-          label: 'Tax Excempt',
-          field: 'tax_exempt',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Tax Excempt',
-            filterDropdownItems: ['Yes', 'No'],
-          },
-        },
-        {
-          label: 'Address',
-          field: 'address1',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Address',
-          },
-        },
-        {
-          label: 'Address',
-          field: 'address2',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Address',
-          },
-        },
-        {
-          label: 'State',
-          field: 'state',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'State',
-          },
-        },
-        {
-          label: 'City',
-          field: 'city',
-          width: '150px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'City',
-          },
-        },
-        {
-          label: 'Billing Address',
-          field: 'billing_address',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Billing Address',
-          },
-        },
-        {
-          label: 'Billing State',
-          field: 'billing_state',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Billing State',
-          },
-        },
-        {
-          label: 'Billing City',
-          field: 'billing_city',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Billing City',
-          },
-        },
-        {
-          label: 'Billing Zip',
-          field: 'billing_zip',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Billing Zip',
-          },
-        },
-        {
-          label: 'Agency',
-          field: 'agency',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Agency',
-            filterDropdownItems: [
-              'Corporation',
-              'Limited Liability Company',
-              'Partnership',
-              'Individual',
-            ],
-          },
-        },
-        {
-          label: 'Agent',
-          field: 'agent',
-          width: '200px',
-          filterOptions: {
-            enabled: true,
-            placeholder: 'Agent',
-            filterDropdownItems: [
-              'Robert Zane',
-              'Harvey Dentt',
-              'Sean Azfarani',
-            ],
-          },
-        },
-        // {
-        //   label: 'Flags',
-        //   field: 'flags',
-        //   width: '100px',
-        // },
-        // {
-        //   label: 'E/G/Q/C',
-        //   field: 'egqc',
-        //   type: 'date',
-        //   dateInputFormat: 'yyyy-MM-dd',
-        //   dateOutputFormat: 'MMM do yy',
-        //   width: '150px',
-        // },
-        {
-          label: 'Actions',
-          field: 'actions',
-          width: '250px',
-        },
-      ],
-      //   rows: [{ id: 1, name: 'taha' }],
-      titles: [
-        'Owner',
-        'Principal',
-        'Partner',
-        'Vice President',
-        'CEO',
-      ],
-      businessTypes: [
-        'Corporation',
-        'Limited Liability Company',
-        'Partnership',
-        'Individual',
-      ],
-      industries: [
-        'Real Estate',
-        'Information',
-        'Arts',
-        'Entertainment',
-        'Construction',
-        'Corporate Management',
-        'Education Services',
-        'Agriculture',
-        'Other',
-        'Government',
-        'Finance',
-        'Energy',
-        'Healthcare',
-        'Hospitality',
-        'Manufacturing',
-        'Retail Trade',
-        'Wholesale Trade',
-      ],
     }
   },
   setup(_, context) {
@@ -423,14 +150,23 @@ export default {
       customers,
       respResult,
       currentPage,
+      totalRecords,
+      tableColumns,
       deleteCustomer,
       fetchCustomers,
       perPageOptions,
     } = useCustomers()
 
-    onMounted(() => {
-      fetchCustomers()
+    const serverParams = ref({
+      columnFilters: {
+      },
+      page: 1,
+      perPage: 10,
     })
+
+    // onMounted(() => {
+    //   fetchCustomers(serverParams.value)
+    // })
 
     const customerData = ref({})
     const isAddCustomerActive = ref(false)
@@ -446,6 +182,25 @@ export default {
       if (respResult.value.status === 200) {
         fetchCustomers()
       }
+    }
+
+    const updateParams = newProps => {
+      serverParams.value = { ...serverParams.value, ...newProps }
+    }
+
+    const onPageChange = params => {
+      updateParams({ page: params.currentPage })
+      fetchCustomers(serverParams.value)
+    }
+
+    const onPerPageChange = params => {
+      updateParams({ perPage: params.currentPerPage })
+      fetchCustomers(serverParams.value)
+    }
+
+    const onColumnFilter = params => {
+      updateParams(params)
+      fetchCustomers(serverParams.value)
     }
 
     const confirmDelete = async id => {
@@ -466,13 +221,18 @@ export default {
       perPage,
       customers,
       currentPage,
+      totalRecords,
       customerData,
+      onPageChange,
+      tableColumns,
       citiesOptions,
       statesOptions,
       confirmDelete,
+      onColumnFilter,
       fetchCustomers,
       perPageOptions,
       editCustomerRow,
+      onPerPageChange,
       isAddCustomerActive,
       isEditCustomerActive,
     }
