@@ -23,32 +23,35 @@ export default function useCustomers() {
     {
       label: 'ID',
       field: 'id',
-      width: '100px',
+      width: '50px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'ID',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'First Name',
       field: 'first_name',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Name',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Last Name',
       field: 'last_name',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Name',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Email',
@@ -59,43 +62,47 @@ export default function useCustomers() {
         filterValue: '',
         placeholder: 'Email',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Phone',
       field: 'phone',
-      width: '180px',
+      width: '160px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Phone',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Business Name',
       field: 'business_name',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Business Name',
         // filterDropdownItems: ['Business 1', 'Business 2'],
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Doing Business As',
       field: 'doing_business_as',
-      width: '220px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Doing Business As',
         // filterDropdownItems: ['Seller', 'Distributor'],
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Business Type',
       field: 'business_type',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
@@ -107,21 +114,23 @@ export default function useCustomers() {
           'Individual',
         ],
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'EIN',
       field: 'ein',
-      width: '150px',
+      width: '120px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'EIN',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Industry',
       field: 'industry',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
@@ -146,17 +155,19 @@ export default function useCustomers() {
           'Wholesale Trade',
         ],
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Tax Excempt',
       field: 'tax_exempt',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Tax Excempt',
         filterDropdownItems: ['Yes', 'No'],
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Address 1',
@@ -167,26 +178,29 @@ export default function useCustomers() {
         filterValue: '',
         placeholder: 'Address',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Address 2',
       field: 'address2',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Address',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'State',
       field: 'state',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'State',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'City',
@@ -197,51 +211,56 @@ export default function useCustomers() {
         filterValue: '',
         placeholder: 'City',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Billing Address',
       field: 'billing_address',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Billing Address',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Billing State',
       field: 'billing_state',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Billing State',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Billing City',
       field: 'billing_city',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Billing City',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Billing Zip',
       field: 'billing_zip',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
         placeholder: 'Billing Zip',
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Agency',
       field: 'agency',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
@@ -253,11 +272,12 @@ export default function useCustomers() {
           'Individual',
         ],
       },
+      tdClass: 'align-middle',
     },
     {
       label: 'Agent',
       field: 'agent',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
@@ -268,24 +288,26 @@ export default function useCustomers() {
           'Sean Azfarani',
         ],
       },
+      tdClass: 'align-middle',
     },
-    // {
-    //   label: 'Flags',
-    //   field: 'flags',
-    //   width: '100px',
-    // },
-    // {
-    //   label: 'E/G/Q/C',
-    //   field: 'egqc',
-    //   type: 'date',
-    //   dateInputFormat: 'yyyy-MM-dd',
-    //   dateOutputFormat: 'MMM do yy',
-    //   width: '150px',
-    // },
+    {
+      label: 'Flags',
+      field: 'flags',
+      width: '80px',
+    },
+    {
+      label: 'E/G/Q/C',
+      field: 'egqc',
+      type: 'date',
+      dateInputFormat: 'yyyy-MM-dd',
+      dateOutputFormat: 'MMM do yy',
+      width: '120px',
+    },
     {
       label: 'Actions',
       field: 'actions',
-      width: '250px',
+      width: '80px',
+      tdClass: 'align-middle text-center',
     },
   ]
 
@@ -308,7 +330,7 @@ export default function useCustomers() {
       const res = await axios.delete(route('customers.destroy', id))
       respResult.value = res
       toast.success(res.data.message)
-    //   refetchData()
+      //   refetchData()
     } catch (error) {
       toast.error('Error! Deleting user')
     } finally {
