@@ -1,364 +1,260 @@
 <template>
-    <div>
-        <Add
-            v-if="isAddCustomerActive"
-            :is-add-customer-active.sync="isAddCustomerActive"
-            @refetch-data="fetchCustomers"
-        />
-        <Edit
-            v-if="isEditCustomerActive"
-            :is-edit-customer-active.sync="isEditCustomerActive"
-            @refetch-data="fetchCustomers"
-            :customer-data="customerData"
-        />
-        <b-row>
-            <b-col cols="12" md>
-                <app-breadcrumb />
-            </b-col>
-            <b-col cols="6" md="auto">
-                <button
-                    class="btn btn-primary"
-                    @click="isAddCustomerActive = true"
-                >
-                    <feather-icon icon="PlusIcon" />
-                    <span class="ml-1">Add Customer</span>
-                </button>
-                <button class="btn btn-primary">
-                    <feather-icon icon="FolderPlusIcon" />
-                    <span class="ml-1">Import Customers</span>
-                </button>
-            </b-col>
-        </b-row>
-        <vue-good-table
-            mode="remote"
-            @on-page-change="onPageChange"
-            @on-per-page-change="onPerPageChange"
-            @on-column-filter="onColumnFilter"
-            max-height="80vh"
-            :columns="tableColumns"
-            :total-rows="totalRecords"
-            :rows="customersDummy"
-            :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
-            :sort-options="{
-                enabled: false,
-            }"
-            :pagination-options="{
-                enabled: true,
-                mode: 'records',
-                perPage: perPage,
-                position: 'top',
-                perPageDropdown: perPageOptions,
-                dropdownAllowAll: false,
-                setCurrentPage: currentPage,
-                nextLabel: 'Next',
-                prevLabel: 'Prev',
-                rowsPerPageLabel: 'Rows per page',
-                ofLabel: 'of',
-                pageLabel: 'page', // for 'pages' mode
-                allLabel: 'All',
-            }"
+  <div>
+    <Add
+      v-if="isAddCustomerActive"
+      :is-add-customer-active.sync="isAddCustomerActive"
+      @refetch-data="fetchCustomers"
+    />
+    <Edit
+      v-if="isEditCustomerActive"
+      :is-edit-customer-active.sync="isEditCustomerActive"
+      @refetch-data="fetchCustomers"
+      :customer-data="customerData"
+    />
+    <b-row>
+      <b-col
+        cols="12"
+        md
+      >
+        <app-breadcrumb />
+      </b-col>
+      <b-col
+        cols="6"
+        md="auto"
+      >
+        <button
+          class="btn btn-primary"
+          @click="isAddCustomerActive = true"
         >
-            <template slot="table-row" slot-scope="props">
-                <span v-if="props.column.field == 'first_name'">
-                    <router-link
-                        :to="{
-                            name: 'customer',
-                            params: {
-                                id: props.row.first_name
-                                    .replace(' ', '-')
-                                    .toLowerCase(),
-                            },
-                        }"
-                    >
-                        {{ props.row.first_name }}
-                    </router-link>
-                </span>
-                <div v-else-if="props.column.field === 'actions'">
-                    <b-dropdown
-                        toggle-class="p-0"
-                        variant="link"
-                        no-caret
-                        right
-                    >
-                        <template #button-content>
-                            <feather-icon
-                                icon="MoreVerticalIcon"
-                                size="16"
-                                class="align-middle text-body"
-                            />
-                        </template>
-                        <b-dropdown-item @click="editCustomerRow(props.row)">
-                            <feather-icon icon="EditIcon" />
-                            <span class="align-middle ml-50">Edit</span>
-                        </b-dropdown-item>
-                        <b-dropdown-item @click="confirmDelete(props.row.id)">
-                            <feather-icon icon="TrashIcon" />
-                            <span class="align-middle ml-50">Delete</span>
-                        </b-dropdown-item>
-                    </b-dropdown>
-                </div>
+          <feather-icon icon="PlusIcon" />
+          <span class="ml-1">Add Customer</span>
+        </button>
+        <button class="btn btn-primary">
+          <feather-icon icon="FolderPlusIcon" />
+          <span class="ml-1">Import Customers</span>
+        </button>
+      </b-col>
+    </b-row>
+    <vue-good-table
+      mode="remote"
+      @on-page-change="onPageChange"
+      @on-per-page-change="onPerPageChange"
+      @on-column-filter="onColumnFilter"
+      max-height="80vh"
+      :columns="tableColumns"
+      :total-rows="totalRecords"
+      :rows="customers"
+      :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+      :sort-options="{
+        enabled: false,
+      }"
+      :pagination-options="{
+        enabled: true,
+        mode: 'records',
+        perPage: perPage,
+        position: 'top',
+        perPageDropdown: perPageOptions,
+        dropdownAllowAll: false,
+        setCurrentPage: currentPage,
+        nextLabel: 'Next',
+        prevLabel: 'Prev',
+        rowsPerPageLabel: 'Rows per page',
+        ofLabel: 'of',
+        pageLabel: 'page', // for 'pages' mode
+        allLabel: 'All',
+      }"
+    >
+      <template
+        slot="table-row"
+        slot-scope="props"
+      >
+        <span v-if="props.column.field == 'name'">
+          <router-link
+            :to="{
+              name: 'customer',
+              params: {
+                id: props.row.id
+              },
+            }"
+          >{{ props.row.name }}</router-link>
+        </span>
 
-                <!-- <span v-if="props.column.field === 'phone'">
-                    {{ props.row.phone }}
-                </span> -->
+        <span v-else-if="props.column.field === 'phone'">
+          <span
+            style="display:block"
+            v-for="(val, index) in props.row.phone"
+            :key="index"
+          >{{ val.value }}</span>
+        </span>
 
-                <span v-else>
-                    {{ props.formattedRow[props.column.field] }}
-                </span>
+        <span v-else>
+          {{ props.formattedRow[props.column.field] }}
+        </span>
+
+        <div v-if="props.column.field === 'actions'">
+          <b-dropdown
+            toggle-class="p-0"
+            variant="link"
+            no-caret
+            right
+          >
+            <template #button-content>
+              <feather-icon
+                icon="MoreVerticalIcon"
+                size="16"
+                class="align-middle text-body"
+              />
             </template>
-        </vue-good-table>
-    </div>
+            <b-dropdown-item @click="editCustomerRow(props.row)">
+              <feather-icon icon="EditIcon" />
+              <span class="align-middle ml-50">Edit</span>
+            </b-dropdown-item>
+            <b-dropdown-item @click="confirmDelete(props.row.id)">
+              <feather-icon icon="TrashIcon" />
+              <span class="align-middle ml-50">Delete</span>
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
+
+      </template>
+    </vue-good-table>
+  </div>
 </template>
 
 <script>
-import { ref, onMounted } from "@vue/composition-api";
-import AppBreadcrumb from "@core/layouts/components/AppBreadcrumb.vue";
-import { VueGoodTable } from "vue-good-table";
-import "vue-select/dist/vue-select.css";
-import "vue-good-table/dist/vue-good-table.css";
-import useCustomers from "@/composables/customers";
-import statesOptions from "@core/data/states.json";
-import citiesOptions from "@core/data/cities.json";
-import { BRow, BCol, BDropdown, BDropdownItem } from "bootstrap-vue";
-import { required, email, integer, min } from "@validations";
-import Add from "./Add.vue";
-import Edit from "./Edit.vue";
+import { ref } from '@vue/composition-api'
+import AppBreadcrumb from '@core/layouts/components/AppBreadcrumb.vue'
+import { VueGoodTable } from 'vue-good-table'
+import 'vue-select/dist/vue-select.css'
+import 'vue-good-table/dist/vue-good-table.css'
+import useCustomers from '@/composables/customers'
+import statesOptions from '@core/data/states.json'
+import citiesOptions from '@core/data/cities.json'
+import {
+  BRow, BCol, BDropdown, BDropdownItem,
+} from 'bootstrap-vue'
+import {
+  required, email, integer, min,
+} from '@validations'
+import Add from './Add.vue'
+import Edit from './Edit.vue'
 
 export default {
-    data() {
-        return {
-            required,
-            email,
-            integer,
-            min,
-        };
-    },
-    setup(_, context) {
-        const {
-            busy,
-            perPage,
-            customers,
-            respResult,
-            currentPage,
-            totalRecords,
-            tableColumns,
-            deleteCustomer,
-            fetchCustomers,
-            perPageOptions,
-        } = useCustomers();
+  data() {
+    return {
+      required,
+      email,
+      integer,
+      min,
+    }
+  },
+  setup(_, context) {
+    const {
+      busy,
+      perPage,
+      customers,
+      respResult,
+      currentPage,
+      totalRecords,
+      tableColumns,
+      deleteCustomer,
+      fetchCustomers,
+      perPageOptions,
+    } = useCustomers()
 
-        const serverParams = ref({
-            columnFilters: {},
-            page: 1,
-            perPage: 10,
-        });
+    const serverParams = ref({
+      columnFilters: {},
+      page: 1,
+      perPage: 10,
+    })
 
-        // onMounted(() => {
-        //   fetchCustomers(serverParams.value)
-        // })
+    // onMounted(() => {
+    //   fetchCustomers(serverParams.value)
+    // })
 
-        const customerData = ref({});
-        const isAddCustomerActive = ref(false);
-        const isEditCustomerActive = ref(false);
+    const customerData = ref({})
+    const isAddCustomerActive = ref(false)
+    const isEditCustomerActive = ref(false)
 
-        const customersDummy = [
-            {
-                id: 1,
-                first_name: "John",
-                last_name: "Doe",
-                email: "johndoe@example.com",
-                phone: "+1 555-555-5555",
-                business_name: "ABC Company",
-                doing_business_as: "ABC Co.",
-                business_type: "Corporation",
-                ein: "12-3456789",
-                industry: "Technology",
-                tax_exempt: false,
-                address1: "123 Main St",
-                address2: "Suite 100",
-                state: "CA",
-                city: "San Francisco",
-                billing_address: "123 Billing St",
-                billing_state: "CA",
-                billing_city: "San Francisco",
-                billing_zip: "94111",
-                agency: "XYZ Agency",
-                agent: "Jane Smith",
-            },
-            {
-                id: 2,
-                first_name: "John",
-                last_name: "Doe",
-                email: "johndoe@example.com",
-                phone: "+1 555-555-5555",
-                business_name: "ABC Company",
-                doing_business_as: "ABC Co.",
-                business_type: "Corporation",
-                ein: "12-3456789",
-                industry: "Technology",
-                tax_exempt: false,
-                address1: "123 Main St",
-                address2: "Suite 100",
-                state: "CA",
-                city: "San Francisco",
-                billing_address: "123 Billing St",
-                billing_state: "CA",
-                billing_city: "San Francisco",
-                billing_zip: "94111",
-                agency: "XYZ Agency",
-                agent: "Jane Smith",
-            },
-            {
-                id: 3,
-                first_name: "John",
-                last_name: "Doe",
-                email: "johndoe@example.com",
-                phone: "+1 555-555-5555",
-                business_name: "ABC Company",
-                doing_business_as: "ABC Co.",
-                business_type: "Corporation",
-                ein: "12-3456789",
-                industry: "Technology",
-                tax_exempt: false,
-                address1: "123 Main St",
-                address2: "Suite 100",
-                state: "CA",
-                city: "San Francisco",
-                billing_address: "123 Billing St",
-                billing_state: "CA",
-                billing_city: "San Francisco",
-                billing_zip: "94111",
-                agency: "XYZ Agency",
-                agent: "Jane Smith",
-            },
-            {
-                id: 4,
-                first_name: "John",
-                last_name: "Doe",
-                email: "johndoe@example.com",
-                phone: "+1 555-555-5555",
-                business_name: "ABC Company",
-                doing_business_as: "ABC Co.",
-                business_type: "Corporation",
-                ein: "12-3456789",
-                industry: "Technology",
-                tax_exempt: false,
-                address1: "123 Main St",
-                address2: "Suite 100",
-                state: "CA",
-                city: "San Francisco",
-                billing_address: "123 Billing St",
-                billing_state: "CA",
-                billing_city: "San Francisco",
-                billing_zip: "94111",
-                agency: "XYZ Agency",
-                agent: "Jane Smith",
-            },
-            {
-                id: 5,
-                first_name: "John",
-                last_name: "Doe",
-                email: "johndoe@example.com",
-                phone: "+1 555-555-5555",
-                business_name: "ABC Company",
-                doing_business_as: "ABC Co.",
-                business_type: "Corporation",
-                ein: "12-3456789",
-                industry: "Technology",
-                tax_exempt: false,
-                address1: "123 Main St",
-                address2: "Suite 100",
-                state: "CA",
-                city: "San Francisco",
-                billing_address: "123 Billing St",
-                billing_state: "CA",
-                billing_city: "San Francisco",
-                billing_zip: "94111",
-                agency: "XYZ Agency",
-                agent: "Jane Smith",
-            },
-        ];
+    const editCustomerRow = item => {
+      customerData.value = item
+      isEditCustomerActive.value = true
+    }
 
-        const editCustomerRow = (item) => {
-            customerData.value = item;
-            isEditCustomerActive.value = true;
-        };
+    const deleteCustomerConfirmed = async id => {
+      await deleteCustomer(id)
+      if (respResult.value.status === 200) {
+        fetchCustomers()
+      }
+    }
 
-        const deleteCustomerConfirmed = async (id) => {
-            await deleteCustomer(id);
-            if (respResult.value.status === 200) {
-                fetchCustomers();
-            }
-        };
+    const updateParams = newProps => {
+      serverParams.value = { ...serverParams.value, ...newProps }
+    }
 
-        const updateParams = (newProps) => {
-            serverParams.value = { ...serverParams.value, ...newProps };
-        };
+    const onPageChange = params => {
+      updateParams({ page: params.currentPage })
+      fetchCustomers(serverParams.value)
+    }
 
-        const onPageChange = (params) => {
-            updateParams({ page: params.currentPage });
-            fetchCustomers(serverParams.value);
-        };
+    const onPerPageChange = params => {
+      updateParams({ perPage: params.currentPerPage })
+      fetchCustomers(serverParams.value)
+    }
 
-        const onPerPageChange = (params) => {
-            updateParams({ perPage: params.currentPerPage });
-            fetchCustomers(serverParams.value);
-        };
+    const onColumnFilter = params => {
+      updateParams(params)
+      fetchCustomers(serverParams.value)
+    }
 
-        const onColumnFilter = (params) => {
-            updateParams(params);
-            fetchCustomers(serverParams.value);
-        };
+    const confirmDelete = async id => {
+      context.root.$bvModal
+        .msgBoxConfirm(
+          'Please confirm that you want to delete customer.',
+          {
+            title: 'Please Confirm',
+            size: 'sm',
+          },
+        )
+        .then(value => {
+          if (value) {
+            deleteCustomerConfirmed(id)
+          }
+        })
+    }
 
-        const confirmDelete = async (id) => {
-            context.root.$bvModal
-                .msgBoxConfirm(
-                    "Please confirm that you want to delete customer.",
-                    {
-                        title: "Please Confirm",
-                        size: "sm",
-                    }
-                )
-                .then((value) => {
-                    if (value) {
-                        deleteCustomerConfirmed(id);
-                    }
-                });
-        };
-
-        return {
-            busy,
-            perPage,
-            customers,
-            currentPage,
-            totalRecords,
-            customerData,
-            onPageChange,
-            tableColumns,
-            citiesOptions,
-            statesOptions,
-            confirmDelete,
-            onColumnFilter,
-            fetchCustomers,
-            perPageOptions,
-            editCustomerRow,
-            onPerPageChange,
-            customersDummy,
-            isAddCustomerActive,
-            isEditCustomerActive,
-        };
-    },
-    components: {
-        Add,
-        Edit,
-        BCol,
-        BRow,
-        BDropdown,
-        VueGoodTable,
-        AppBreadcrumb,
-        BDropdownItem,
-    },
-};
+    return {
+      busy,
+      perPage,
+      customers,
+      currentPage,
+      totalRecords,
+      customerData,
+      onPageChange,
+      tableColumns,
+      citiesOptions,
+      statesOptions,
+      confirmDelete,
+      onColumnFilter,
+      fetchCustomers,
+      perPageOptions,
+      editCustomerRow,
+      onPerPageChange,
+      isAddCustomerActive,
+      isEditCustomerActive,
+    }
+  },
+  components: {
+    Add,
+    Edit,
+    BCol,
+    BRow,
+    BDropdown,
+    VueGoodTable,
+    AppBreadcrumb,
+    BDropdownItem,
+  },
+}
 </script>
 <style lang="scss">
 .vgt-wrap {

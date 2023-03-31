@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\CustomerAccountController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ResetPasswordController;
@@ -29,9 +30,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/users/status/{id}', [UserController::class, 'updateStatus'])->name('users.status');
     Route::get('/users/stats', [UserController::class, 'usersStats'])->name('users.stats');
 
+    Route::post('/account-files/{id}', [CustomerAccountController::class, 'accountFiles'])->name('customerAccount.files');
+
     Route::apiResources([
         'users' => UserController::class,
         'customers' => CustomerController::class,
+        'customerAccount' => CustomerAccountController::class,
     ]);
 
     Route::get('/dashboard/statistics', [DashboardController::class, 'statistics'])->name('dashboard.statistics');

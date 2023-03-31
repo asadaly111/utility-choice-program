@@ -22,9 +22,9 @@ class CustomerController extends Controller
         $customers = Customer::query()
         ->applyFilters($request)
         ->when($request->perPage, function ($query, $perPage) {
-            return $query->paginate($perPage);
+            return $query->orderByDesc('id')->paginate($perPage);
         }, function ($query) {
-            return $query->get();
+            return $query->orderByDesc('id')->get();
         });
         return CustomerResource::collection($customers);
     }
@@ -37,10 +37,12 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request)
     {
-        // if ($request->hasFile('document')) {
+        if ($request->hasFile('document')) {
             $file = $request->file('document');
             $document = Storage::disk('public')->put('documents', $file);
-        // }
+        }else{
+            $document = null;
+        }
 
         Customer::create(array_merge($request->validated(), [
             'document' => $document,
@@ -57,9 +59,9 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $user)
+    public function show(Customer $customer)
     {
-        return new CustomerResource($user);
+        return new CustomerResource($customer);
     }
 
     /**
@@ -73,8 +75,12 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
         if ($request->hasFile('document')) {
-            Storage::delete(storage_path('public/documents'.$customer->document));
-            Storage::disk('public')->delete($customer->document);
+
+            if($customer->document){
+                Storage::delete(storage_path('public/documents'.$customer->document));
+                Storage::disk('public')->delete($customer->document);
+            }
+
             $file = $request->file('document');
             $document = Storage::disk('public')->put('documents', $file);
         }else{

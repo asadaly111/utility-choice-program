@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('billing_city',255)->nullable();
             $table->string('billing_zip',255)->nullable();
             $table->boolean('tax_exempt')->default(false);
-            $table->boolean('billing_address_option')->default(false);
+            $table->boolean('billing_address_option')->default(false)->nullable();
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

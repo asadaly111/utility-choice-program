@@ -5,10 +5,10 @@
     size="lg"
     centered
     :hide-footer="true"
-    title="Add New Account"
-    :visible="isAddAccountActive"
-    @close="$emit('update:is-add-account-active', false)"
-    @hide="$emit('update:is-add-account-active', false)"
+    title="Edit Account"
+    :visible="isEditAccountActive"
+    @close="$emit('update:is-edit-account-active', false)"
+    @hide="$emit('update:is-edit-account-active', false)"
   >
     <validation-observer
       #default="{ handleSubmit }"
@@ -161,9 +161,13 @@
                 <vue-select
                   :options="[
                     {
-                      value: 'none',
-                      name: 'None',
-                    }
+                      value: 'DropdownItem1',
+                      name: 'DropDownItem1',
+                    },
+                    {
+                      value: 'DropdownItem',
+                      name: 'DropDownItem',
+                    },
                   ]"
                   label="name"
                   :reduce="(dropdown) => dropdown.name"
@@ -201,7 +205,7 @@
                   ]"
                   label="name"
                   :reduce="(dropdown) => dropdown.name"
-                  v-model="formData.account_status"
+                  v-model="formData.status"
                   :state="errors.length > 0 ? false : null"
                 />
                 <small class="text-danger">{{
@@ -300,9 +304,13 @@
                 <vue-select
                   :options="[
                     {
-                      value: 'none',
-                      name: 'None',
-                    }
+                      value: 'Lorem Ipsum1',
+                      name: 'Lorem Ipsum',
+                    },
+                    {
+                      value: 'Lorem Ipsum1',
+                      name: 'Lorem Ipsum',
+                    },
                   ]"
                   label="name"
                   :reduce="(dropdown) => dropdown.name"
@@ -330,10 +338,13 @@
                 <vue-select
                   :options="[
                     {
-                      value: 'none',
-                      name: 'None',
-                    }
-
+                      value: 'Lorem Ipsum1',
+                      name: 'Lorem Ipsum1',
+                    },
+                    {
+                      value: 'Lorem Ipsum',
+                      name: 'Lorem Ipsum',
+                    },
                   ]"
                   label="name"
                   :reduce="(dropdown) => dropdown.name"
@@ -437,7 +448,7 @@
             size="sm"
             class="mr-2"
             variant="outline-secondary"
-            @click="$emit('update:is-add-account-active', false)"
+            @click="$emit('update:is-edit-account-active', false)"
           >
             Cancel
           </b-button>
@@ -528,15 +539,15 @@ export default {
     }
   },
   model: {
-    prop: 'isAddAccountActive',
-    event: 'update:is-add-account-active',
+    prop: 'isEditAccountActive',
+    event: 'update:is-edit-account-active',
   },
   props: {
-    isAddAccountActive: {
+    isEditAccountActive: {
       type: Boolean,
       required: true,
     },
-    userData: {
+    accountData: {
       type: Object,
       required: true,
     },
@@ -548,6 +559,7 @@ export default {
       city: '',
       notes: '',
       state: '',
+      status: '',
       utility: '',
       address1: '',
       address2: '',
@@ -557,7 +569,6 @@ export default {
       current_rate: '',
       annual_volume: '',
       account_number: '',
-      account_status: '',
       contract_end_date: '',
     }
 
@@ -570,11 +581,11 @@ export default {
     const formData = ref({ ...formInitialState })
 
     const {
-      storeAccount, respResult,
+      updateAccount, respResult,
     } = useAccounts()
 
     onMounted(() => {
-      formData.value = { ...props.userData }
+      formData.value = { ...props.accountData }
     })
 
     const filterCities = state => {
@@ -593,31 +604,19 @@ export default {
 
     const onSubmit = async () => {
       const data = new FormData()
-      data.append('document', file.value.document)
-      data.append('zip', formData.value.zip)
-      data.append('sub_type', formData.value.sub_type)
-      data.append('commodity', formData.value.commodity)
-      data.append('address1', formData.value.address1)
-      data.append('rate_class', formData.value.rate_class)
-      data.append('status', formData.value.account_status)
-      data.append('contract_end_date', formData.value.contract_end_date)
-      data.append('state', formData.value.state)
-      data.append('city', formData.value.city)
-      data.append('zone', formData.value.zone)
-      data.append('utility', formData.value.utility)
-      data.append('current_rate', formData.value.current_rate)
-      data.append('notes', formData.value.notes)
-      data.append('account_number', formData.value.account_number)
-      data.append('annual_volume', formData.value.annual_volume)
-      data.append('user_id', props.userData.id)
 
-      if (formData.value.address2) {
-        data.append('address2', formData.value.address2)
+      data.append('document', file.value.document)
+      data.append('_method', 'PUT')
+
+      for (const key in formData.value) {
+        if (formData.value[key]) {
+          data.append(key, formData.value[key])
+        }
       }
 
-      await storeAccount(data)
+      await updateAccount(data, props.accountData.id)
       if (respResult.value.status === 200) {
-        emit('update:is-add-account-active', false)
+        emit('update:is-edit-account-active', false)
         emit('refetch-data')
         resetplanData()
       }
@@ -635,8 +634,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-#addNewCustomerAccount .modal-dialog {
-    max-width: 1000px;
-}
-</style>
+  <style lang="scss">
+  #addNewCustomerAccount .modal-dialog {
+      max-width: 1000px;
+  }
+  </style>

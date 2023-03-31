@@ -10,15 +10,15 @@ export default function useCustomers() {
   const toast = toaster()
   const respResult = ref(null)
   const refListTable = ref(null)
-  const customers = ref([])
   const perPage = ref(10)
   const sortBy = ref('id')
   const isSortDirDesc = ref(true)
   const totalRecords = ref(0)
   const currentPage = ref(1)
   const perPageOptions = [25, 50, 100, 150]
-  const customer = ref({})
+  const account = ref({})
   const errors = ref({})
+  const customersAccounts = ref([])
   const tableColumns = [
     {
       label: 'ID',
@@ -27,156 +27,136 @@ export default function useCustomers() {
       filterOptions: {
         enabled: true,
         filterValue: '',
-        placeholder: 'ID',
       },
       tdClass: 'align-middle',
     },
     {
-      label: 'Name',
-      field: 'name',
-      width: '150px',
+      label: 'E/G',
+      field: 'commodity',
+      width: '50px',
       filterOptions: {
         enabled: true,
         filterValue: '',
-        placeholder: 'Name',
-      },
-      tdClass: 'align-middle',
-    },
-    // {
-    //   label: 'Last Name',
-    //   field: 'last_name',
-    //   width: '150px',
-    //   filterOptions: {
-    //     enabled: true,
-    //     filterValue: '',
-    //     placeholder: 'Last Name',
-    //   },
-    //   tdClass: 'align-middle',
-    // },
-    {
-      label: 'Email',
-      field: 'email',
-      width: '180px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Email',
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'Phone',
-      field: 'phone',
-      width: '160px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Phone',
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'Business Name',
-      field: 'business_name',
-      width: '150px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Business Name',
-        // filterDropdownItems: ['Business 1', 'Business 2'],
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'Doing Business As',
-      field: 'doing_business_as',
-      width: '150px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Doing Business As',
-        // filterDropdownItems: ['Seller', 'Distributor'],
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'Business Type',
-      field: 'business_type',
-      width: '150px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Business Type',
         filterDropdownItems: [
-          'Corporation',
-          'Limited Liability Company',
-          'Partnership',
-          'Individual',
+          'Gas',
+          'Electricity',
         ],
       },
       tdClass: 'align-middle',
     },
     {
-      label: 'EIN',
-      field: 'ein',
+      label: 'State',
+      field: 'state',
       width: '120px',
       filterOptions: {
         enabled: true,
         filterValue: '',
-        placeholder: 'EIN',
       },
       tdClass: 'align-middle',
     },
     {
-      label: 'Industry',
-      field: 'industry',
-      width: '150px',
+      label: 'Utility',
+      field: 'utility',
+      width: '120px',
       filterOptions: {
         enabled: true,
         filterValue: '',
-        placeholder: 'Industry',
-        filterDropdownItems: [
-          'Real Estate',
-          'Information',
-          'Arts',
-          'Entertainment',
-          'Construction',
-          'Corporate Management',
-          'Education Services',
-          'Agriculture',
-          'Other',
-          'Government',
-          'Finance',
-          'Energy',
-          'Healthcare',
-          'Hospitality',
-          'Manufacturing',
-          'Retail Trade',
-          'Wholesale Trade',
-        ],
       },
       tdClass: 'align-middle',
     },
     {
-      label: 'Tax Excempt',
-      field: 'tax_exempt',
+      label: 'Account Number',
+      field: 'account_number',
+      width: '160px',
+      filterOptions: {
+        enabled: true,
+        filterValue: '',
+      },
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Service Agreement',
+      field: 'service_agreement',
+      width: '150px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Zone',
+      field: 'zone',
+      width: '70px',
+      filterOptions: {
+        enabled: true,
+        filterValue: '',
+      },
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Rate Class',
+      field: 'rate_class',
+      width: '120px',
+      filterOptions: {
+        enabled: true,
+        filterValue: '',
+      },
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Sub Type',
+      field: 'sub_type',
+      width: '100px',
+      filterOptions: {
+        enabled: true,
+        filterValue: '',
+      },
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Annual Vol.',
+      field: 'annual_volume',
+      width: '120px',
+      filterOptions: {
+        enabled: true,
+        filterValue: '',
+      },
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Current Rate',
+      field: 'current_rate',
       width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
-        placeholder: 'Tax Excempt',
-        filterDropdownItems: ['Yes', 'No'],
+      },
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'End Rate',
+      field: 'contract_end_date',
+      width: '100px',
+      filterOptions: {
+        enabled: true,
+        filterValue: '',
+      },
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Status',
+      field: 'status',
+      width: '100px',
+      filterOptions: {
+        enabled: true,
+        filterValue: '',
       },
       tdClass: 'align-middle',
     },
     {
       label: 'Address 1',
       field: 'address1',
-      width: '200px',
+      width: '150px',
       filterOptions: {
         enabled: true,
         filterValue: '',
-        placeholder: 'Address',
       },
       tdClass: 'align-middle',
     },
@@ -187,127 +167,72 @@ export default function useCustomers() {
       filterOptions: {
         enabled: true,
         filterValue: '',
-        placeholder: 'Address',
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'State',
-      field: 'state',
-      width: '150px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'State',
       },
       tdClass: 'align-middle',
     },
     {
       label: 'City',
       field: 'city',
-      width: '150px',
+      width: '100px',
       filterOptions: {
         enabled: true,
         filterValue: '',
-        placeholder: 'City',
       },
       tdClass: 'align-middle',
     },
     {
-      label: 'Billing Address',
-      field: 'billing_address',
-      width: '150px',
+      label: 'Zip',
+      field: 'zip',
+      width: '60px',
       filterOptions: {
         enabled: true,
         filterValue: '',
-        placeholder: 'Billing Address',
       },
       tdClass: 'align-middle',
     },
     {
-      label: 'Billing State',
-      field: 'billing_state',
-      width: '150px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Billing State',
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'Billing City',
-      field: 'billing_city',
-      width: '150px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Billing City',
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'Billing Zip',
-      field: 'billing_zip',
-      width: '150px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Billing Zip',
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'Agency',
-      field: 'agency',
-      width: '150px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Agency',
-        filterDropdownItems: [
-          'Corporation',
-          'Limited Liability Company',
-          'Partnership',
-          'Individual',
-        ],
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'Agent',
-      field: 'agent',
-      width: '150px',
-      filterOptions: {
-        enabled: true,
-        filterValue: '',
-        placeholder: 'Agent',
-        filterDropdownItems: [
-          'Robert Zane',
-          'Harvey Dentt',
-          'Sean Azfarani',
-        ],
-      },
-      tdClass: 'align-middle',
-    },
-    {
-      label: 'Flags',
-      field: 'flags',
+      label: 'Bill',
+      field: 'bill',
       width: '80px',
+      tdClass: 'align-middle',
     },
     {
-      label: 'E/G/Q/C',
-      field: 'egqc',
-      type: 'date',
-      dateInputFormat: 'yyyy-MM-dd',
-      dateOutputFormat: 'MMM do yy',
-      width: '120px',
+      label: 'LOR',
+      field: 'lor',
+      width: '80px',
+      tdClass: 'align-middle',
     },
+    {
+      label: 'LOA',
+      field: 'loa',
+      width: '80px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Misc',
+      field: 'misc',
+      width: '80px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Tax Exempt',
+      field: 'tax_exempt',
+      width: '100px',
+    },
+    // {
+    //   label: 'Notes',
+    //   field: 'notes',
+    //   width: '80px',
+    //   filterOptions: {
+    //     enabled: true,
+    //     filterValue: '',
+    //   },
+    // },
     {
       label: 'Actions',
       field: 'actions',
-      width: '80px',
-      tdClass: 'align-middle text-center',
+      width: '150px',
+      tdClass: 'align-middle',
     },
   ]
 
@@ -324,29 +249,29 @@ export default function useCustomers() {
     }
   })
 
-  const deleteCustomer = async id => {
+  const deleteAccount = async id => {
     try {
       busy.value = true
-      const res = await axios.delete(route('customers.destroy', id))
+      const res = await axios.delete(route('customerAccount.destroy', id))
       respResult.value = res
       toast.success(res.data.message)
       //   refetchData()
     } catch (error) {
-      toast.error('Error! Deleting user')
+      toast.error('Error! Deleting Account')
     } finally {
       busy.value = false
     }
   }
 
-  const getCustomer = async id => {
-    const response = await axios.get(route('customers.show', id))
-    customer.value = response.data.data
+  const getAccount = async id => {
+    const response = await axios.get(route('customerAccount.show', id))
+    account.value = response.data.data
   }
 
-  const updateCustomer = async (customerData, id) => {
+  const updateAccount = async (customerData, id) => {
     try {
       busy.value = true
-      const response = await axios.post(route('customers.update', id), customerData)
+      const response = await axios.post(route('customerAccount.update', id), customerData)
       respResult.value = response
       toast.success(response.data.message)
     } catch (error) {
@@ -359,10 +284,10 @@ export default function useCustomers() {
     }
   }
 
-  const storeCustomer = async formData => {
+  const storeAccount = async formData => {
     busy.value = true
     await axios
-      .post(route('customers.store'), formData)
+      .post(route('customerAccount.store'), formData)
       .then(resp => {
         respResult.value = resp
         toast.success(resp.data.message)
@@ -378,10 +303,10 @@ export default function useCustomers() {
       })
   }
 
-  const fetchCustomers = async params => {
+  const fetchAccounts = async params => {
     busy.value = true
     try {
-      const response = await axios.get(route('customers.index'), {
+      const response = await axios.get(route('customerAccount.index'), {
         params: {
           perPage: perPage.value,
           page: currentPage.value,
@@ -390,7 +315,7 @@ export default function useCustomers() {
           ...params,
         },
       })
-      customers.value = response.data.data
+      customersAccounts.value = response.data.data
       if (response.data.meta) {
         const { total } = response.data.meta
         totalRecords.value = total
@@ -402,8 +327,24 @@ export default function useCustomers() {
     }
   }
 
+  const AccountFiles = async (customerData, id) => {
+    try {
+      busy.value = true
+      const response = await axios.post(route('customerAccount.files', id), customerData)
+      respResult.value = response
+      toast.success(response.data.message)
+    } catch (error) {
+      if (error.response.status === 422) {
+        errors.value = error.response.data.errors
+      }
+      toast.error(error.response.data.message)
+    } finally {
+      busy.value = false
+    }
+  }
+
   watch([currentPage, perPage], () => {
-    fetchCustomers()
+    fetchAccounts()
   })
 
   return {
@@ -412,20 +353,21 @@ export default function useCustomers() {
     sortBy,
     perPage,
     dataMeta,
-    customer,
-    customers,
+    account,
     respResult,
-    getCustomer,
+    getAccount,
     refetchData,
+    AccountFiles,
     currentPage,
     refListTable,
     tableColumns,
     totalRecords,
     isSortDirDesc,
-    updateCustomer,
-    deleteCustomer,
-    storeCustomer,
-    fetchCustomers,
+    updateAccount,
+    deleteAccount,
+    storeAccount,
+    fetchAccounts,
     perPageOptions,
+    customersAccounts,
   }
 }

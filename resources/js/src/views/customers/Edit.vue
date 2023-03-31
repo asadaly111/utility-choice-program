@@ -345,12 +345,11 @@
                 name="Tax Exempt"
               >
                 <b-form-checkbox
-                  v-model="formData.tax_exempt"
-                  :state="
-                    errors.length > 0 ? false : null
-                  "
-                  placeholder="Tax Exempt"
                   :value="true"
+                  :unchecked-value="false"
+                  placeholder="Tax Exempt"
+                  v-model="formData.tax_exempt"
+                  :state="errors.length > 0 ? false : null"
                 ><p>
                   You will be required to upload a
                   state Tax Exemption document
@@ -393,22 +392,10 @@
             lg="4"
           >
             <b-form-group label="Address 2">
-              <validation-provider
-                #default="{ errors }"
-                rules="required"
-                name="Address 2"
-              >
-                <b-form-input
-                  v-model="formData.address2"
-                  :state="
-                    errors.length > 0 ? false : null
-                  "
-                  placeholder="Address 2"
-                />
-                <small class="text-danger">{{
-                  errors[0]
-                }}</small>
-              </validation-provider>
+              <b-form-input
+                v-model="formData.address2"
+                placeholder="Address 2"
+              />
             </b-form-group>
           </b-col>
 
@@ -495,10 +482,11 @@
           >
             <b-form-group label="Billing Address">
               <b-form-checkbox
+                :value="true"
+                :unchecked-value="false"
                 @input="showBilling"
-                v-model="formData.billing_address_option"
                 placeholder="Billing Address"
-                value="true"
+                v-model="formData.billing_address_option"
               ><p>
                 Check if billing address different
                 than business address
@@ -811,7 +799,6 @@ export default {
       data.append('industry', formData.value.industry)
       data.append('tax_exempt', formData.value.tax_exempt)
       data.append('address1', formData.value.address1)
-      data.append('address2', formData.value.address2)
       data.append('state', formData.value.state)
       data.append('city', formData.value.city)
       data.append('zip', formData.value.zip)
@@ -821,6 +808,10 @@ export default {
       data.append('billing_city', formData.value.billing_city)
       data.append('billing_zip', formData.value.billing_zip)
       data.append('_method', 'PUT')
+
+      if (formData.value.address2) {
+        data.append('address2', formData.value.address2)
+      }
 
       for (let index = 0; index < phone.value.phone_number.length; index++) {
         data.append(`phone[${index}][id]`, phone.value.phone_number[index].id)
