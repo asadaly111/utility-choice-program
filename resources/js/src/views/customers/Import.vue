@@ -7,8 +7,8 @@
     :hide-footer="true"
     title="Add New Account"
     :visible="isAddAccountActive"
-    @close="$emit('update:is-add-account-active', false)"
-    @hide="$emit('update:is-add-account-active', false)"
+    @close="$emit('update:is-import-customer-active', false)"
+    @hide="$emit('update:is-import-customer-active', false)"
   >
     <validation-observer
       #default="{ handleSubmit }"
@@ -431,7 +431,7 @@
             size="sm"
             class="mr-2"
             variant="outline-secondary"
-            @click="$emit('update:is-add-account-active', false)"
+            @click="$emit('update:is-import-customer-active', false)"
           >
             Cancel
           </b-button>
@@ -523,11 +523,11 @@ export default {
     }
   },
   model: {
-    prop: 'isAddAccountActive',
-    event: 'update:is-add-account-active',
+    prop: 'isImportCustomerActive',
+    event: 'update:is-import-customer-active',
   },
   props: {
-    isAddAccountActive: {
+    isImportCustomerActive: {
       type: Boolean,
       required: true,
     },
@@ -612,7 +612,7 @@ export default {
 
       await storeAccount(data)
       if (respResult.value.status === 200) {
-        emit('update:is-add-account-active', false)
+        emit('update:is-import-customer-active', false)
         emit('refetch-data')
         resetplanData()
       }
@@ -631,8 +631,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-#addNewCustomerAccount .modal-dialog {
-    max-width: 1000px;
-}
-</style>
+  <style lang="scss">
+  #addNewCustomerAccount .modal-dialog {
+      max-width: 1000px;
+  }
+  </style>

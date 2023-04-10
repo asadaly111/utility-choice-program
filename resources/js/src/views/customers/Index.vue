@@ -11,6 +11,12 @@
       @refetch-data="fetchCustomers"
       :customer-data="customerData"
     />
+    <Import
+      v-if="isImportCustomerActive"
+      :is-import-customer-active.sync="isImportCustomerActive"
+      @refetch-data="fetchCustomers"
+      :customer-data="customerData"
+    />
     <b-row>
       <b-col
         cols="12"
@@ -29,7 +35,10 @@
           <feather-icon icon="PlusIcon" />
           <span class="ml-1">Add Customer</span>
         </button>
-        <button class="btn btn-primary">
+        <button
+          class="btn btn-primary"
+          @click="isImportCustomerActive = true"
+        >
           <feather-icon icon="FolderPlusIcon" />
           <span class="ml-1">Import Customers</span>
         </button>
@@ -138,6 +147,7 @@ import {
 } from '@validations'
 import Add from './Add.vue'
 import Edit from './Edit.vue'
+import Import from './Import.vue'
 
 export default {
   data() {
@@ -175,6 +185,7 @@ export default {
     const customerData = ref({})
     const isAddCustomerActive = ref(false)
     const isEditCustomerActive = ref(false)
+    const isImportCustomerActive = ref(false)
 
     const editCustomerRow = item => {
       customerData.value = item
@@ -242,6 +253,7 @@ export default {
       onPerPageChange,
       isAddCustomerActive,
       isEditCustomerActive,
+      isImportCustomerActive,
     }
   },
   components: {
@@ -249,6 +261,7 @@ export default {
     Edit,
     BCol,
     BRow,
+    Import,
     BDropdown,
     VueGoodTable,
     AppBreadcrumb,
