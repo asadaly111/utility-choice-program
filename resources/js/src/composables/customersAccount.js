@@ -235,6 +235,137 @@ export default function useCustomers() {
       tdClass: 'align-middle',
     },
   ]
+  const tableColumns2 = [
+    {
+      label: 'ID',
+      field: 'id',
+      width: '50px',
+      tdClass: 'align-middle',
+    },
+
+    {
+      label: 'Account Number',
+      field: 'account_number',
+      width: '160px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Service Agreement',
+      field: 'service_agreement',
+      width: '150px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Zone',
+      field: 'zone',
+      width: '70px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Rate Class',
+      field: 'rate_class',
+      width: '120px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Sub Type',
+      field: 'sub_type',
+      width: '100px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Annual Vol.',
+      field: 'annual_volume',
+      width: '120px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Current Rate',
+      field: 'current_rate',
+      width: '150px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'End Rate',
+      field: 'contract_end_date',
+      width: '100px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Status',
+      field: 'status',
+      width: '100px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Address 1',
+      field: 'address1',
+      width: '150px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Address 2',
+      field: 'address2',
+      width: '150px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'City',
+      field: 'city',
+      width: '100px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Zip',
+      field: 'zip',
+      width: '60px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Bill',
+      field: 'bill',
+      width: '80px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'LOR',
+      field: 'lor',
+      width: '80px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'LOA',
+      field: 'loa',
+      width: '80px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Misc',
+      field: 'misc',
+      width: '80px',
+      tdClass: 'align-middle',
+    },
+    {
+      label: 'Tax Exempt',
+      field: 'tax_exempt',
+      width: '100px',
+    },
+    // {
+    //   label: 'Notes',
+    //   field: 'notes',
+    //   width: '80px',
+    //   filterOptions: {
+    //     enabled: true,
+    //     filterValue: '',
+    //   },
+    // },
+    {
+      label: 'Actions',
+      field: 'actions',
+      width: '150px',
+      tdClass: 'align-middle',
+    },
+  ]
 
   const refetchData = () => {
     refListTable.value.refresh()
@@ -361,6 +492,7 @@ export default function useCustomers() {
     currentPage,
     refListTable,
     tableColumns,
+    tableColumns2,
     totalRecords,
     isSortDirDesc,
     updateAccount,
