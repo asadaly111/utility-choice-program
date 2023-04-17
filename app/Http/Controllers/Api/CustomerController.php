@@ -44,12 +44,13 @@ class CustomerController extends Controller
             $document = null;
         }
 
-        Customer::create(array_merge($request->validated(), [
+        $customer = Customer::create(array_merge($request->validated(), [
             'document' => $document,
         ]));
 
         return response()->json([
             'message' => 'Customer successfully created.',
+            'customer' => $customer
         ], 200);
     }
 

@@ -47,55 +47,55 @@ class Account extends Model
         if ($request->columnFilters) {
             $key = json_decode($request->columnFilters, true);
 
-            $query->when($key['id'], function ($query, $id) {
+            $query->when(isset($key['id']), function ($query, $id) {
                 $query->where('id', 'like', '%' . $id . '%');
             })
-            ->when($key['status'], function ($query, $status) {
+            ->when(isset($key['status']), function ($query, $status) {
                 $query->where('status', 'like', '%' . $status . '%');
             })
-            ->when($key['sub_type'], function ($query, $sub_type) {
+            ->when(isset($key['sub_type']), function ($query, $sub_type) {
                 $query->where('sub_type', 'like', '%' . $sub_type . '%');
             })
-            ->when($key['commodity'], function ($query, $commodity) {
+            ->when(isset($key['commodity']), function ($query, $commodity) {
                 $query->where('commodity', 'like', '%' . $commodity . '%');
             })
-            ->when($key['zone'], function ($query, $zone) {
+            ->when(isset($key['zone']), function ($query, $zone) {
                 $query->where('zone', 'like', '%' . $zone . '%');
             })
-            ->when($key['utility'], function ($query, $utility) {
+            ->when(isset($key['utility']), function ($query, $utility) {
                 $query->where('utility', $utility);
             })
-            ->when($key['current_rate'], function ($query, $current_rate) {
+            ->when(isset($key['current_rate']), function ($query, $current_rate) {
                 $query->where('current_rate', 'like', '%' . $current_rate . '%');
             })
-            ->when($key['rate_class'], function ($query, $rate_class) {
+            ->when(isset($key['rate_class']), function ($query, $rate_class) {
                 $query->where('rate_class', $rate_class);
             })
-            ->when($key['contract_end_date'], function ($query, $contract_end_date) {
+            ->when(isset($key['contract_end_date']), function ($query, $contract_end_date) {
                 $query->where('contract_end_date', $contract_end_date);
             })
-            ->when($key['account_number'], function ($query, $account_number) {
+            ->when(isset($key['account_number']), function ($query, $account_number) {
                 $query->where('account_number', 'like', '%' . $account_number . '%');
             })
-            ->when($key['annual_volume'], function ($query, $annual_volume) {
+            ->when(isset($key['annual_volume']), function ($query, $annual_volume) {
                 $query->where('annual_volume', 'like', '%' . $annual_volume . '%');
             })
-            ->when($key['city'], function ($query, $city) {
+            ->when(isset($key['city']), function ($query, $city) {
                 $query->where('city', 'like', '%' . $city . '%');
             })
-            ->when($key['state'], function ($query, $state) {
+            ->when(isset($key['state']), function ($query, $state) {
                 $query->where('state', 'like', '%' . $state . '%');
             })
-            ->when($key['zip'], function ($query, $zip) {
+            ->when(isset($key['zip']), function ($query, $zip) {
                 $query->where('zip', 'like', '%' . $zip . '%');
             })
-            ->when($key['address1'], function ($query, $address1) {
+            ->when(isset($key['address1']), function ($query, $address1) {
                 $query->where('address1', 'like', '%' . $address1 . '%');
             })
-            ->when($key['address2'], function ($query, $address2) {
+            ->when(isset($key['address2']), function ($query, $address2) {
                 $query->where('address2', 'like', '%' . $address2 . '%');
             })
-            // ->when($key['notes'], function ($query, $notes) {
+            // ->when($key['notes']), function ($query, $notes) {
             //     $query->where('notes', 'like', '%' . $notes . '%');
             // })
             ->when($request->sortDesc, function ($query, $sortDesc) {

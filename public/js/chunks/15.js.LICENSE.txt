@@ -3,3 +3,5 @@
  * (c) 2018 Hyunje Jun
  * @license MIT
  */
+
+//! invalid number

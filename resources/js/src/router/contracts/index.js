@@ -1,6 +1,5 @@
 
 const routes = [
-
   {
     path: 'contracts',
     name: 'contracts',
@@ -19,9 +18,9 @@ const routes = [
     },
   },
   {
-    path: 'contracts/create',
-    name: 'create-contract',
-    component: () => import('@/views/contracts/CreateContract.vue'),
+    path: 'contracts/customer/:id?',
+    name: 'contract-customer',
+    component: () => import('@/views/contracts/CreateCustomer.vue'),
     meta: {
       pageTitle: 'Contracts',
       resource: 'all',
@@ -29,11 +28,41 @@ const routes = [
       auth: true,
       breadcrumb: [
         {
-          text: 'Contracts Rates',
+          text: 'Create Customer',
           active: true,
         },
+      ],
+    },
+  },
+  {
+    path: 'contracts/customer-accounts/:id',
+    name: 'contract-customer-accounts',
+    component: () => import('@/views/contracts/CustomerAccounts.vue'),
+    meta: {
+      pageTitle: 'Contracts',
+      resource: 'all',
+      action: 'contracts-view',
+      auth: true,
+      breadcrumb: [
         {
-          text: 'Create Contract',
+          text: 'Customer Accounts',
+          active: true,
+        },
+      ],
+    },
+  },
+  {
+    path: 'contracts/generate/:id',
+    name: 'contract-generate',
+    component: () => import('@/views/contracts/GenerateContract.vue'),
+    meta: {
+      pageTitle: 'Contracts',
+      resource: 'all',
+      action: 'contracts-view',
+      auth: true,
+      breadcrumb: [
+        {
+          text: 'Customer Details',
           active: true,
         },
       ],

@@ -54,7 +54,7 @@
       <b-button
         variant="primary"
         class="mr-2"
-        :to="{ name: 'create-contract'}"
+        :to="{ name: 'contract-customer'}"
       >
         Start Contract
       </b-button>

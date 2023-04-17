@@ -15,17 +15,17 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('document',255);
+            $table->string('document',255)->nullable();
             $table->string('first_name',255);
             $table->string('last_name',255);
             $table->longText('phone',255);
             $table->string('title',255);
             $table->string('email',255);
             $table->string('business_name',255);
-            $table->string('doing_business_as',255);
+            $table->string('doing_business_as',255)->nullable();
             $table->string('business_type',255);
-            $table->string('ein',255);
-            $table->string('industry',255);
+            $table->string('ein',255)->nullable();
+            $table->string('industry',255)->nullable();
             $table->string('address1',255);
             $table->string('address2',255)->nullable();
             $table->string('state',255);
