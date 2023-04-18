@@ -44,15 +44,15 @@
                   @on-per-page-change="onPerPageChange"
                   @on-column-filter="onColumnFilter"
                   max-height="80vh"
-                  :columns="tableColumns2"
+                  :columns="tableColumns"
                   :total-rows="totalRecords"
                   :rows="customersAccounts"
                   :select-options="{
                     enabled: true,
-                    selectOnCheckboxOnly: false,
+                    selectOnCheckboxOnly: true,
                   }"
                   :sort-options="{
-                    enabled: false,
+                    enabled: true,
                   }"
                   :pagination-options="{
                     enabled: true,
@@ -227,7 +227,7 @@
                     class="mb-0"
                     show
                     variant="primary"
-                    v-if="formData.annual_volume >= totalVolume"
+                    v-if="formData.annual_volume == totalVolume"
                   >
                     <div class="alert-body">
                       <span>You may generate contract. Just save account first.</span>
@@ -847,7 +847,6 @@ export default {
     } = useCustomers()
 
 
-
     onMounted(async () => {
       await getCustomer(root.$route.params.id)
       userData.value = customer.value
@@ -888,7 +887,7 @@ export default {
       perPage,
       respResult,
       currentPage,
-      tableColumns2,
+      tableColumns,
       storeAccount,
       totalRecords,
       fetchAccounts,
@@ -914,9 +913,6 @@ export default {
       user_id: root.$route.params.id,
       perPage,
     })
-
-
-    fetchAccounts(serverParams.value)
 
 
     const fetchAccountRefresh = () => {
@@ -1031,7 +1027,7 @@ export default {
       onPerPageChange,
       respResult,
       currentPage,
-      tableColumns2,
+      tableColumns,
       totalRecords,
       fetchAccounts,
       deleteAccount,
@@ -1053,6 +1049,9 @@ export default {
 @import '@core/scss/vue/libs/vue-wizard.scss';
 .vgt-table th{
   font-size: 11px !important;
+}
+.vgt-table th{
+    padding: 1px !important;
 }
 </style>
 

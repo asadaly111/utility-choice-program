@@ -578,6 +578,7 @@
           >
             Save &amp; Go to Step 2
           </b-button>
+
         </div>
       </b-form>
     </validation-observer>
@@ -585,7 +586,7 @@
 </template>
 
 <script>
-import { ref } from '@vue/composition-api'
+import { ref, onMounted } from '@vue/composition-api'
 import {
   BCol,
   BRow,
@@ -721,14 +722,13 @@ export default {
       ],
     }
 
-    const { busy, respResult, storeCustomer, getCustomer, customer } = useCustomers()
+    const {
+      busy, respResult, storeCustomer, getCustomer, customer, updateCustomer,
+    } = useCustomers()
 
-    // onMounted(async () => {
-    //   await getCustomer(root.$route.params.id)
-    //   userData.value = customer.value
-    // })
 
     const isBillingActive = ref(false)
+    const isEdit = ref(false)
     const citiesFilteredObjects = ref([])
     const billingCitiesFilteredObjects = ref([])
     const formData = ref({ ...formInitialState })
@@ -737,6 +737,15 @@ export default {
     const showBilling = item => {
       isBillingActive.value = item
     }
+
+    onMounted(async () => {
+      if ((root.$route.params.id !== undefined) && (root.$route.params.id !== null)) {
+        await getCustomer(root.$route.params.id)
+        formData.value = customer.value
+        phone.value.phone_number = customer.value.phone
+        isEdit.value = true
+      }
+    })
 
     const addPhoneNumber = id => {
       phone.value.phone_number.push({ id, type: 'Mobile', value: '' })
@@ -813,7 +822,13 @@ export default {
         )
       }
 
-      await storeCustomer(data)
+      if (isEdit.value) {
+        data.append('_method', 'PUT')
+        await updateCustomer(data, formData.value.id)
+      } else {
+        await storeCustomer(data)
+      }
+
       if (respResult.value.status === 200) {
         console.log(respResult)
         // push to contract account with id
@@ -830,6 +845,7 @@ export default {
     return {
       busy,
       phone,
+      isEdit,
       titles,
       businessTypes,
       industries,

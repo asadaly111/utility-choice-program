@@ -32,44 +32,55 @@
         </template>
 
         <!-- 4 buttons inline for generate docusign, inperson sign, print and download -->
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-center">
           <div>
+            <!-- alert wit success message of generate contract -->
+            <b-alert
+              show
+              variant="success"
+              class="mt-2 p-2"
+            >
+              Contract Generated Successfully
+            </b-alert>
             <b-button
               variant="primary"
               class="mr-2"
               @click="generateContract"
             >
-              Generate Contract
+              <feather-icon
+                icon="SendIcon"
+                class="d-inline "
+              />&nbsp; Send Via DocuSign
             </b-button>
             <b-button
               variant="primary"
               class="mr-2"
               @click="generateContract"
             >
-              Generate Docusign
+              <feather-icon
+                icon="PenToolIcon"
+                class="d-inline "
+              />&nbsp; In Person Sign
             </b-button>
             <b-button
               variant="primary"
               class="mr-2"
               @click="generateContract"
             >
-              In Person Sign
-            </b-button>
-          </div>
-          <div>
-            <b-button
-              variant="primary"
-              class="mr-2"
-              @click="generateContract"
-            >
-              Print
+              <feather-icon
+                icon="PrinterIcon"
+                class="d-inline "
+              />&nbsp;Print
             </b-button>
             <b-button
               variant="primary"
               class="mr-2"
               @click="generateContract"
             >
-              Download
+              <feather-icon
+                icon="DownloadIcon"
+                class="d-inline "
+              /> &nbsp; Download
             </b-button>
           </div>
         </div>
@@ -87,6 +98,8 @@ import {
   BCard,
   BTab,
   BTabs,
+  BAlert,
+  BButton,
 } from 'bootstrap-vue'
 
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
@@ -97,12 +110,18 @@ export default {
     BTab,
     BTabs,
     BCard,
+    BAlert,
+    BButton,
   },
 
   setup() {
-    return {
-
+    const generateContract = () => {
+      console.log('generateContract')
     }
-  }
+
+    return {
+      generateContract,
+    }
+  },
 }
 </script>
