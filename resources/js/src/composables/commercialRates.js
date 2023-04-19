@@ -25,6 +25,7 @@ export default function useCommercialRates() {
     { key: 'utility', sortable: true },
     { key: 'product', sortable: true },
     { key: 'start_month', sortable: true },
+    { key: 'rate_class', sortable: false },
     { key: 'current_rate', sortable: false },
     { key: 'actions' },
   ]

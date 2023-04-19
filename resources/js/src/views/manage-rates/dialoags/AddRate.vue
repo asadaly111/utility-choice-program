@@ -94,6 +94,7 @@
             </b-form-group>
           </validation-provider>
 
+
           <validation-provider
             #default="validationContext"
             name="Product"
@@ -106,6 +107,29 @@
               <b-form-select
                 :options="products"
                 v-model="formData.product"
+              />
+              <b-form-invalid-feedback
+                :state="getValidationState(validationContext)"
+              >
+                {{ validationContext.errors[0] }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
+
+          <validation-provider
+            #default="validationContext"
+            name="Rate Class"
+            rules="required"
+          >
+            <b-form-group
+              label="Rate Class"
+              :state="getValidationState(validationContext)"
+            >
+              <v-select
+                v-model="formData.rate_class"
+                :options="[]"
+                label="name"
+                placeholder="Rate Class"
               />
               <b-form-invalid-feedback
                 :state="getValidationState(validationContext)"
