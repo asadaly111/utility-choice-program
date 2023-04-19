@@ -308,7 +308,6 @@
                 <b-form-group label="Tax Exempt">
                   <validation-provider
                     #default="{ errors }"
-                    rules="required"
                     name="Tax Exempt"
                   >
                     <b-form-checkbox
@@ -699,7 +698,7 @@ export default {
       business_type: '',
       ein: '',
       industry: '',
-      tax_exempt: '',
+      tax_exempt: false,
       address1: '',
       address2: '',
       state: '',

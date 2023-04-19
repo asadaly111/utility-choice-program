@@ -55,4 +55,11 @@ export default [
       },
     ],
   },
+  {
+    title: 'Manage Rates',
+    route: 'manage-rates',
+    icon: 'TrelloIcon',
+    action: 'manage-rates-view',
+    resource: 'all',
+  },
 ]

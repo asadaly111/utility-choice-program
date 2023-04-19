@@ -6,12 +6,13 @@ import { canNavigate } from '@/libs/acl/routeProtection'
 // customer routes
 import AccountRoutes from './account'
 import generalRoutes from './general'
-import invoicesRoutes from './invoices'
-import ordersRoutes from './orders'
+// import invoicesRoutes from './invoices'
+// import ordersRoutes from './orders'
 import usersRoutes from './users'
 import commercialRoutes from './commercial'
 import customerRoutes from './customers'
 import contractsRoutes from './contracts'
+import manageRatesRoutes from './manage-rates'
 
 // routes
 
@@ -33,8 +34,9 @@ const router = new Router({
         requiresAuth: false,
       },
       children: [
-        ...ordersRoutes,
-        ...invoicesRoutes,
+        // ...ordersRoutes,
+        // ...invoicesRoutes,
+        ...manageRatesRoutes,
         ...usersRoutes,
         ...AccountRoutes,
         ...customerRoutes,

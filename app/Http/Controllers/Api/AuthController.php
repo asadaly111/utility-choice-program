@@ -64,6 +64,7 @@ class AuthController extends Controller
                         'users-add',
                         'users-delete',
                         'users-active-view',
+                        'manage-rates-view',
                         'users-deactive-view',
                     ],
                 ];

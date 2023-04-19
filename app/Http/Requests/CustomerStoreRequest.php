@@ -24,7 +24,7 @@ class CustomerStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'document' => 'nullable|mimes:jpeg,jpg,png,pdf,doc,xlsx|max:10000',
+            'document' => 'required_if:tax_exempt,upload|mimes:pdf,jpeg,png,jpg|max:20480',
             'first_name' => 'required',
             'last_name' => 'required',
             'title' => 'required',
@@ -37,7 +37,7 @@ class CustomerStoreRequest extends FormRequest
             'business_type' => 'required',
             'ein' => 'nullable|integer',
             'industry' => 'nullable',
-            'tax_exempt' => 'required',
+            'tax_exempt' => 'nullable',
             'address1' => 'required',
             'address2' => 'nullable',
             'state' => 'required',
