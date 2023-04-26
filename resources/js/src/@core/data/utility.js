@@ -290,6 +290,13 @@ export default [
   },
 
   {
+    'id': 84,
+    'text': 'Unitil (Fitchburg Gas & Electric)',
+    'commodity': 'electricity',
+    'state': 'Massachusetts',
+  },
+
+  {
     'id': 7,
     'text': 'Baltimore Gas and Electric Company',
     'commodity': 'gas',

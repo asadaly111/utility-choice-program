@@ -15,6 +15,17 @@ return new class extends Migration
     {
         Schema::create('commercial_rates', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
+            $table->string('supplier');
+            $table->string('state');
+            $table->string('commodity');
+            $table->string('utility');
+            $table->string('product');
+            $table->string('demand_size');
+            $table->string('start_month');
+            $table->string('rate_class');
+            $table->string('current_rate');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

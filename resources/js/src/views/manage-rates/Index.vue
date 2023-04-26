@@ -14,12 +14,12 @@
     />
 
 
-    <!-- <EditRate
-      :is-edit-order-active.sync="isEditRateActive"
+    <EditRate
+      :is-edit-rate-active.sync="isEditRateActive"
       @refetch-data="fetchCommercialRates"
-      :order-data="orderData"
+      :rate-id="rateId"
       v-if="isEditRateActive"
-    /> -->
+    />
     <b-card
       no-body
       class="mb-0"
@@ -79,7 +79,7 @@
         <b-table
           ref="refListTable"
           class="position-relative"
-          :items="orders"
+          :items="commercialRates"
           responsive
           :fields="tableColumns"
           primary-key="id"
@@ -88,29 +88,8 @@
           empty-text="No matching records found"
           :sort-desc.sync="isSortDirDesc"
         >
-          <template #cell(runSheetFile)="data">
-            <b-link
-              :to="data.item.runSheetFile"
-              class="font-weight-bold"
-              target="_blank"
-              download
-            >
-              <feather-icon
-                icon="DownloadIcon"
-                size="22"
-              />
-            </b-link>
-            <b-link
-              :to="data.item.runSheetFile"
-              class="font-weight-bold ml-1"
-              target="_blank"
-              :id="`runSheetFile${data.item.id}`"
-            >
-              <feather-icon
-                icon="EyeIcon"
-                size="22"
-              />
-            </b-link>
+          <template #cell(demand_size)="data">
+            <span>{{ data.item.demand_size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }}</span>
           </template>
 
           <template #cell(actions)="data">
@@ -126,7 +105,10 @@
                     class="align-middle text-body"
                   />
                 </template>
-
+                <b-dropdown-item @click="editRate(data.item.id)">
+                  <feather-icon icon="PencilIcon" />
+                  <span class="align-middle ml-50">Edit</span>
+                </b-dropdown-item>
                 <b-dropdown-item @click="confirmDelete(data.item.id)">
                   <feather-icon icon="TrashIcon" />
                   <span class="align-middle ml-50">Delete</span>
@@ -185,7 +167,6 @@
 
 <script>
 import {
-  BLink,
   BCard,
   BRow,
   BCol,
@@ -207,7 +188,6 @@ export default {
   components: {
     BCol,
     BRow,
-    BLink,
     BCard,
     BTable,
     BButton,
@@ -224,10 +204,9 @@ export default {
     const {
       busy,
       sortBy,
-      orders,
+      commercialRates,
       filters,
       perPage,
-      student,
       dataMeta,
       respResult,
       refetchData,
@@ -236,7 +215,7 @@ export default {
       totalRecords,
       tableColumns,
       refListTable,
-      deleteOrder,
+      deleteCommercialRate,
       isSortDirDesc,
       fetchCommercialRates,
       perPageOptions,
@@ -253,12 +232,8 @@ export default {
     const isEditRateActive = ref(false)
     const isOrderDetailsActive = ref(false)
     const filterKey = ref(0)
-    const orderData = ref({})
+    const rateId = ref(null)
 
-    const viewOrder = data => {
-      isOrderDetailsActive.value = true
-      orderData.value = data
-    }
 
 
     const filterUpdate = filterQuery => {
@@ -270,22 +245,27 @@ export default {
       filterKey.value += 1
     }
 
-    const deleteUserConfirmed = async id => {
-      await deleteOrder(id)
+    const deleteRateConfirmed = async id => {
+      await deleteCommercialRate(id)
       if (respResult.value.status === 200) {
         fetchCommercialRates()
       }
     }
 
+    const editRate = id => {
+      isEditRateActive.value = true
+      rateId.value = Number(id)
+    }
+
     const confirmDelete = async id => {
       root.$bvModal
-        .msgBoxConfirm('Please confirm that you want to delete order and all of linked data.', {
+        .msgBoxConfirm('Please confirm that you want to delete rate .', {
           title: 'Please Confirm',
           size: 'sm',
         })
         .then(value => {
           if (value) {
-            deleteUserConfirmed(id)
+            deleteRateConfirmed(id)
           }
         })
     }
@@ -294,14 +274,13 @@ export default {
       busy,
       sortBy,
       filters,
-      student,
       perPage,
-      orders,
-      orderData,
+      commercialRates,
       dataMeta,
       filterKey,
+      rateId,
       resetFilter,
-      viewOrder,
+      editRate,
       fetchCommercialRates,
       refetchData,
       searchQuery,

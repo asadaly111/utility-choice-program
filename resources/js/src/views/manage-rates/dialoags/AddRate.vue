@@ -69,6 +69,7 @@
                     :reduce="(state) => state.name"
                     label="name"
                     placeholder="State"
+                    @input="onStateChange"
                   />
                   <b-form-invalid-feedback
                     :state="getValidationState(validationContext)"
@@ -81,20 +82,18 @@
             <b-col lg="6">
               <validation-provider
                 #default="validationContext"
-                name="State"
+                name="Start Month"
                 rules="required"
               >
                 <b-form-group
-                  label-for="commodity"
-                  label="Commodity"
+                  label-for="start_month"
+                  label="Start Month"
                 >
-                  <v-select
-                    :options="[{ text: 'Electricity', value: 'electricity' }, { text: 'Gas', value: 'gas'}]"
-                    label="text"
-                    value="value"
-                    @input="onCommodityChange"
-                    :reduce="(dropdown) => dropdown.value"
-                    v-model="formData.commodity"
+                  <flat-pickr
+                    :config="pickerConfig"
+                    class="form-control"
+                    placeholder="Start Month"
+                    v-model="formData.start_month"
                   />
                   <b-form-invalid-feedback
                     :state="getValidationState(validationContext)"
@@ -105,6 +104,41 @@
               </validation-provider>
             </b-col>
             <b-col lg="6">
+              <validation-provider
+                #default="validationContext"
+                name="Commodity"
+                rules="required"
+              >
+                <b-form-group
+                  label-for="commodity"
+                  label="Commodity"
+                >
+                  <!-- <v-select
+                    :options="[{ text: 'Electricity', value: 'electricity' }, { text: 'Gas', value: 'gas'}]"
+                    label="text"
+                    value="value"
+                    @input="onCommodityChange"
+                    :reduce="(dropdown) => dropdown.value"
+                    v-model="formData.commodity"
+                  /> -->
+
+                  <b-form-radio-group
+                    v-model="formData.commodity"
+                    :options="commodityOptions"
+                    name="commodity"
+                    @change="onCommodityChange"
+                  />
+
+
+                  <b-form-invalid-feedback
+                    :state="getValidationState(validationContext)"
+                  >
+                    {{ validationContext.errors[0] }}
+                  </b-form-invalid-feedback>
+                </b-form-group>
+              </validation-provider>
+            </b-col>
+            <b-col lg="12">
               <validation-provider
                 #default="validationContext"
                 name="Utility"
@@ -173,30 +207,6 @@
                 </b-form-group>
               </validation-provider>
             </b-col>
-            <b-col lg="12">
-              <validation-provider
-                #default="validationContext"
-                name="Rate Class"
-                rules="required"
-              >
-                <b-form-group
-                  label="Rate Class"
-                  :state="getValidationState(validationContext)"
-                >
-                  <v-select
-                    v-model="formData.rate_class"
-                    :options="rateClassesList"
-                    label="text"
-                    placeholder="Rate Class"
-                  />
-                  <b-form-invalid-feedback
-                    :state="getValidationState(validationContext)"
-                  >
-                    {{ validationContext.errors[0] }}
-                  </b-form-invalid-feedback>
-                </b-form-group>
-              </validation-provider>
-            </b-col>
             <b-col lg="6">
               <validation-provider
                 #default="validationContext"
@@ -216,6 +226,56 @@
                 </b-form-group>
               </validation-provider>
             </b-col>
+            <b-col lg="12">
+              <validation-provider
+                #default="validationContext"
+                name="Rate Class"
+                rules="required"
+              >
+                <b-form-group
+                  label="Rate Class"
+                  :state="getValidationState(validationContext)"
+                >
+                  <v-select
+                    v-model="formData.rate_class"
+                    :options="rateClassesList"
+                    label="text"
+                    :reduce="(dropdown) => dropdown.text"
+                    placeholder="Rate Class"
+                  />
+                  <b-form-invalid-feedback
+                    :state="getValidationState(validationContext)"
+                  >
+                    {{ validationContext.errors[0] }}
+                  </b-form-invalid-feedback>
+                </b-form-group>
+              </validation-provider>
+            </b-col>
+
+            <!-- description -->
+            <b-col lg="12">
+              <validation-provider
+                #default="validationContext"
+                name="Description"
+                rules="required"
+              >
+                <b-form-group
+                  label-for="description"
+                  label="Description"
+                >
+                  <b-form-textarea
+                    v-model="formData.description"
+                    placeholder="Description"
+                  />
+                  <b-form-invalid-feedback
+                    :state="getValidationState(validationContext)"
+                  >
+                    {{ validationContext.errors[0] }}
+                  </b-form-invalid-feedback>
+                </b-form-group>
+              </validation-provider>
+            </b-col>
+
           </b-row>
           <div class="d-flex mt-2">
             <b-button
@@ -248,6 +308,8 @@ import {
   BButton,
   BOverlay,
   BFormInput,
+  BFormTextarea,
+  BFormRadioGroup,
   BFormSelect,
   BFormGroup,
   BFormInvalidFeedback,
@@ -263,17 +325,24 @@ import rateClasses from '@core/data/rateClasses'
 import suppliers from '@core/data/suppliers'
 import utility from '@core/data/utility'
 import vSelect from 'vue-select'
+import flatPickr from 'vue-flatpickr-component'
+import 'flatpickr/dist/flatpickr.css'
+import monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index.js'
+import 'flatpickr/dist/plugins/monthSelect/style.css'
 
 export default {
   components: {
     BButton,
     BModal,
+    flatPickr,
     BRow,
     BCol,
     BForm,
     BOverlay,
     vSelect,
+    BFormTextarea,
     BFormGroup,
+    BFormRadioGroup,
     BFormInput,
     BFormSelect,
     ValidationProvider,
@@ -303,15 +372,25 @@ export default {
       state: '',
       commodity: '',
       utility: '',
-      product: '',
+      product: 'Fixed Price',
       start_month: '',
       current_rate: '',
       demand_size: '',
       rate_class: '',
+      description: '',
     }
     const formData = ref({ ...initialState })
     const rateClassesList = ref([])
     const utilitiesList = ref([])
+
+    const pickerConfig = {
+      plugins: [
+        new monthSelectPlugin({
+          shorthand: true,
+          dateFormat: 'm/Y',
+        }),
+      ],
+    }
 
     const onCommodityChange = value => {
       console.log(value)
@@ -335,14 +414,31 @@ export default {
 
     const products = ref(['Fixed Price'])
 
-    const demandSizeOptions = ref(['25kW - 35kW', '35kW - 50kW', '<100kW', '<25kW', '50kW', '100kW', '>25kW', '50kW', 'Flat Load', 'Heat Load'])
+    const commodityOptions = ref([
+      { text: 'Electricity', value: 'electricity' },
+      { text: 'Gas', value: 'gas' },
+    ])
+
+    const demandSizeOptions = ref([
+      { text: '0 - 100,000', value: '100000' },
+      { text: '100,000 - 200,000', value: '200000' },
+      { text: '200,000 - 300,000', value: '300000' },
+      { text: '300,000 - 400,000', value: '400000' },
+      { text: '400,000 - 500,000', value: '500000' },
+      { text: '500,000 - 600,000', value: '600000' },
+      { text: '600,000 - 700,000', value: '700000' },
+      { text: '700,000 - 800,000', value: '800000' },
+      { text: '800,000 - 900,000', value: '900000' },
+      { text: '900,000 - 1,000,000+', value: '1000000' },
+    ])
+
 
     const {
       refFormObserver, getValidationState, resetForm,
     } = formValidation()
 
     const onSubmit = async () => {
-      await storeCommercialRate(formData)
+      await storeCommercialRate(formData.value)
       if (respResult.value.status === 200) {
         emit('refetch-data')
         emit('update:is-add-new-rate-active', false)
@@ -358,8 +454,10 @@ export default {
       resetForm,
       onStateChange,
       formData,
+      commodityOptions,
       utilitiesList,
       suppliers,
+      pickerConfig,
       rateClasses,
       statesOptions,
       refFormObserver,
@@ -372,4 +470,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.form-control[readonly]{
+    background-color: #fff;
+    opacity: 1;
+}
+</style>

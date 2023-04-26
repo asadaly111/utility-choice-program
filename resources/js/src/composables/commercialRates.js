@@ -7,7 +7,7 @@ export default function useCommercialRates() {
   const busy = ref(false)
   const respResult = ref(null)
   const commercialRates = ref([])
-  const order = ref(null)
+  const rateData = ref(null)
   const errors = ref({})
   const toast = toaster()
   const perPage = ref(10)
@@ -74,7 +74,7 @@ export default function useCommercialRates() {
   const getCommercialRate = async id => {
     try {
       const response = await axios.get(route('commercial-rates.show', { id }))
-      order.value = response.data.data
+      rateData.value = response.data.data
     } catch (error) {
       if (error.message === 'Network Error') {
         toast.error(error.message)
@@ -179,7 +179,7 @@ export default function useCommercialRates() {
     sortBy,
     errors,
     perPage,
-    order,
+    rateData,
     dataMeta,
     respResult,
     updateCommercialRate,

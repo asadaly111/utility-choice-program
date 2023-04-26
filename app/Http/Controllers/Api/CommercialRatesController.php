@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\CommercialRate;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CommercialRate\Store;
+use App\Http\Requests\CommercialRate\Update;
+use App\Http\Resources\CommercialRateResource;
 
 class CommercialRatesController extends Controller
 {
@@ -12,19 +16,18 @@ class CommercialRatesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        // get all commercial rates in resource collection
+        $commercialRates = CommercialRate::query()
+        // ->applyFilters($request)
+            ->when($request->perPage, function ($query, $perPage) {
+                return $query->orderByDesc('id')->paginate($perPage);
+            }, function ($query) {
+                return $query->orderByDesc('id')->get();
+            });
+        return CommercialRateResource::collection($commercialRates);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -33,9 +36,14 @@ class CommercialRatesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
-        //
+        $customer = CommercialRate::create($request->validated());
+
+        return response()->json([
+            'message' => 'Commercial Rate successfully created.',
+        ], 200);
+
     }
 
     /**
@@ -47,17 +55,8 @@ class CommercialRatesController extends Controller
     public function show($id)
     {
         //
-    }
+        return new CommercialRateResource(CommercialRate::findOrFail($id));
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -67,9 +66,14 @@ class CommercialRatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Update $request, $id)
     {
-        //
+        $commercialRate = CommercialRate::findOrFail($id);
+        $commercialRate->update($request->validated());
+
+        return response()->json([
+            'message' => 'Commercial Rate successfully updated.',
+        ], 200);
     }
 
     /**
@@ -80,6 +84,7 @@ class CommercialRatesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $commercialRate = CommercialRate::findOrFail($id);
+        $commercialRate->delete();
     }
 }

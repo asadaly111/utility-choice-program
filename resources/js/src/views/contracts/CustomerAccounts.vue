@@ -338,18 +338,11 @@
                         name="Commodity"
                       >
                         <vue-select
-                          :options="[
-                            {
-                              value: 'electricity',
-                              name: 'Electricity',
-                            },
-                            {
-                              value: 'gas',
-                              name: 'Gas',
-                            },
-                          ]"
-                          label="name"
-                          :reduce="(dropdown) => dropdown.name"
+                          :options="[{ text: 'Electricity', value: 'electricity' }, { text: 'Gas', value: 'gas'}]"
+                          label="text"
+                          value="value"
+                          @input="onCommodityChange"
+                          :reduce="(dropdown) => dropdown.value"
                           v-model="formData.commodity"
                           :state="errors.length > 0 ? false : null"
                         />
@@ -579,7 +572,7 @@
                         <vue-select
                           :options="utility"
                           label="name"
-                          :reduce="(dropdown) => dropdown.name"
+                          :reduce="(dropdown) => dropdown.text"
                           v-model="formData.utility"
                           :state="errors.length > 0 ? false : null"
                         />
@@ -753,6 +746,7 @@ import 'vue-good-table/dist/vue-good-table.css'
 import utility from '@core/data/utility'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { VueSelect } from 'vue-select'
+import rateClasses from '@core/data/rateClasses'
 import AddAccount from '../customers/AddAccount.vue'
 
 export default {
@@ -941,8 +935,10 @@ export default {
     const isBillingActive = ref(false)
     const citiesFilteredObjects = ref([])
     const billingCitiesFilteredObjects = ref([])
+    const rateClassesList = ref([])
     const formData = ref({ ...formInitialState })
     const phone = ref({ ...formPhoneInitialState })
+    const utilitiesList = ref([])
 
     const showBilling = item => {
       isBillingActive.value = item
@@ -957,7 +953,27 @@ export default {
       )
     }
 
+    const onCommodityChange = value => {
+      console.log(value)
+      //   utilitiesList.value = []
+      formData.value.commodity = value
+      rateClassesList.value = rateClasses.filter(rateClass => rateClass.commodity === value)
+      utilitiesList.value = utility.filter(
+        util => util.state === formData.value.state && util.commodity === value,
+      )
+    }
+
+    const onStateChange = value => {
+      console.log(value)
+      //   formData.value.state = value
+      utilitiesList.value = utility.filter(
+        util => util.state === value && util.commodity === formData.value.commodity,
+      )
+    }
+
     const filterCities = state => {
+      onStateChange(state)
+      formData.value.utility = ''
       citiesFilteredObjects.value = citiesOptions.filter(
         obj => obj.state_name === state,
       )
@@ -1012,7 +1028,9 @@ export default {
       formData,
       utility,
       file,
+      onStateChange,
       titles,
+      utilitiesList,
       totalVolume,
       userData,
       industries,
@@ -1021,6 +1039,7 @@ export default {
       filterCities,
       onColumnFilter,
       citiesOptions,
+      onCommodityChange,
       perPage,
       isAddAccountActive,
       onPageChange,
