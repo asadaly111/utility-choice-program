@@ -89,18 +89,11 @@
                 name="Commodity"
               >
                 <vue-select
-                  :options="[
-                    {
-                      value: 'electricity',
-                      name: 'Electricity',
-                    },
-                    {
-                      value: 'gas',
-                      name: 'Gas',
-                    },
-                  ]"
-                  label="name"
-                  :reduce="(dropdown) => dropdown.name"
+                  :options="[{ text: 'Electricity', value: 'electricity' }, { text: 'Gas', value: 'gas'}]"
+                  label="text"
+                  value="value"
+                  @input="onCommodityChange"
+                  :reduce="(dropdown) => dropdown.value"
                   v-model="formData.commodity"
                   :state="errors.length > 0 ? false : null"
                 />
@@ -150,7 +143,7 @@
           <b-col
             cols="12"
             md="6"
-            lg="4"
+            lg="8"
           >
             <b-form-group label="Rate Class">
               <validation-provider
@@ -159,14 +152,10 @@
                 name="Rate Class"
               >
                 <vue-select
-                  :options="[
-                    {
-                      value: 'none',
-                      name: 'None',
-                    }
-                  ]"
-                  label="name"
-                  :reduce="(dropdown) => dropdown.name"
+                  :options="rateClassesList"
+
+                  label="text"
+                  :reduce="(dropdown) => dropdown.text"
                   v-model="formData.rate_class"
                   :state="errors.length > 0 ? false : null"
                 />
@@ -328,9 +317,9 @@
                 name="Utility"
               >
                 <vue-select
-                  :options="utility"
-                  label="name"
-                  :reduce="(dropdown) => dropdown.name"
+                  :options="utilitiesList"
+                  label="text"
+                  :reduce="(dropdown) => dropdown.text"
                   v-model="formData.utility"
                   :state="errors.length > 0 ? false : null"
                 />
@@ -455,7 +444,8 @@ import 'vue-select/dist/vue-select.css'
 import { VueSelect } from 'vue-select'
 import statesOptions from '@core/data/states.json'
 import citiesOptions from '@core/data/cities.json'
-import utility from '@core/data/utility.json'
+import utility from '@core/data/utility'
+import rateClasses from '@core/data/rateClasses'
 import {
   required, email, integer, min,
 } from '@validations'
@@ -542,7 +532,7 @@ export default {
       zone: '',
       city: '',
       notes: '',
-      state: '',
+      state: 'Delaware',
       utility: '',
       address1: '',
       address2: '',
@@ -563,6 +553,28 @@ export default {
     const citiesFilteredObjects = ref([])
     const file = ref({ ...fileInitialState })
     const formData = ref({ ...formInitialState })
+    const rateClassesList = ref([])
+    const utilitiesList = ref([])
+
+    // filter utilities by state and commodity
+    const onStateChange = value => {
+      console.log(value)
+      //   formData.value.state = value
+      utilitiesList.value = utility.filter(
+        util => util.state === value && util.commodity === formData.value.commodity,
+      )
+    }
+
+
+    // change formData commodity filter rateClasses
+    const onCommodityChange = value => {
+      //   utilitiesList.value = []
+      formData.value.commodity = value
+      rateClassesList.value = rateClasses.filter(rateClass => rateClass.commodity === value)
+      utilitiesList.value = utility.filter(
+        util => util.state === formData.value.state && util.commodity === value,
+      )
+    }
 
     const {
       storeAccount, respResult,
@@ -573,14 +585,16 @@ export default {
     })
 
     const filterCities = state => {
+      onStateChange(state)
+      formData.value.utility = ''
       citiesFilteredObjects.value = citiesOptions.filter(
         obj => obj.state_name === state,
       )
     }
 
-    watch(formData, () => {
-      filterCities(formData.value.state)
-    })
+    // watch(formData, () => {
+    //   filterCities(formData.value.state)
+    // })
 
     const resetplanData = () => {
       formData.value = JSON.parse(JSON.stringify(formInitialState))
@@ -623,6 +637,10 @@ export default {
       utility,
       onSubmit,
       formData,
+      onStateChange,
+      utilitiesList,
+      onCommodityChange,
+      rateClassesList,
       filterCities,
       statesOptions,
       citiesFilteredObjects,

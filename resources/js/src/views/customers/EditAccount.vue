@@ -14,7 +14,7 @@
       #default="{ handleSubmit }"
       ref="refFormObserver"
     >
-      <b-form
+    <b-form
         ref="form"
         @submit.prevent="handleSubmit(onSubmit)"
       >
@@ -89,18 +89,11 @@
                 name="Commodity"
               >
                 <vue-select
-                  :options="[
-                    {
-                      value: 'electricity',
-                      name: 'Electricity',
-                    },
-                    {
-                      value: 'gas',
-                      name: 'Gas',
-                    },
-                  ]"
-                  label="name"
-                  :reduce="(dropdown) => dropdown.name"
+                  :options="[{ text: 'Electricity', value: 'electricity' }, { text: 'Gas', value: 'gas'}]"
+                  label="text"
+                  value="value"
+                  @input="onCommodityChange"
+                  :reduce="(dropdown) => dropdown.value"
                   v-model="formData.commodity"
                   :state="errors.length > 0 ? false : null"
                 />
@@ -150,7 +143,7 @@
           <b-col
             cols="12"
             md="6"
-            lg="4"
+            lg="8"
           >
             <b-form-group label="Rate Class">
               <validation-provider
@@ -159,18 +152,10 @@
                 name="Rate Class"
               >
                 <vue-select
-                  :options="[
-                    {
-                      value: 'DropdownItem1',
-                      name: 'DropDownItem1',
-                    },
-                    {
-                      value: 'DropdownItem',
-                      name: 'DropDownItem',
-                    },
-                  ]"
-                  label="name"
-                  :reduce="(dropdown) => dropdown.name"
+                  :options="rateClassesList"
+
+                  label="text"
+                  :reduce="(dropdown) => dropdown.text"
                   v-model="formData.rate_class"
                   :state="errors.length > 0 ? false : null"
                 />
@@ -304,13 +289,9 @@
                 <vue-select
                   :options="[
                     {
-                      value: 'Lorem Ipsum1',
-                      name: 'Lorem Ipsum',
-                    },
-                    {
-                      value: 'Lorem Ipsum1',
-                      name: 'Lorem Ipsum',
-                    },
+                      value: 'none',
+                      name: 'None',
+                    }
                   ]"
                   label="name"
                   :reduce="(dropdown) => dropdown.name"
@@ -336,18 +317,9 @@
                 name="Utility"
               >
                 <vue-select
-                  :options="[
-                    {
-                      value: 'Lorem Ipsum1',
-                      name: 'Lorem Ipsum1',
-                    },
-                    {
-                      value: 'Lorem Ipsum',
-                      name: 'Lorem Ipsum',
-                    },
-                  ]"
-                  label="name"
-                  :reduce="(dropdown) => dropdown.name"
+                  :options="utilitiesList"
+                  label="text"
+                  :reduce="(dropdown) => dropdown.text"
                   v-model="formData.utility"
                   :state="errors.length > 0 ? false : null"
                 />
@@ -448,7 +420,7 @@
             size="sm"
             class="mr-2"
             variant="outline-secondary"
-            @click="$emit('update:is-edit-account-active', false)"
+            @click="$emit('update:is-add-account-active', false)"
           >
             Cancel
           </b-button>
@@ -472,6 +444,9 @@ import 'vue-select/dist/vue-select.css'
 import { VueSelect } from 'vue-select'
 import statesOptions from '@core/data/states.json'
 import citiesOptions from '@core/data/cities.json'
+import rateClasses from '@core/data/rateClasses'
+import utility from '@core/data/utility'
+
 import {
   required, email, integer, min,
 } from '@validations'
@@ -579,7 +554,8 @@ export default {
     const citiesFilteredObjects = ref([])
     const file = ref({ ...fileInitialState })
     const formData = ref({ ...formInitialState })
-
+    const rateClassesList = ref([])
+    const utilitiesList = ref([])
     const {
       updateAccount, respResult,
     } = useAccounts()
@@ -597,6 +573,25 @@ export default {
     watch(formData, () => {
       filterCities(formData.value.state)
     })
+
+    const onStateChange = value => {
+      console.log(value)
+      //   formData.value.state = value
+      utilitiesList.value = utility.filter(
+        util => util.state === value && util.commodity === formData.value.commodity,
+      )
+    }
+
+
+    // change formData commodity filter rateClasses
+    const onCommodityChange = value => {
+      //   utilitiesList.value = []
+      formData.value.commodity = value
+      rateClassesList.value = rateClasses.filter(rateClass => rateClass.commodity === value)
+      utilitiesList.value = utility.filter(
+        util => util.state === formData.value.state && util.commodity === value,
+      )
+    }
 
     const resetplanData = () => {
       formData.value = JSON.parse(JSON.stringify(formInitialState))
@@ -627,6 +622,10 @@ export default {
       onSubmit,
       formData,
       filterCities,
+      onCommodityChange,
+      utilitiesList,
+      rateClassesList,
+      onStateChange,
       statesOptions,
       citiesFilteredObjects,
     }

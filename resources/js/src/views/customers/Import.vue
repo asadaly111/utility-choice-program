@@ -455,7 +455,7 @@ import 'vue-select/dist/vue-select.css'
 import { VueSelect } from 'vue-select'
 import statesOptions from '@core/data/states.json'
 import citiesOptions from '@core/data/cities.json'
-import utility from '@core/data/utility.json'
+import utility from '@core/data/utility'
 import {
   required, email, integer, min,
 } from '@validations'
