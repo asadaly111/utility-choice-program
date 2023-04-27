@@ -4,10 +4,9 @@
       v-if="isStartContractVisible"
       :is-start-contract-visible.sync="isStartContractVisible"
       :rate="selectRate"
-      :term="selectTerm"
     />
     <b-form-row
-      class="commercial-rates-filters align-items-center justify-content-end"
+      class="commercial-rates-filters align-items-end justify-content-between"
     >
       <b-col cols="12">
         <app-breadcrumb />
@@ -17,12 +16,46 @@
         sm="4"
         md="3"
         lg="2"
+        xl
       >
         <b-form-group>
-          <vue-select
-            :options="zipcodes"
-            v-model="filter.zipcode"
-            placeholder="Zip Code"
+          <label
+            class="d-block"
+            for="commodity"
+          >
+            Commodity
+          </label>
+          <b-form-select
+            v-model="filters.commodity"
+            placeholder="Select Commodity"
+            :options="commodityOptions"
+            id="commodity"
+            @change="onCommodityChange"
+          />
+        </b-form-group>
+      </b-col>
+
+      <b-col
+        cols="6"
+        sm="4"
+        md="3"
+        lg="2"
+        xl
+      >
+        <b-form-group>
+          <label
+            class="d-block"
+            for="state"
+          >
+            State
+          </label>
+          <v-select
+            v-model="filters.state"
+            :options="statesOptions"
+            :reduce="(state) => state.name"
+            label="name"
+            placeholder="State"
+            @input="onStateChange"
           />
         </b-form-group>
       </b-col>
@@ -31,12 +64,46 @@
         sm="4"
         md="3"
         lg="2"
+        xl
       >
         <b-form-group>
-          <vue-select
-            :options="commodities"
-            v-model="filter.commodities"
-            placeholder="Commodity"
+          <label
+            class="d-block"
+            for="supplier"
+          >
+            Supplier
+          </label>
+          <v-select
+            v-model="filters.supplier"
+            :options="suppliers"
+            :reduce="(supplier) => supplier.title"
+            label="title"
+            id="supplier"
+            placeholder="Select Supplier"
+          />
+        </b-form-group>
+      </b-col>
+
+      <b-col
+        cols="6"
+        sm="4"
+        md="3"
+        lg="2"
+        xl
+      >
+        <b-form-group>
+          <label
+            class="d-block"
+            for="utility"
+          >
+            Utility
+          </label>
+          <v-select
+            :options="utilitiesList"
+            label="text"
+            placeholder="Select Utility"
+            :reduce="(dropdown) => dropdown.text"
+            v-model="filters.utility"
           />
         </b-form-group>
       </b-col>
@@ -45,82 +112,20 @@
         sm="4"
         md="3"
         lg="2"
+        xl
       >
         <b-form-group>
-          <vue-select
-            :options="states"
-            v-model="filter.states"
-            placeholder="States"
-          />
-        </b-form-group>
-      </b-col>
-      <b-col
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <b-form-group>
-          <vue-select
-            :options="utilities"
-            v-model="filter.utilities"
-            placeholder="Utilities"
-          />
-        </b-form-group>
-      </b-col>
-      <b-col
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <b-form-group>
-          <vue-select
-            :options="zones"
-            v-model="filter.zones"
-            placeholder="Zones"
-          />
-        </b-form-group>
-      </b-col>
-      <b-col
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <b-form-group>
-          <vue-select
-            :options="rateClasses"
-            v-model="filter.rateClasses"
-            placeholder="Rate Classes"
-          />
-        </b-form-group>
-      </b-col>
-      <b-col
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <b-form-group>
-          <vue-select
-            :options="dSizeRCode"
-            v-model="filter.dSizeRCode"
-            placeholder="D. Size / R. Code"
-          />
-        </b-form-group>
-      </b-col>
-      <b-col
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <b-form-group>
-          <b-form-input
-            type="text"
-            v-model="filter.startMonth"
+          <label
+            class="d-block"
+            for="start_month"
+          >
+            Start Month
+          </label>
+          <flat-pickr
+            :config="pickerConfig"
+            class="form-control"
             placeholder="Start Month"
+            v-model="filters.start_month"
           />
         </b-form-group>
       </b-col>
@@ -129,12 +134,21 @@
         sm="4"
         md="3"
         lg="2"
+        xl
       >
         <b-form-group>
-          <b-form-input
-            type="text"
-            v-model="filter.annualVolume"
-            placeholder="Annual Volumne"
+          <label
+            class="d-block"
+            for="start_month"
+          >
+            Rate Classes
+          </label>
+          <v-select
+            v-model="filters.rate_class"
+            :options="rateClassesList"
+            label="text"
+            :reduce="(dropdown) => dropdown.text"
+            placeholder="Rate Class"
           />
         </b-form-group>
       </b-col>
@@ -143,12 +157,18 @@
         sm="4"
         md="3"
         lg="2"
+        xl
       >
         <b-form-group>
-          <vue-select
-            :options="prices"
-            v-model="filter.fixedPrice"
-            placeholder="Fixed Price"
+          <label
+            class="d-block"
+            for="start_month"
+          >
+            Demand Size
+          </label>
+          <b-form-select
+            :options="demandSizeOptions"
+            v-model="filters.demand_size"
           />
         </b-form-group>
       </b-col>
@@ -157,139 +177,85 @@
         sm="4"
         md="3"
         lg="2"
+        xl
       >
         <b-form-group>
-          <b-form-input
-            type="text"
-            v-model="filter.brokerFee"
-            placeholder="Broker Fee"
-          />
+          <button
+            type="button"
+            @click="onSearch"
+            class="btn btn-primary w-100"
+          >
+            <feather-icon icon="SearchIcon" />
+            <span class="ml-1">Start Search</span>
+          </button>
         </b-form-group>
-      </b-col>
-      <b-col
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <b-form-group>
-          <b-form-input
-            type="text"
-            v-model="filter.currentRate"
-            placeholder="Current Rate"
-          />
-        </b-form-group>
-      </b-col>
-      <b-col
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <button
-          type="submit"
-          class="btn btn-primary w-100"
-        >
-          <feather-icon icon="SearchIcon" />
-          <span class="ml-1">Start Search</span>
-        </button>
       </b-col>
     </b-form-row>
 
     <!-- table -->
     <div class="table-responsive mt-3">
       <p class="text-center">Last Update Was:
-        04/13/2023 10:35</p>
-      <table class="table ">
-        <thead>
-          <tr>
-            <th scope="col">
-              Supplier
-            </th>
-            <th scope="col">
-              Product
-            </th>
-            <th scope="col">
-              12 Month
-            </th>
-            <th scope="col">
-              18 Month
-            </th>
-            <th scope="col">
-              24 Month
-            </th>
-            <th scope="col">
-              36 Month
-            </th>
-            <th scope="col">
-              48 Month
-            </th>
-            <th scope="col">
-              60 Month
-            </th>
-            <th scope="col">
-              Information
-            </th>
-            <th>
-              Swing
-            </th>
-            <th>
-              Min Load Factor
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class=""
-            v-for="(rate, index) in rates"
-            :key="index"
-          >
-            <td>
-              <img
-                :src="rate.supplier_logo"
-                alt="avatar"
-                style="width:auto;max-width:120px;height:35px;object-fit:contain"
-              >
-            </td>
-            <td>{{ rate.name }}</td>
-            <td><a
-                class="text-decoration-underline"
-              href="#"
-              @click="startContract(rate, '12 month')"
-            >{{ rate.price_12 }}</a></td>
-            <td><a
-                class="text-decoration-underline"
-              href="#"
-              @click="startContract(rate, '18 month')"
-            >{{ rate.price_18 }}</a></td>
-            <td><a
-              href="#"
-              class="text-decoration-underline"
-              @click="startContract(rate, '24 month')"
-            >{{ rate.price_24 }}</a></td>
-            <td><a
-              href="#"
-              class="text-decoration-underline"
-              @click="startContract(rate, '36 month')"
-            >{{ rate.price_36 }}</a></td>
-            <td><a
-              href="#"
-              class="text-decoration-underline"
-              @click="startContract(rate, '48 month')"
-            >{{ rate.price_48 }}</a></td>
-            <td><a
-              href="#"
-              class="text-decoration-underline"
-              @click="startContract(rate, '60 months')"
-            >{{ rate.price_60 }}</a></td>
-            <td><div style="width: 200px;height: 50px;overflow: auto;">
-              {{ rate.description }}
-            </div></td>
-            <td>{{ rate.swing }}</td>
-            <td>{{ rate.load_factor }}</td>
-          </tr>
-        </tbody>
-      </table>
+        {{ lastUpdatedAt }}
+      </p>
+      <b-overlay
+        rounded
+        opacity="0.6"
+        :show="ratesLoading"
+      >
+        <table class="table ">
+          <thead>
+            <tr>
+              <th scope="col">
+                Supplier
+              </th>
+              <th scope="col">
+                State
+              </th>
+              <th scope="col">
+                Utility
+              </th>
+              <th scope="col">
+                Start Month
+              </th>
+              <th scope="col">
+                Rate
+              </th>
+              <th scope="col">
+                Rate Class
+              </th>
+              <th scope="col">
+                Demand Size
+              </th>
+
+              <th scope="col">
+                Updated At
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(rate, index) in commercialRates"
+              :key="index"
+            >
+              <td>
+                {{ rate.supplier }}
+              </td>
+              <td>{{ rate.state }}</td>
+              <td>{{ rate.utility }}</td>
+              <td>{{ rate.start_month }}</td>
+              <td><a
+                href="javascript:;"
+                class="text-primary text-underline"
+                @click="startContract(rate)"
+              >{{ rate.current_rate }}</a></td>
+              <td>{{ rate.rate_class }}</td>
+              <!-- demand_size  comma separated -->
+              <td>{{ rate.demand_size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }}</td>
+              <td>{{ rate.updated_at }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </b-overlay>
     </div>
   </div>
 
@@ -297,16 +263,23 @@
 
 <script>
 import AppBreadcrumb from '@core/layouts/components/AppBreadcrumb.vue'
-import { VueSelect } from 'vue-select'
+import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
-// import VueApexCharts from 'vue-apexcharts'
+import flatPickr from 'vue-flatpickr-component'
+import 'flatpickr/dist/flatpickr.css'
+import monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index.js'
+import 'flatpickr/dist/plugins/monthSelect/style.css'
+import statesOptions from '@core/data/states.json'
+import rateClasses from '@core/data/rateClasses'
+import suppliers from '@core/data/suppliers'
+import utility from '@core/data/utility'
+import useCommercialRates from '@/composables/commercialRates'
 import {
-  BRow,
   BCol,
-  BForm,
+  BOverlay,
   BFormRow,
+  BFormSelect,
   BFormGroup,
-  BFormInput,
 } from 'bootstrap-vue'
 import { ref } from '@vue/composition-api'
 import StartContractDialog from './StartContractDialog.vue'
@@ -316,124 +289,131 @@ export default {
     return {}
   },
   components: {
-    BRow,
     BCol,
-    BForm,
+    BOverlay,
+    vSelect,
+    flatPickr,
     BFormRow,
     BFormGroup,
-    BFormInput,
-    VueSelect,
+    BFormSelect,
     AppBreadcrumb,
     StartContractDialog,
   },
   setup() {
-    const filter = ref({
-      zipcode: '',
-      commodities: '',
-      states: '',
-      utilities: '',
-      zones: '',
-      rateClasses: '',
-      dSizeRCode: '',
-      startMonth: '',
-      annualVolume: '',
-      fixedPrice: '',
-      brokerFee: '',
-      currentRate: '',
-    })
-    const zipcodes = ['834798', '645331', '567323', '478563']
-    const commodities = ['Option A', 'Option B', 'Option C', 'Option D']
-    const states = ['Option A', 'Option B', 'Option C', 'Option D']
-    const utilities = ['Option A', 'Option B', 'Option C', 'Option D']
-    const zones = ['Option A', 'Option B', 'Option C', 'Option D']
-    const rateClasses = ['Option A', 'Option B', 'Option C', 'Option D']
-    const dSizeRCode = ['Option A', 'Option B', 'Option C', 'Option D']
-    const prices = ['Option A', 'Option B', 'Option C', 'Option D']
+    // const filters = ref({
+    //   supplier: '',
+    //   commodities: '',
+    //   state: '',
+    //   commodity: '',
+    //   utility: '',
+    //   start_month: '',
+    //   current_rate: '',
+    //   demand_size: '',
+    //   rate_class: '',
+    // })
+
+    const {
+      busy: ratesLoading,
+      filters,
+      commercialRates,
+      fetchCommercialRates,
+    } = useCommercialRates()
+
+
+    const commodityOptions = ref([
+      { text: 'Electricity', value: 'electricity' },
+      { text: 'Gas', value: 'gas' },
+    ])
 
     const selectRate = ref({})
     const isStartContractVisible = ref(false)
     const selectTerm = ref('')
-    const startContract = (rate, term) => {
+    const startContract = (rate) => {
       selectRate.value = rate
-      selectTerm.value = term
-
       isStartContractVisible.value = true
     }
 
-    const rates = [
-      {
-        id: 1,
-        supplier_logo: 'https://myservicecloud.net/uploads/supplier_logo/Dynegy-removebg-preview.png',
-        name: 'Fixed Price Single Bill',
-        price_12: '0.06580',
-        price_18: '0.06580',
-        price_24: '0.06580',
-        price_36: '0.06580',
-        price_48: '0.06580',
-        price_60: '0.06580',
-        description: 'All-In Fixed prices, no passthroughs, includes Tax and POR where applicable',
-        swing: '100%',
-        load_factor: '30%',
-      },
-      {
-        id: 2,
-        supplier_logo: 'https://myservicecloud.net/uploads/supplier_logo/hudson.png',
-        name: 'Fixed Price Single Bill',
-        price_12: '0.06580',
-        price_18: '0.06580',
-        price_24: '0.06580',
-        price_36: '0.06580',
-        price_48: '0.06580',
-        price_60: '0.06580',
-        description: 'All-In Fixed prices, no passthroughs, includes Tax and POR where applicable',
-        swing: '100%',
-        load_factor: '30%',
-      },
-      {
-        id: 3,
-        supplier_logo: 'https://myservicecloud.net/uploads/supplier_logo/santanna.png',
-        name: 'Fixed Price Single Bill',
-        price_12: '0.06580',
-        price_18: '0.06580',
-        price_24: '0.06580',
-        price_36: '0.06580',
-        price_48: '0.06580',
-        price_60: '0.06580',
-        description: 'All-In Fixed prices, no passthroughs, includes Tax and POR where applicable',
-        swing: '100%',
-        load_factor: '30%',
-      },
-      {
-        id: 4,
-        supplier_logo: 'https://myservicecloud.net/uploads/supplier_logo/natil.png',
-        name: 'Fixed Price Single Bill',
-        price_12: '0.06580',
-        price_18: '0.06580',
-        price_24: '0.06580',
-        price_36: '0.06580',
-        price_48: '0.06580',
-        price_60: '0.06580',
-        description: 'All-In Fixed prices, no passthroughs, includes Tax and POR where applicable',
-        swing: '100%',
-        load_factor: '30%',
-      },
-    ]
+
+    const rateClassesList = ref([])
+    const utilitiesList = ref([])
+
+    const pickerConfig = {
+      plugins: [
+        new monthSelectPlugin({
+          shorthand: true,
+          dateFormat: 'm/Y',
+        }),
+      ],
+    }
+
+    // get last updated_at from commercialRates array
+    const lastUpdatedAt = ref('')
+    const lastUpdated = () => {
+      if (commercialRates.value.length > 0) {
+        lastUpdatedAt.value = commercialRates.value[0].updated_at
+      }
+    }
+
+    // rate.current_rate comma separated string
+
+
+    const onCommodityChange = value => {
+      //   utilitiesList.value = []
+      filters.value.commodity = value
+      rateClassesList.value = rateClasses.filter(rateClass => rateClass.commodity === value)
+      utilitiesList.value = utility.filter(
+        util => util.state === filters.value.state && util.commodity === value,
+      )
+    }
+
+    const onStateChange = value => {
+      console.log(value)
+      //   filters.value.state = value
+      utilitiesList.value = utility.filter(
+        util => util.state === value && util.commodity === filters.value.commodity,
+      )
+    }
+
+    // onSearch
+    const onSearch = async () => {
+      await fetchCommercialRates()
+      await lastUpdated()
+    }
+
+
+    const demandSizeOptions = ref([
+      { text: '0 - 100,000', value: '100000' },
+      { text: '100,000 - 200,000', value: '200000' },
+      { text: '200,000 - 300,000', value: '300000' },
+      { text: '300,000 - 400,000', value: '400000' },
+      { text: '400,000 - 500,000', value: '500000' },
+      { text: '500,000 - 600,000', value: '600000' },
+      { text: '600,000 - 700,000', value: '700000' },
+      { text: '700,000 - 800,000', value: '800000' },
+      { text: '800,000 - 900,000', value: '900000' },
+      { text: '900,000 - 1,000,000+', value: '1000000' },
+    ])
 
     return {
-      filter,
-      zipcodes,
-      commodities,
-      states,
-      utilities,
-      zones,
+      filters,
       rateClasses,
-      dSizeRCode,
-      prices,
-      rates,
+      suppliers,
+      statesOptions,
+      pickerConfig,
       selectTerm,
-      isStartContractVisible,
       startContract,
+      onCommodityChange,
       selectRate,
+      lastUpdatedAt,
+      onSearch,
+      ratesLoading,
+      commercialRates,
+      rateClassesList,
+      onStateChange,
+      utilitiesList,
+      commodityOptions,
+      demandSizeOptions,
+      isStartContractVisible,
     }
   },
 }
@@ -450,4 +430,23 @@ export default {
 .text-decoration-underline {
     text-decoration: underline;
 }
+.form-control[readonly]{
+    background-color: #fff;
+    opacity: 1;
+}
+.vs__selected{
+    text-overflow: ellipsis;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+}
+.text-underline{
+    text-decoration: underline;
+}
+.text-primary{
+    color: #5A8DEE;
+}
+
 </style>
+

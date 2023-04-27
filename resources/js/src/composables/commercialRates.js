@@ -1,5 +1,7 @@
 import axios from '@axios'
-import { computed, ref, watch } from '@vue/composition-api'
+import {
+  computed, ref, watch, reactive,
+} from '@vue/composition-api'
 import route from 'ziggy-js'
 import toaster from './toaster'
 
@@ -18,6 +20,10 @@ export default function useCommercialRates() {
   const sortBy = ref('id')
   const isSortDirDesc = ref(true)
   const refListTable = ref(null)
+
+  const filters = reactive({
+
+  })
 
   const tableColumns = [
     { key: 'state', sortable: false },
@@ -51,6 +57,7 @@ export default function useCommercialRates() {
           page: currentPage.value,
           sortBy: sortBy.value,
           sortDesc: isSortDirDesc.value,
+          ...filters,
         },
       })
       commercialRates.value = response.data.data
@@ -170,6 +177,22 @@ export default function useCommercialRates() {
     }
   }
 
+  const fetchCommercialRatesList = async () => {
+    busy.value = true
+    try {
+      const response = await axios.get(route('commercial-rates.index'), {
+        params: {
+          ...filters,
+        },
+      })
+      commercialRates.value = response.data.data
+    } catch (e) {
+      toast.error(e.response.data.message)
+    } finally {
+      busy.value = false
+    }
+  }
+
   watch([currentPage, searchQuery], () => {
     fetchCommercialRates()
   })
@@ -180,6 +203,7 @@ export default function useCommercialRates() {
     errors,
     perPage,
     rateData,
+    filters,
     dataMeta,
     respResult,
     updateCommercialRate,
@@ -194,6 +218,7 @@ export default function useCommercialRates() {
     storeCommercialRate,
     fetchCommercialRates,
     deleteCommercialRate,
+    fetchCommercialRatesList,
     updateCommercialRateStatus,
   }
 }

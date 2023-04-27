@@ -138,7 +138,7 @@
                 </b-form-group>
               </validation-provider>
             </b-col>
-            <b-col lg="12">
+            <b-col lg="6">
               <validation-provider
                 #default="validationContext"
                 name="Utility"
@@ -226,7 +226,7 @@
                 </b-form-group>
               </validation-provider>
             </b-col>
-            <b-col lg="12">
+            <b-col lg="6">
               <validation-provider
                 #default="validationContext"
                 name="Rate Class"
@@ -257,7 +257,6 @@
               <validation-provider
                 #default="validationContext"
                 name="Description"
-                rules="required"
               >
                 <b-form-group
                   label-for="description"
@@ -470,9 +469,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .form-control[readonly]{
     background-color: #fff;
     opacity: 1;
+}
+.vs__selected{
+    text-overflow: ellipsis;
+    max-width: 280px;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
 }
 </style>

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class CommercialRate extends Model
 {
@@ -25,12 +25,22 @@ class CommercialRate extends Model
     ];
 
     /**
- * Get the columns that should receive a unique identifier.
- *
- * @return array<int, string>
- */
-public function uniqueIds(): array
-{
-    return ['uuid'];
-}
+     * Get the columns that should receive a unique identifier.
+     *
+     * @return array<int, string>
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
+
+    // updated_at change format
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('Y-m-d H:i a', strtotime($value));
+    }
+
+
+
 }

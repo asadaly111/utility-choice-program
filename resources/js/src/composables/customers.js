@@ -399,6 +399,22 @@ export default function useCustomers() {
     }
   }
 
+  const fetchCustomersList = async () => {
+    busy.value = true
+    try {
+      const response = await axios.get(route('customers.index'))
+      customers.value = response.data.data
+      if (response.data.meta) {
+        const { total } = response.data.meta
+        totalRecords.value = total
+      }
+    } catch (e) {
+      toast.error(e.response.data.message)
+    } finally {
+      busy.value = false
+    }
+  }
+
   watch([currentPage, perPage], () => {
     fetchCustomers()
   })
@@ -424,5 +440,6 @@ export default function useCustomers() {
     storeCustomer,
     fetchCustomers,
     perPageOptions,
+    fetchCustomersList,
   }
 }
