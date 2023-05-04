@@ -45,6 +45,16 @@
             <b-button
               variant="primary"
               class="mr-2"
+              :to="{ name: 'contracts' }"
+            >
+              <feather-icon
+                icon="FileIcon"
+                class="d-inline "
+              /> View Contracts
+            </b-button>
+            <b-button
+              variant="primary"
+              class="mr-2"
               @click="generateContract"
             >
               <feather-icon
@@ -82,16 +92,7 @@
                 class="d-inline "
               /> &nbsp; Download
             </b-button>
-            <b-button
-              variant="primary"
-              class="mr-2"
-              :to="{ name: 'contracts' }"
-            >
-              <feather-icon
-                icon="FileIcon"
-                class="d-inline "
-              /> View Contracts
-            </b-button>
+
 
           </div>
         </div>

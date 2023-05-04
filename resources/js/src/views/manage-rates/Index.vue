@@ -13,7 +13,6 @@
       v-if="isAddNewRateActive"
     />
 
-
     <EditRate
       :is-edit-rate-active.sync="isEditRateActive"
       @refetch-data="fetchCommercialRates"
@@ -105,8 +104,8 @@
                     class="align-middle text-body"
                   />
                 </template>
-                <b-dropdown-item @click="editRate(data.item.id)">
-                  <feather-icon icon="PencilIcon" />
+                <b-dropdown-item @click="editRate(data.item.uuid)">
+                  <feather-icon icon="EditIcon" />
                   <span class="align-middle ml-50">Edit</span>
                 </b-dropdown-item>
                 <b-dropdown-item @click="confirmDelete(data.item.id)">
@@ -254,7 +253,7 @@ export default {
 
     const editRate = id => {
       isEditRateActive.value = true
-      rateId.value = Number(id)
+      rateId.value = id
     }
 
     const confirmDelete = async id => {

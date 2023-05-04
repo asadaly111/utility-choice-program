@@ -3,12 +3,12 @@
     cancel-variant="outline-secondary"
     centered
     :hide-footer="true"
-    title="Create New Rate"
+    title="Edit Rate"
     size="lg"
     id="add-new-order"
-    @close="$emit('update:is-add-edit-rate-active', false)"
+    @close="$emit('update:is-edit-rate-active', false)"
     :visible="isEditRateActive"
-    @hide="$emit('update:is-add-edit-rate-active', false)"
+    @hide="$emit('update:is-edit-rate-active', false)"
   >
     <validation-observer
       #default="{ handleSubmit }"
@@ -128,7 +128,6 @@
                     name="commodity"
                     @change="onCommodityChange"
                   />
-
 
                   <b-form-invalid-feedback
                     :state="getValidationState(validationContext)"
@@ -288,7 +287,7 @@
             <b-button
               type="button"
               variant="outline-secondary"
-              @click="$emit('update:is-add-edit-rate-active',false)"
+              @click="$emit('update:is-edit-rate-active',false)"
             >
               Cancel
             </b-button>
@@ -351,7 +350,7 @@ export default {
   },
   model: {
     prop: 'isEditRateActive',
-    event: 'update:is-add-edit-rate-active',
+    event: 'update:is-edit-rate-active',
   },
   props: {
     isEditRateActive: {
@@ -359,7 +358,7 @@ export default {
       required: true,
     },
     rateId: {
-      type: Number,
+      type: String,
       default: () => ({}),
     },
   },
@@ -374,7 +373,6 @@ export default {
     } = useCommercialRates()
 
     // get rate
-
 
     const initialState = {
       supplier: '',
