@@ -25,17 +25,6 @@
 
         <b-card no-body>
           <b-card-body>
-            <!-- <b-row>
-              <b-col>
-                <b-button
-                  class="mb-1"
-                  variant="primary"
-                  @click="isAddAccountActive = true"
-                >
-                  Add Account
-                </b-button>
-              </b-col>
-            </b-row> -->
             <b-row>
               <b-col>
                 <vue-good-table
@@ -47,12 +36,13 @@
                   :columns="tableColumns"
                   :total-rows="totalRecords"
                   :rows="customersAccounts"
+                  @on-row-click="selectOne"
                   :select-options="{
-                    enabled: true,
-                    selectOnCheckboxOnly: true,
+                    enabled: false,
+                    selectOnCheckboxOnly: false,
                   }"
                   :sort-options="{
-                    enabled: true,
+                    enabled: false,
                   }"
                   :pagination-options="{
                     enabled: true,
@@ -70,10 +60,22 @@
                     allLabel: 'All',
                   }"
                 >
+
                   <template
                     slot="table-row"
                     slot-scope="props"
                   >
+                    <span v-if="props.column.field == 'selection'">
+                      <!-- radio -->
+                      <b-form-radio
+                        :value="props.row.id"
+                        name="radio"
+                        class="mt-1"
+                        v-model="selectAccount"
+                      />
+
+                    </span>
+
                     <div v-if="props.column.field == 'eg'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -151,14 +153,15 @@
                             class="align-middle text-body"
                           />
                         </template>
-                        <b-dropdown-item>
+
+                        <!-- <b-dropdown-item>
                           <feather-icon
                             icon="RotateCcwIcon"
                           />
                           <span
                             class="align-middle ml-50"
                           >History</span>
-                        </b-dropdown-item>
+                        </b-dropdown-item> -->
                         <b-dropdown-item
                           @click="editAccountRow(props.row)"
                         >
@@ -193,8 +196,10 @@
                 variant="primary"
                 :to="{
                   name: 'contract-customer',
-                  params: {
-                    id: $route.params.id,
+                  query: {
+                    customerId: $route.query.customerId,
+                    rateId: $route.query.rateId,
+                    isEdit: true,
                   },
                 }"
               >
@@ -250,7 +255,7 @@
                 class="mb-1"
                 variant="primary"
                 :disabled="customersAccounts.length > 0 ? false : true"
-                :to="{name: 'contract-generate'}"
+                @click="generateContract"
               >
                 Generate Contract
               </b-button>
@@ -401,14 +406,9 @@
                         name="Rate Class"
                       >
                         <vue-select
-                          :options="[
-                            {
-                              value: 'none',
-                              name: 'None',
-                            }
-                          ]"
-                          label="name"
-                          :reduce="(dropdown) => dropdown.name"
+                          :options="rateClassesList"
+                          label="text"
+                          :reduce="(dropdown) => dropdown.text"
                           v-model="formData.rate_class"
                           :state="errors.length > 0 ? false : null"
                         />
@@ -571,7 +571,7 @@
                       >
                         <vue-select
                           :options="utility"
-                          label="name"
+                          label="text"
                           :reduce="(dropdown) => dropdown.text"
                           v-model="formData.utility"
                           :state="errors.length > 0 ? false : null"
@@ -700,13 +700,6 @@
         sd
       </b-tab>
     </b-tabs>
-    <!-- end tabs -->
-    <AddAccount
-      v-if="isAddAccountActive"
-      :is-add-account-active.sync="isAddAccountActive"
-      @refetch-data="fetchAccountRefresh"
-      :user-data="userData"
-    />
   </b-card>
 </template>
 
@@ -727,6 +720,7 @@ import {
   BFormGroup,
   BFormInput,
   BDropdown,
+  BFormRadio,
   BDropdownItem,
   BFormSelect,
   BInputGroup,
@@ -747,7 +741,8 @@ import utility from '@core/data/utility'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { VueSelect } from 'vue-select'
 import rateClasses from '@core/data/rateClasses'
-import AddAccount from '../customers/AddAccount.vue'
+import useCommercialRates from '@/composables/commercialRates'
+import useContracts from '@/composables/contracts'
 
 export default {
   components: {
@@ -759,7 +754,7 @@ export default {
     BForm,
     BAlert,
     BCardBody,
-    AddAccount,
+    BFormRadio,
     BButton,
     VueGoodTable,
     BFormFile,
@@ -840,35 +835,29 @@ export default {
       customer,
     } = useCustomers()
 
-
-    onMounted(async () => {
-      await getCustomer(root.$route.params.id)
-      userData.value = customer.value
-    })
+    const {
+      getCommercialRateByUUid,
+      rateData,
+    } = useCommercialRates()
 
 
     const formInitialState = {
-      document: null,
-      first_name: '',
-      last_name: '',
-      title: '',
-      email: '',
-      business_name: '',
-      doing_business_as: '',
-      business_type: '',
-      ein: '',
-      industry: '',
-      tax_exempt: '',
+      zip: '',
+      zone: '',
+      city: '',
+      notes: '',
+      state: '',
+      utility: '',
       address1: '',
       address2: '',
-      state: '',
-      city: '',
-      zip: '',
-      billing_address_option: '',
-      billing_address: '',
-      billing_state: '',
-      billing_city: '',
-      billing_zip: '',
+      sub_type: '',
+      commodity: '',
+      rate_class: '',
+      current_rate: '',
+      annual_volume: '',
+      account_number: '',
+      account_status: '',
+      contract_end_date: '',
     }
 
     const fileInitialState = {
@@ -876,6 +865,12 @@ export default {
     }
 
     const file = ref({ ...fileInitialState })
+    const selectAccount = ref('')
+
+    const {
+      respResult: respResultContract,
+      storeContract,
+    } = useContracts()
 
     const {
       perPage,
@@ -890,24 +885,37 @@ export default {
       customersAccounts,
     } = useAccounts()
 
-    const formPhoneInitialState = {
-      phone_number: [
-        {
-          id: 1,
-          type: 'Mobile',
-          value: '',
-        },
-      ],
-    }
-
-
     const serverParams = ref({
       columnFilters: {},
       page: currentPage,
-      user_id: root.$route.params.id,
+      user_id: root.$route.query.customerId,
       perPage,
     })
 
+    // generateContract
+    const generateContract = async () => {
+      if (selectAccount.value === '') {
+        root.$bvToast.toast('Please select an account', {
+          title: 'Error',
+          variant: 'danger',
+          solid: true,
+        })
+      } else {
+        await storeContract({
+          account_id: selectAccount.value,
+          rate_id: rateData.value.id,
+          customer_id: root.$route.query.customerId,
+        })
+        if (respResultContract.value.status === 200) {
+          root.$router.push({
+            name: 'contract-generate',
+            query: {
+              contractId: respResultContract.value.data.contract.id,
+            },
+          })
+        }
+      }
+    }
 
     const fetchAccountRefresh = () => {
       fetchAccounts(serverParams.value)
@@ -932,29 +940,13 @@ export default {
       fetchAccounts(serverParams.value)
     }
 
-    const isBillingActive = ref(false)
     const citiesFilteredObjects = ref([])
     const billingCitiesFilteredObjects = ref([])
     const rateClassesList = ref([])
     const formData = ref({ ...formInitialState })
-    const phone = ref({ ...formPhoneInitialState })
     const utilitiesList = ref([])
 
-    const showBilling = item => {
-      isBillingActive.value = item
-    }
-
-    const addPhoneNumber = id => {
-      phone.value.phone_number.push({ id, type: 'Mobile', value: '' })
-    }
-    const removePhoneNumber = id => {
-      phone.value.phone_number = phone.value.phone_number.filter(
-        obj => obj.id !== id,
-      )
-    }
-
     const onCommodityChange = value => {
-      console.log(value)
       //   utilitiesList.value = []
       formData.value.commodity = value
       rateClassesList.value = rateClasses.filter(rateClass => rateClass.commodity === value)
@@ -964,12 +956,28 @@ export default {
     }
 
     const onStateChange = value => {
-      console.log(value)
       //   formData.value.state = value
       utilitiesList.value = utility.filter(
         util => util.state === value && util.commodity === formData.value.commodity,
       )
     }
+
+    onMounted(async () => {
+      await getCustomer(root.$route.query.customerId)
+      await getCommercialRateByUUid(root.$route.query.rateId)
+      //   await getContract(root.$route.query.customerId)
+      //   userData.value = customer.value
+      formData.value.state = customer.value.state
+      formData.value.city = customer.value.city
+      formData.value.zip = customer.value.zip
+      formData.value.rate_class = rateData.value.rate_class
+      formData.value.current_rate = rateData.value.current_rate
+      formData.value.commodity = rateData.value.commodity
+      formData.value.utility = rateData.value.utility
+      onCommodityChange(rateData.value.commodity)
+      onStateChange(customer.value.state)
+    })
+
 
     const filterCities = state => {
       onStateChange(state)
@@ -983,6 +991,22 @@ export default {
       billingCitiesFilteredObjects.value = citiesOptions.filter(
         obj => obj.state_name === state,
       )
+    }
+
+    // selectOne
+    const selectOne = payload => {
+    // for select just one item
+    //   if (!payload || !payload.row || !payload.row.vgtSelected) {
+    //     return
+    //   }
+    //   for (let i = 0; i < this.data.length; i++) {
+    //     const element = this.data[i]
+    //     if (element.id !== payload.row.id) {
+    //       element.vgtSelected = false
+    //       continue
+    //     }
+    //     element.vgtSelected = payload.selected
+    //   }
     }
 
     const onSubmit = async () => {
@@ -1023,24 +1047,26 @@ export default {
       email,
       integer,
       min,
-      phone,
       onSubmit,
       formData,
       utility,
       file,
+      selectOne,
       onStateChange,
       titles,
       utilitiesList,
       totalVolume,
       userData,
       industries,
+      generateContract,
       businessTypes,
-      showBilling,
       filterCities,
+      rateClassesList,
       onColumnFilter,
       citiesOptions,
       onCommodityChange,
       perPage,
+      selectAccount,
       isAddAccountActive,
       onPageChange,
       onPerPageChange,
@@ -1054,9 +1080,6 @@ export default {
       perPageOptions,
       customersAccounts,
       statesOptions,
-      addPhoneNumber,
-      isBillingActive,
-      removePhoneNumber,
       filterBillingCities,
       citiesFilteredObjects,
       billingCitiesFilteredObjects,
@@ -1069,8 +1092,18 @@ export default {
 .vgt-table th{
   font-size: 11px !important;
 }
+.vgt-table td{
+  font-size: 11px !important;
+}
 .vgt-table th{
     padding: 1px !important;
+}
+.vs__selected{
+    text-overflow: ellipsis;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
 }
 </style>
 

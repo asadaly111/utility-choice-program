@@ -169,6 +169,7 @@
           <b-form-select
             :options="demandSizeOptions"
             v-model="filters.demand_size"
+            placeholder="Demand Size"
           />
         </b-form-group>
       </b-col>
@@ -180,14 +181,22 @@
         xl
       >
         <b-form-group>
-          <button
-            type="button"
-            @click="onSearch"
-            class="btn btn-primary w-100"
-          >
-            <feather-icon icon="SearchIcon" />
-            <span class="ml-1">Start Search</span>
-          </button>
+          <div class="d-flex justify-content-between">
+            <button
+              type="button"
+              @click="onSearch"
+              class="btn btn-primary w-50 ml-1"
+            >
+              <feather-icon icon="SearchIcon" /><span>Search</span>
+            </button>
+            <button
+              type="button"
+              @click="resetSearch"
+              class="btn btn-warning w-50 ml-1"
+            >
+              <span>Reset</span>
+            </button>
+          </div>
         </b-form-group>
       </b-col>
     </b-form-row>
@@ -205,6 +214,9 @@
         <table class="table ">
           <thead>
             <tr>
+              <th scope="col">
+                Commodity
+              </th>
               <th scope="col">
                 Supplier
               </th>
@@ -230,6 +242,9 @@
               <th scope="col">
                 Updated At
               </th>
+              <th scope="col">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -237,6 +252,20 @@
               v-for="(rate, index) in commercialRates"
               :key="index"
             >
+              <td>
+                <span>
+                  <img
+                    :src="require('@/assets/images/icons/gas.svg')"
+                    v-if="rate.commodity == 'gas'"
+                    width="20"
+                  >
+                  <img
+                    :src="require('@/assets/images/icons/electricity.svg')"
+                    v-if="rate.commodity == 'electricity'"
+                    width="20"
+                  >
+                </span>
+              </td>
               <td>
                 {{ rate.supplier }}
               </td>
@@ -252,6 +281,13 @@
               <!-- demand_size  comma separated -->
               <td>{{ rate.demand_size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }}</td>
               <td>{{ rate.updated_at }}</td>
+              <td><a
+                href="javascript:;"
+                class="text-primary text-underline"
+                @click="startContract(rate)"
+              >Start Contract
+              </a>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -328,9 +364,18 @@ export default {
     const selectRate = ref({})
     const isStartContractVisible = ref(false)
     const selectTerm = ref('')
-    const startContract = (rate) => {
+    const startContract = rate => {
       selectRate.value = rate
       isStartContractVisible.value = true
+    }
+
+    const resetSearch = () => {
+      // reset filters key value
+      Object.keys(filters).forEach(key => {
+        filters[key] = ''
+      })
+
+      fetchCommercialRates()
     }
 
 
@@ -348,7 +393,7 @@ export default {
 
     // get last updated_at from commercialRates array
     const lastUpdatedAt = ref('')
-    const lastUpdated = () => {
+    const lastUpdated = async () => {
       if (commercialRates.value.length > 0) {
         lastUpdatedAt.value = commercialRates.value[0].updated_at
       }
@@ -359,18 +404,18 @@ export default {
 
     const onCommodityChange = value => {
       //   utilitiesList.value = []
-      filters.value.commodity = value
+      filters.commodity = value
       rateClassesList.value = rateClasses.filter(rateClass => rateClass.commodity === value)
       utilitiesList.value = utility.filter(
-        util => util.state === filters.value.state && util.commodity === value,
+        util => util.state === filters.state && util.commodity === value,
       )
     }
 
     const onStateChange = value => {
       console.log(value)
-      //   filters.value.state = value
+      //   filters.state = value
       utilitiesList.value = utility.filter(
-        util => util.state === value && util.commodity === filters.value.commodity,
+        util => util.state === value && util.commodity === filters.commodity,
       )
     }
 
@@ -401,6 +446,7 @@ export default {
       statesOptions,
       pickerConfig,
       selectTerm,
+      resetSearch,
       startContract,
       onCommodityChange,
       selectRate,
@@ -436,7 +482,7 @@ export default {
 }
 .vs__selected{
     text-overflow: ellipsis;
-    max-width: 180px;
+    max-width: 250px;
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;

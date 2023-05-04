@@ -54,7 +54,7 @@
       <b-button
         variant="primary"
         class="mr-2"
-        :to="{ name: 'contract-customer', params: { id: rate.uuid }}"
+        :to="{ name: 'contract-customer', query: { rateId: rate.uuid }}"
       >
         Start Contract
       </b-button>

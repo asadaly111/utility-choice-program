@@ -21,6 +21,16 @@ export default function useCustomers() {
   const customersAccounts = ref([])
   const tableColumns = [
     {
+      label: 'Selection',
+      field: 'selection',
+      width: '50px',
+      filterOptions: {
+        enabled: true,
+        filterValue: '',
+      },
+      tdClass: 'align-middle',
+    },
+    {
       label: 'ID',
       field: 'id',
       width: '50px',

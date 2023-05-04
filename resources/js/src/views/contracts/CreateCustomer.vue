@@ -5,7 +5,6 @@
       <b-card>
         <b-card-body>
           <b-form-group>
-
             <b-form-radio-group
               buttons
               size="lg"
@@ -41,7 +40,7 @@
             v-if="selectType === 'exist'"
           >
             <v-select
-              v-model="customerId"
+              v-model="customerObj"
               :options="customers"
               label="name"
               class="mb-3"
@@ -57,14 +56,14 @@
 
           </b-form-group>
           <div class="text-center d-flex justify-content-between">
-              <div />
-              <b-button
-                type="submit"
-                variant="outline-primary"
-              >
-                 Go to Step 2
-              </b-button>
-            </div>
+            <div />
+            <b-button
+              @click="goToStep2"
+              variant="outline-primary"
+            >
+              Go to Step 2
+            </b-button>
+          </div>
         </b-card-body>
 
       </b-card>
@@ -683,6 +682,7 @@ import statesOptions from '@core/data/states.json'
 import citiesOptions from '@core/data/cities.json'
 import { required, alphaNum } from '@validations'
 import 'vue-select/dist/vue-select.css'
+import useCommercialRates from '@/composables/commercialRates'
 
 export default {
   components: {
@@ -797,12 +797,17 @@ export default {
     }
 
 
-    const selectType = ref('')
-    const customerId = ref('')
+    const selectType = ref('exist')
+    const customerObj = ref('')
 
     const {
-      busy, respResult, storeCustomer, getCustomer, customer, customers, updateCustomer, fetchCustomersList,
+      busy, respResult, storeCustomer, getCustomer, customer, toast, customers, updateCustomer, fetchCustomersList,
     } = useCustomers()
+
+    const {
+      getCommercialRateByUUid,
+      rateData,
+    } = useCommercialRates()
 
 
     const isBillingActive = ref(false)
@@ -816,15 +821,6 @@ export default {
       isBillingActive.value = item
     }
 
-    onMounted(async () => {
-      if ((root.$route.params.id !== undefined) && (root.$route.params.id !== null)) {
-        // await getCustomer(root.$route.params.id)
-        // formData.value = customer.value
-        // phone.value.phone_number = customer.value.phone
-        // isEdit.value = true
-        fetchCustomersList()
-      }
-    })
 
     const addPhoneNumber = id => {
       phone.value.phone_number.push({ id, type: 'Mobile', value: '' })
@@ -833,6 +829,19 @@ export default {
       phone.value.phone_number = phone.value.phone_number.filter(
         obj => obj.id !== id,
       )
+    }
+
+    // goToStep2
+    const goToStep2 = () => {
+
+      if (customerObj.value !== '') {
+        root.$router.push({
+          name: 'contract-customer-accounts',
+          query: { customerId: customerObj.value.id, rateId: root.$route.query.rateId },
+        })
+      } else {
+        toast.error('Please select a customer')
+      }
     }
 
     const filterCities = state => {
@@ -846,6 +855,25 @@ export default {
         obj => obj.state_name === state,
       )
     }
+
+    onMounted(async () => {
+      console.log(root.$route.query)
+      if ((root.$route.query.rateId !== undefined) && (root.$route.query.rateId !== null)) {
+        await getCommercialRateByUUid(root.$route.query.rateId)
+        formData.value.state = rateData.value.state
+        filterCities(rateData.value.state)
+        filterBillingCities(rateData.value.state)
+
+        fetchCustomersList()
+      }
+      if (root.$route.query.customerId && root.$route.query.isEdit === 'true') {
+        selectType.value = 'new'
+        await getCustomer(root.$route.query.customerId)
+        formData.value = customer.value
+        phone.value.phone_number = customer.value.phone
+        isEdit.value = true
+      }
+    })
 
     const resetform = () => {
       formData.value = JSON.parse(JSON.stringify(formInitialState))
@@ -911,10 +939,12 @@ export default {
       if (respResult.value.status === 200) {
         console.log(respResult)
         // push to contract account with id
-        root.$router.push({
-          name: 'contract-customer-accounts',
-          params: { id: respResult.value.data.customer.id },
-        })
+        customerObj.value = respResult.value.data.customer
+        // root.$router.push({
+        //   name: 'contract-customer-accounts',
+        //   params: { id: respResult.value.data.customer.id },
+        // })
+        goToStep2()
         // emit('update:is-add-customer-active', false)
         // emit('refetch-data')
         // resetform()
@@ -927,9 +957,10 @@ export default {
       isEdit,
       titles,
       customers,
-      customerId,
+      customerObj,
       required,
       businessTypes,
+      goToStep2,
       industries,
       formData,
       onSubmit,

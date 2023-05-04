@@ -282,11 +282,11 @@ export default function useCustomers() {
         enabled: true,
         filterValue: '',
         placeholder: 'Agent',
-        filterDropdownItems: [
-          'Robert Zane',
-          'Harvey Dentt',
-          'Sean Azfarani',
-        ],
+        // filterDropdownItems: [
+        //   'Robert Zane',
+        //   'Harvey Dentt',
+        //   'Sean Azfarani',
+        // ],
       },
       tdClass: 'align-middle',
     },
@@ -421,6 +421,7 @@ export default function useCustomers() {
 
   return {
     busy,
+    toast,
     errors,
     sortBy,
     perPage,

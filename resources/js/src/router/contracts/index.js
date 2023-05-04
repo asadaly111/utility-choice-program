@@ -11,14 +11,14 @@ const routes = [
       auth: true,
       breadcrumb: [
         {
-          text: 'Contracts Rates',
+          text: 'Contracts',
           active: true,
         },
       ],
     },
   },
   {
-    path: 'contracts/customer/:id?',
+    path: 'contracts/customer',
     name: 'contract-customer',
     component: () => import('@/views/contracts/CreateCustomer.vue'),
     meta: {
@@ -35,7 +35,7 @@ const routes = [
     },
   },
   {
-    path: 'contracts/customer-accounts/:id',
+    path: 'contracts/customer-accounts',
     name: 'contract-customer-accounts',
     component: () => import('@/views/contracts/CustomerAccounts.vue'),
     meta: {
@@ -52,7 +52,7 @@ const routes = [
     },
   },
   {
-    path: 'contracts/generate/:id',
+    path: 'contracts/generate',
     name: 'contract-generate',
     component: () => import('@/views/contracts/GenerateContract.vue'),
     meta: {
@@ -62,7 +62,7 @@ const routes = [
       auth: true,
       breadcrumb: [
         {
-          text: 'Customer Details',
+          text: 'Contract Generate',
           active: true,
         },
       ],

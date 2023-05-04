@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ResetPasswordController;
@@ -33,9 +34,13 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::post('/account-files/{id}', [CustomerAccountController::class, 'accountFiles'])->name('customerAccount.files');
 
+    // get rate by uuid
+    Route::get('/commercial-rates/{uuid}', [CommercialRatesController::class, 'getRateByUuid'])->name('commercial-rates.uuid');
+
     Route::apiResources([
         'users' => UserController::class,
         'customers' => CustomerController::class,
+        'contracts' => ContractController::class,
         'customerAccount' => CustomerAccountController::class,
         'commercial-rates' => CommercialRatesController::class,
     ]);

@@ -22,7 +22,7 @@ export default function useCommercialRates() {
   const refListTable = ref(null)
 
   const filters = reactive({
-
+    commodity: '',
   })
 
   const tableColumns = [
@@ -94,6 +94,24 @@ export default function useCommercialRates() {
       }
     }
   }
+
+  const getCommercialRateByUUid = async uuid => {
+    try {
+      const response = await axios.get(route('commercial-rates.uuid', { uuid }))
+      rateData.value = response.data.data
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        toast.error(error.message)
+      } else {
+        if (error.response.status === 422) {
+          errors.value = error.response.data.errors
+        }
+        respResult.value = error
+        toast.error(error.response.data.message)
+      }
+    }
+  }
+
 
 
   const storeCommercialRate = async data => {
@@ -219,6 +237,7 @@ export default function useCommercialRates() {
     fetchCommercialRates,
     deleteCommercialRate,
     fetchCommercialRatesList,
+    getCommercialRateByUUid,
     updateCommercialRateStatus,
   }
 }

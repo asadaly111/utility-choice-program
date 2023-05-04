@@ -20,7 +20,7 @@ class CommercialRatesController extends Controller
     {
         // get all commercial rates in resource collection
         $commercialRates = CommercialRate::query()
-        // ->applyFilters($request)
+        ->applyFilters($request)
             ->when($request->perPage, function ($query, $perPage) {
                 return $query->orderByDesc('id')->paginate($perPage);
             }, function ($query) {
@@ -86,5 +86,12 @@ class CommercialRatesController extends Controller
     {
         $commercialRate = CommercialRate::findOrFail($id);
         $commercialRate->delete();
+    }
+
+    // getRateByUuid
+    public function getRateByUuid($uuid)
+    {
+        $commercialRate = CommercialRate::where('uuid', $uuid)->firstOrFail();
+        return new CommercialRateResource($commercialRate);
     }
 }
