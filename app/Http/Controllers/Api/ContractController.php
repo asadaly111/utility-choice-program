@@ -97,9 +97,9 @@ class ContractController extends Controller
     }
 
 
-    public function sendContractForSignature(Request $request, Contract $contract)
+    public function sendContractForSignature(Request $request, $contractId)
     {
-        // $contract = Contract::find($request->contract_id);
+        $contract = Contract::find($contractId);
         $contract->update([
             'status' => 'Sent',
         ]);
@@ -226,6 +226,11 @@ class ContractController extends Controller
     {
         $contract = Contract::find($contractId);
         $pdf = PDF::loadView('pdf.contract', compact('contract'));
+
+// create folder if not exists
+if (!file_exists(storage_path('app/public/contracts'))) {
+    mkdir(storage_path('app/public/contracts'), 0777, true);
+}
 
         // store pdf file
         $pdf->save(storage_path('app/public/contracts/'.$contract->id.'-contract.pdf'));
