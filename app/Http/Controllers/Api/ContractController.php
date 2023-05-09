@@ -103,6 +103,7 @@ class ContractController extends Controller
         $contract->update([
             'status' => 'Sent',
         ]);
+        $contract->load('customer', 'account');
         $this->sendEnvelopeForSignature($contract);
         return response()->json([
             'message' => 'Contract successfully sent.',
@@ -172,7 +173,7 @@ class ContractController extends Controller
         # Create the document model
         $document = new \DocuSign\eSign\Model\Document ([# create the DocuSign document object
             'document_base64' => $base64_file_content,
-            'name' => 'Example document', # can be different from actual file name
+            'name' => 'Contract', # can be different from actual file name
             'file_extension' => 'pdf', # many different document types are accepted
             'document_id' => 1, # a label used to reference the doc
         ]);
@@ -189,8 +190,8 @@ class ContractController extends Controller
             'sign_here_tabs' => $sign_here_tabs,
         ]);
         $signer = new Signer([
-            'email' => 'asadaly111@gmail.com',
-            'name' => 'shoaib testing',
+            'email' => $contract->customer->email,
+            'name' => $contract->customer->name,
             'recipient_id' => "1",
             'tabs' => $tabs1,
         ]);
