@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row class="justify-content-md-end">
+    <!-- <b-row class="justify-content-md-end">
       <b-col
         cols="12"
         md
@@ -21,7 +21,7 @@
           </b-form-checkbox>
         </b-form-group>
       </b-col>
-    </b-row>
+    </b-row> -->
     <vue-good-table
       mode="remote"
       @on-page-change="onPageChange"
@@ -128,7 +128,10 @@
           class="action-buttons"
           v-else-if="props.column.field === 'actions'"
         >
-          <button class="btn action-btn">
+          <button
+            class="btn action-btn"
+            @click="downloadContract(props.row)"
+          >
             <feather-icon
               icon="DownloadIcon"
               size="16"
@@ -253,6 +256,13 @@ export default {
       fetchContracts(serverParams.value)
     }
 
+    // download contract
+
+    const downloadContract = item => {
+      const url = `/storage/contracts/${item.id}-contract.pdf`
+      window.open(url, '_blank')
+    }
+
     const onColumnFilter = params => {
       updateParams(params)
       fetchContracts(serverParams.value)
@@ -288,6 +298,7 @@ export default {
       fetchContracts,
       perPageOptions,
       editCustomerRow,
+      downloadContract,
       onPerPageChange,
       isAddCustomerActive,
       isEditCustomerActive,

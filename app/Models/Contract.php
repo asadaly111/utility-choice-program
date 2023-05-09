@@ -99,6 +99,7 @@ class Contract extends Model
         }
     }
 
+
     // user
     public function user()
     {

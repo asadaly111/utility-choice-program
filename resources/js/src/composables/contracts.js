@@ -258,6 +258,28 @@ export default function useContracts() {
     customer.value = response.data.data
   }
 
+  const downloadContractPdf = async id => {
+    try {
+      const response = await axios.get(route('contracts.download', id), {
+        headers: {
+          'Content-Type': 'application/pdf',
+        },
+      })
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(new Blob([blob]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', `${id}-contract.pdf`)
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    } catch (error) {
+      toast.error(error.response.data.message)
+    } finally {
+      busy.value = false
+    }
+  }
+
   const updateCustomer = async (customerData, id) => {
     try {
       busy.value = true
@@ -265,6 +287,23 @@ export default function useContracts() {
       respResult.value = response
       toast.success(response.data.message)
     } catch (error) {
+      if (error.response.status === 422) {
+        errors.value = error.response.data.errors
+      }
+      toast.error(error.response.data.message)
+    } finally {
+      busy.value = false
+    }
+  }
+
+  const sendContractViaDocuSign = async contractId => {
+    try {
+      busy.value = true
+      const response = await axios.post(route('contracts.docusign', contractId))
+      respResult.value = response
+      toast.success(response.data.message)
+    } catch (error) {
+      console.log(error)
       if (error.response.status === 422) {
         errors.value = error.response.data.errors
       }
@@ -348,6 +387,7 @@ export default function useContracts() {
     refListTable,
     tableColumns,
     totalRecords,
+    downloadContractPdf,
     isSortDirDesc,
     updateCustomer,
     deleteCustomer,
@@ -355,5 +395,6 @@ export default function useContracts() {
     fetchContracts,
     perPageOptions,
     fetchContractsList,
+    sendContractViaDocuSign,
   }
 }

@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/subscription/{id}', [HomeController::class, 'subscription'])->name('subscription');
 // Route::get('/transaction/{id}', [HomeController::class, 'transaction'])->name('transaction');
 
+// download pdf contract from storage
+
 Route::get('/', function () {
     return redirect('/login');
 });
