@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Api;
 
-use PDF;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ContractResource;
 use App\Models\Account;
+use App\Models\CommercialRate;
 use App\Models\Contract;
 use App\Models\Customer;
-use Illuminate\Http\Request;
-use App\Models\CommercialRate;
-use DocuSign\eSign\Model\Tabs;
-use DocuSign\eSign\Model\Signer;
-use DocuSign\eSign\Model\SignHere;
-use App\Http\Controllers\Controller;
+use DocuSign\eSign\Api\EnvelopesApi;
 use DocuSign\eSign\Client\ApiClient;
-use DocuSign\eSign\Model\Recipients;
-use App\Http\Resources\ContractResource;
-use DocuSign\eSign\Model\InlineTemplate;
 use DocuSign\eSign\Model\CompositeTemplate;
 use DocuSign\eSign\Model\EnvelopeDefinition;
-use DocuSign\eSign\Api\EnvelopesApi;
+use DocuSign\eSign\Model\InlineTemplate;
+use DocuSign\eSign\Model\Recipients;
+use DocuSign\eSign\Model\Signer;
+use DocuSign\eSign\Model\SignHere;
+use DocuSign\eSign\Model\Tabs;
+use Illuminate\Http\Request;
+use PDF;
 
 class ContractController extends Controller
 {
@@ -72,14 +72,11 @@ class ContractController extends Controller
             // 'flag' => $commercialRate->customer_id,
         ]);
 
-        if(in_array($commercialRate->supplier, ['SFE Energy'])){
+        if (in_array($commercialRate->supplier, ['SFE Energy', 'Energy Harbor'])) {
 
-            $this->generateDownload($contract->id);
+            $supplier = $commercialRate->supplier;
 
-            return response()->json([
-                'message' => 'Contract successfully created.',
-                'contract' => $contract,
-            ], 200);
+            $this->generateDownload($contract->id, $supplier);
         }
 
         return response()->json([
@@ -137,7 +134,7 @@ class ContractController extends Controller
 
         $userInfo = $apiClient->getUserInfo($accessToken);
         $accountInfo = $userInfo[0]->getAccounts();
-        $apiClient->getConfig()->setHost($accountInfo[0]->getBaseUri() . env('DS_ESIGN_URI_SUFFIX'));
+        $apiClient->getConfig()->setHost($accountInfo[0]->getBaseUri().env('DS_ESIGN_URI_SUFFIX'));
         $envelopeDefenition = $this->buildEnvelope($contract);
         try {
             $envelopeApi = new EnvelopesApi($apiClient);
@@ -170,7 +167,7 @@ class ContractController extends Controller
     private function buildEnvelope($contract): EnvelopeDefinition
     {
 
-        $contractPdf = asset('storage/contracts/' . $contract->id . '-contract.pdf');
+        $contractPdf = asset('storage/contracts/'.$contract->id.'-contract.pdf');
 
         $arrContextOptions = [
             'ssl' => [
@@ -225,7 +222,7 @@ class ContractController extends Controller
         $composite_templates = [$composite_template];
         $envelope_definition = new EnvelopeDefinition([
             'composite_templates' => $composite_templates,
-            'email_subject' => 'Contract for ' . $contract->account->commodity . ' - ' . $contract->account->utility,
+            'email_subject' => 'Contract for '.$contract->account->commodity.' - '.$contract->account->utility,
             'status' => 'sent',
         ]);
 
@@ -234,22 +231,26 @@ class ContractController extends Controller
     }
 
     // contractDownload
-    public function generateDownload($contractId)
+    public function generateDownload($contractId, $supplier)
     {
 
-        $contract = Contract::with('customer','account')->find($contractId);
+        $contract = Contract::with('customer', 'account')->find($contractId);
         $pdf = \App::make('dompdf.wrapper');
         // $pdf->loadView('welcome');
         $pdf->setOption('fontDir', public_path('/fonts'));
 
-        $pdf = $pdf->loadView('pdf.energy_harbor_contract', compact('contract'));
+        if ($supplier == 'SFE Energy') {
+            $pdf = $pdf->loadView('pdf.sfe_energy', compact('contract'));
+        } elseif ($supplier == 'Energy Harbor') {
+            $pdf = $pdf->loadView('pdf.energy_harbor_contract', compact('contract'));
+        }
 
-        if (!file_exists(storage_path('app/public/contracts'))) {
+        if (! file_exists(storage_path('app/public/contracts'))) {
             mkdir(storage_path('app/public/contracts'), 0777, true);
         }
 
         // store pdf file
-        $pdf->save(storage_path('app/public/contracts/' . $contract->id . '-contract.pdf'));
+        $pdf->save(storage_path('app/public/contracts/'.$contract->id.'-contract.pdf'));
 
         // return $pdf->download($contract->id . '-contract.pdf');
 
@@ -260,7 +261,7 @@ class ContractController extends Controller
     {
 
         // download pdf from storage
-        return response()->download(storage_path('app/public/contracts/' . $contractId . '-contract.pdf'));
+        return response()->download(storage_path('app/public/contracts/'.$contractId.'-contract.pdf'));
 
     }
 }

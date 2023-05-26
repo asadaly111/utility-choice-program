@@ -147,7 +147,7 @@ export default {
 
     onMounted(async () => {
       const response = await getContract(root.$route.query.contractId)
-      if (response.data && response.data.data.supplier && ['SFE Energy'].includes(response.data.data.supplier)) {
+      if (response.data && response.data.data.supplier && ['SFE Energy', 'Energy Harbor'].includes(response.data.data.supplier)) {
         visibleContract.value = true
       }
     })

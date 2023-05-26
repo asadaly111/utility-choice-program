@@ -63,8 +63,6 @@
             border-bottom: 1px solid #000;
             width: 100%;
             height: 15px;
-            /* padding-left: 5px; */
-            /* padding-right: 5px; */
         }
 
         input[type=checkbox],
@@ -75,6 +73,11 @@
 
         table {
             width: 100%;
+        }
+
+        table th,
+        table td {
+            padding: 4px 6px;
         }
 
         ul li,
@@ -93,18 +96,14 @@
                     <table style="width: 100%">
                         <tbody>
                             <td style="width: 150px">
-                                <img src="images/logo1.jpg" width="100">
+                                <img src="images/energy_harbor.jpg" width="100">
                             </td>
                             <td style="text-align: center;">
-                                <p style="color: #004270">SFE Energy Ohio, Inc.<br> P.O. Box 967, Buffalo, NY
-                                    14240-0967<br> Customer Service:
-                                    1-866-255-3844 cs@sfeenergy.com<br> PUCO Gas Certificate # 16-498G(3) | PUCO
-                                    Electric
-                                    Certificate # 16-1047E(3)<br>
+                                <h4 style="font-size: 14px; margin-bottom: 0px; color: #004270;">Energy Harbor LLC</h4>
+                                <p style="margin-bottom: 10px;color: #004270">Pennsylvania Electric Supply Agreement
+                                    Pricing Attachment -
+                                    Small Commercial<br>
                                 </p>
-                                <h4 style="font-size: 14px; color: #004270; margin-bottom: 20px">Large Commercial
-                                    Natural Gas &
-                                    Electricity Supply Agreements</h4>
                             </td>
                             <td style="width: 150px">
                             </td>
@@ -113,1828 +112,2031 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <table style="width: 100%; border-collapse: collapse">
-                        <tbody>
-                            <tr>
-                                <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: left">
-                                    CUSTOMER INFORMATION
-                                </th>
-                                <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: right">
-                                    COH012, COV002
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span style="white-space: normal; display: block;">
-                        These Agreements are for competitive retail natural gas service
-                        (“Natural Gas”) and/or competitive retail electric service (“Electricity”) between SFE Energy
-                        Ohio, Inc. (“SFE”) and the Business Legal Name (“Applicant”) as outlined below.
-                    </span>
-                    <table style="width: 100%;">
-                        <tbody>
-                            <tr>
-                                <td style="width: 1px; white-space: nowrap;">
-                                    Business Legal Name (“Applicant”):
-                                </td>
-                                <td>
-                                    <input type="text" value="{{ $contract->customer->business_name }}">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table style="width: 100%;">
-                        <tbody>
-                            <tr>
-                                <td style="width: 1px; white-space: nowrap;">
-                                    <span>
-                                        <input type="checkbox">
-                                        <span style="vertical-align: top; line-height: 1;">Mr.</span>
-                                    </span>
-                                    <span>
-                                        <input type="checkbox">
-                                        <span style="vertical-align: top; line-height: 1;">Ms.</span>
-                                    </span>
-                                    <span>
-                                        <input type="checkbox">
-                                        <span style="vertical-align: top; line-height: 1;">Mrs.</span>
-                                    </span>
-                                </td>
-                                <td>
-                                    <table style="width: 100%;">
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 1px; white-space: nowrap;">
-                                                    Contact First Name:
-                                                </td>
-                                                <td>
-                                                    <input type="text" value="{{ $contract->customer->first_name }}">
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table style="width: 100%;">
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 1px; white-space: nowrap;">
-                                                    Contact Last Name:
-                                                </td>
-                                                <td>
-                                                    <input type="text" value="{{ $contract->customer->last_name }}">
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table style="width: 100%">
-                        <tr>
-                            @foreach ($contract->customer->phone as $contact)
-                                
-                            <td style="width: 18%; vertical-align: top">
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                {{ $contact['type'] }}:
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ $contact['value'] }}">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            @endforeach
-                            <td style="width: 30%; vertical-align: top">
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                Email:
-                                            </td>
-                                            <td>
-                                                <input type="email" value="{{ $contract->customer->email }}">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width: 100%">
-                        <tr>
-                            <td><span style="color: #004270;font-size: 10px; line-height: 11px;">
-                                    By providing my email address above, I agree to receive notifications and
-                                    information from SFE Energy and its affiliates.</span></td>
-                        </tr>
-                    </table>
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                Service Address:
-                                            </td>
-                                            <td>
-                                                <input type="text">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                Street Address
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ $contract->customer->address1 }}">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                City:
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ $contract->customer->city }}">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                States:
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ $contract->customer->address1 }}">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                Billing Address (if different from Service Address):
-                                            </td>
-                                            <td>
-                                                <input type="text">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                Street Address:
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ $contract->customer->billing_address }}">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                City:
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ $contract->customer->billing_city }}">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                States:
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ $contract->customer->billing_state }}">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 1px; white-space: nowrap;">
-                                                Zip:
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ $contract->customer->billing_zip }}">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-top: 10px; padding-bottom: 10px;">
-                    <table style="font-size: 8px; border-collapse: collapse;">
-                        <tr>
-                            <td style="width: 50%; vertical-align: top; padding-right: 10px;">
-                                <table style="border: 1px solid #004270;">
-                                    <tbody>
-                                        <tr>
-                                            <th
-                                                style="background: #004270; text-align: center; color: #FFF; text-transform: uppercase; padding: 5px;">
-                                                Electricity
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">American Electric Power
-                                                                (AEP)</span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">Dayton Power & Light</span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">Duke Energy</span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">The Illuminating
-                                                                Company</span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">Ohio Edison</span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">Toledo Edison</span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 1px; white-space: nowrap;">
-                                                            <span>
-                                                                <input type="checkbox">
-                                                                <span style="vertical-align: top; line-height: 1;">Fixed
-                                                                    Price:</span>
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" value="{{ $contract->commodity == 'electricity' ? $contract->current_rate : '' }}">
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">month(s) at $</td>
-                                                        <td>
-                                                            <input type="text">
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">
-                                                            /kWh
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <span>
-                                                                <input type="checkbox" value="Yes">
-                                                                <span style="vertical-align: top; line-height: 1;">Tax
-                                                                    Exempt
-                                                                    Form Attached?</span>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <span>
-                                                                <input type="checkbox">
-                                                                <span
-                                                                    style="vertical-align: top; line-height: 1;">Variable
-                                                                    Month to Month Price per kWh (price will vary
-                                                                    monthly)</span>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 1px; white-space: nowrap;">
-                                                            <span>
-                                                                <span>Offer is valid until</span>
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" value="{{  $contract->commodity == 'electricity' ? date('m', strtotime($contract->account->contract_end_date)) : '' }}">
-                                                            <span>MONTH</span>
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">,</td>
-                                                        <td>
-                                                            <input type="text" value="{{ $contract->commodity == 'electricity' ? date('d', strtotime($contract->account->contract_end_date)) : '' }}">
-                                                            <span>DAY</span>
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">,</td>
-                                                        <td>
-                                                            <input type="text" value="{{ $contract->commodity == 'electricity' ? date('Y', strtotime($contract->account->contract_end_date)) : '' }}">
-                                                            <span>YEAR</span>
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">; Time</td>
-                                                        <td style="width: 20%;">
-                                                            <input type=" text">
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table style="width: 100%;">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="padding-right: 20px;">
-                                                                <input type="text" value="{{ $contract->commodity == 'electricity' ? $contract->volume : '' }}">
-                                                                <div>Estimated Annual Usage</div>
-                                                            </td>
-                                                            <td style="padding-right: 20px;">
-                                                                <input type="text">
-                                                                <div>Requested Supply Date</div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="text">
-                                                <div style="margin-bottom: 10px;">Electricity Account # / Service
-                                                    Delivery Identifier / Customer
-                                                    Number / Choice Service ID</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 50%">
-                                                            <span>
-                                                                <input type="checkbox">
-                                                                <span
-                                                                    style="vertical-align: top; line-height: 1;">Schedule
-                                                                    A Attached</span>
-                                                            </span>
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">Number of
-                                                            Locations:</td>
-                                                        <td>
-                                                            <input type="text">
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td style="width: 50%; vertical-align: top; padding-left: 10px;">
-                                <table style="border: 1px solid #004270;">
-                                    <tr>
-                                        <th
-                                            style="background: #004270; text-align: center; color: #FFF; text-transform: uppercase; padding: 5px;">
-                                            NATURAL GAS
-                                        </th>
-                                    </tr>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">Columbia Gas</span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">Dominion Energy Ohio</span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">Duke Energy</span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="radio">
-                                                            <span style="font-size: 8px">Vectren</span>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 1px; white-space: nowrap;">
-                                                            <span>
-                                                                <input type="checkbox">
-                                                                <span style="vertical-align: top; line-height: 1;">Fixed
-                                                                    Price:</span>
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" {{ $contract->commodity == 'gas' ? $contract->current_rate : '' }}>
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">month(s) at $</td>
-                                                        <td>
-                                                            <input type="text" value="">
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">
-                                                            /kWh
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <span>
-                                                                <input type="checkbox">
-                                                                <span
-                                                                    style="vertical-align: top; line-height: 1;">Variable
-                                                                    Month to Month Price per kWh (price will vary
-                                                                    monthly)</span>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div style="height: 22px"></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 1px; white-space: nowrap;">
-                                                            <span>
-                                                                <span>Offer is valid until </span>
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" value="{{  $contract->commodity == 'gas' ? date('m', strtotime($contract->account->contract_end_date)) : '' }}">
-                                                            <span>MONTH</span>
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">,</td>
-                                                        <td>
-                                                            <input type="text" value="{{ $contract->commodity == 'gas' ? date('d', strtotime($contract->account->contract_end_date)) : '' }}">
-                                                            <span>DAY</span>
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">,</td>
-                                                        <td>
-                                                            <input type="text" value="{{ $contract->commodity == 'gas' ? date('Y', strtotime($contract->account->contract_end_date)) : '' }}">
-                                                            <span>YEAR</span>
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">; Time</td>
-                                                        <td style="width: 20%;">
-                                                            <input type="text" >
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table style="width: 100%;">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="padding-right: 20px;">
-                                                                <input type="text" value="{{ $contract->commodity == 'gas' ? $contract->volume : '' }}">
-                                                                <div>Estimated Annual Usage</div>
-                                                            </td>
-                                                            <td style="padding-right: 20px;">
-                                                                <input type="text">
-                                                                <div>Requested Supply Date</div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="text">
-                                                <div style="margin-bottom: 10px;">Electricity Account # / Service
-                                                    Delivery Identifier / Customer
-                                                    Number / Choice Service ID</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 50%">
-                                                            <span>
-                                                                <input type="checkbox">
-                                                                <span
-                                                                    style="vertical-align: top; line-height: 1;">Schedule
-                                                                    A Attached</span>
-                                                            </span>
-                                                        </td>
-                                                        <td style="width: 1px; white-space: nowrap;">Number of
-                                                            Locations:</td>
-                                                        <td>
-                                                            <input type="text">
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 100%;">
-                    <p style="margin-bottom: 15px;"><strong>AGREEMENT(s) DETAILS:</strong> SFE sets the prices (“Price”)
-                        that the Applicant
-                        pays for the Natural Gas and/or Electricity
-                        program (“Program”) (see Terms and Conditions for
-                        further details). The Applicant will buy their Natural Gas and/or
-                        Electricity for the above Service Address and/or the
-                        Service Address(es) as outlined in the Schedule A from
-                        SFE beginning on a date set by the Applicant's Natural Gas
-                        Company/Electric Distribution Utility (“NGC/EDU”) and will
-                        continue for the term selected above (“Term”).
-                        SFE may renew (includes automatic renewal) one or both of the
-                        Agreement(s) at the end of the Term. Please refer to
-                        Section 9 of the Terms and Conditions for details.</p>
-                    <p style="margin-bottom: 15px;"><strong>APPLICANT AWARENESS:</strong> The Applicant is the account
-                        holder and/or the
-                        Contact
-                        and is authorized to make account decisions.
-                        By choosing SFE as their natural gas
-                        and/or electricity supplier, retail natural gas supplier and/or certified electric
-                        services
-                        company, the NGC/EDU will
-                        continue to deliver the Applicant's Natural Gas
-                        and/or Electricity supply, read the Applicant's meter, bill the Applicant, and respond
-                        to
-                        any emergencies. Applicant
-                        acknowledges that it is a mercantile customer
-                        and consumes more than 700,000 kilowatt hours of aggregated Electricity per year or
-                        consumes
-                        more than 500,000 cubic
-                        feet of aggregated Natural Gas per year
-                        (“Mercantile Customer”).</p>
-                    <p style="margin-bottom: 15px;">(By signing below, the Applicant agrees to purchase Natural Gas
-                        and/or Electricity supply
-                        service from SFE and
-                        acknowledges that they have read the Agreement(s)
-                        and understands and agrees to the Terms and Conditions of the Agreement(s)).</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p style="margin-bottom: 15px;">To: SFE Energy Ohio, Inc. (“SFE”) and the local Natural Gas Company
-                        and Electric
-                        Distribution Utility (“NGC/EDU”) for
-                        the Service Address on the Natural Gas and/
-                        or Electricity Agreements (“Agreement(s)”).</p>
+                <td style="font-size: 9px;">
+                    By executing this completed Pricing Attachment, Customer acknowledges agreement with the terms and
+                    conditions as set
+                    forth
+                    in the Disclosure Statement that accompanies this Pricing Attachment (together the “Agreement”).
                 </td>
             </tr>
         </tbody>
     </table>
-    <h4 style="text-align: center; text-transform: uppercase; margin-bottom: 10px; page-break-before:always">Terms &
-        Conditions</h4>
-    <ol style="font-size: 8px; padding-left: 15px;">
-        <li><strong>Agency.</strong> The Applicant hereby appoints SFE as agent for the purposes
-            of acquiring the
-            supplies necessary to meet the
-            Applicant's Natural Gas and/or Electricity
-            supply needs, and arranging, contracting for and administering transportation and
-            transmission facilities and related
-            services over transportation/transmission
-            facilities and those facilities of the NGC/EDU needed to deliver Natural Gas and/or
-            Electricity to the Applicant's
-            Service Address. The Agreement(s) is/are for the
-            sale and purchase of Natural Gas and/or Electricity and is/are between SFE and the
-            Applicant under which the Applicant
-            shall initiate Natural Gas and/or Electricity
-            supply and begin enrollment with SFE (the “Agreement(s)”). Subject to the Terms and
-            Conditions of the Agreement(s), SFE
-            agrees to sell and deliver, and the
-            Applicant agrees to purchase and accept the quantity of Natural Gas and/or
-            Electricity
-            supply, as estimated by SFE,
-            necessary to meet the requirements based upon
-            consumption data obtained by SFE or the delivery schedule of the Applicant's
-            NGC/EDU.
-            The amount of Natural Gas and/or
-            Electricity supply delivered under the
-            Agreement(s) is/are subject to change based upon data reflecting the Applicant's
-            consumption obtained by SFE or the
-            NGC/EDU delivery schedule. The Applicant
-            acknowledges that it is a Mercantile Customer. SFE reserves the right to cancel this
-            Agreement if it is determined that
-            the customer consumes less than 700,000 kilowatt
-            hours of aggregated Electricity per year or consumes less than 500,000 cubic feet of
-            aggregated Natural Gas per year.</li>
-        <li><strong>Length of Agreement(s).</strong> The Applicant acknowledges that the
-            commencement of the Agreement(s) begins on the date on which
-            the Applicant has signed the
-            Agreement(s) (“Start Date”) and SFE Energy has determined that the Applicant's
-            credit standing is satisfactory (see
-            Section 8). The Applicant also acknowledges that
-            the service under the Agreement(s) depends upon the date on which the Applicant's
-            NGC/EDU completes all applicable
-            switching and enrollment processes (“Supply
-            Date”) and shall begin with the next available meter reading after processing of the
-            request by the NGC/EDU and SFE. If
-            a specific Supply Date is requested on the
-            first page of this Agreement, SFE will use reasonable commercial efforts to begin
-            supply on or near the date requested.
-            If no Supply Date is requested, SFE shall use
-            reasonable commercial efforts to attempt to flow on the next available date. The
-            Applicant further acknowledges that the
-            timing for the NGC/EDU's completion of
-            the switching and enrollment processes is beyond SFE's control, and SFE makes no
-            warranties as to the Applicant's Supply
-            Date. The end date of the Agreement(s)
-            is/are the meter reading date after the entire Term of the Agreement(s) (“End Date”)
-            (as selected by the Applicant on
-            the first page of the Agreement(s)) from the
-            Supply Date, plus any time required to obtain a final meter read. The Term of the
-            Applicant's Agreement(s) is/are the
-            period from the Supply Date to the End Date.</li>
-        <li><strong>Natural Gas and/or Electricity Billing.</strong> The Applicant acknowledges
-            that their NGC/EDU will bill them for the Natural Gas
-            and/or Electricity delivered to the Service
-            Address(es) and for certain distribution access charges, and any other fees, charges
-            or taxes relating to the delivery
-            of Natural Gas and/or Electricity delivered to the
-            Service Address(es) and that the type and frequency of such billing will be in
-            accordance with the Applicant's NGC/EDU
-            billing practice and the Applicant's NGC/EDU
-            usual billing cycle. The Applicant further acknowledges that, at some point during
-            the Term of the Agreement, SFE may
-            choose to bill the Applicant directly for all costs
-            associated with the supply and delivery of Natural Gas and/or Electricity to the
-            Service Address(es), provided that the
-            Applicant will not have to pay any additional
-            fees or costs as a result of SFE billing the Applicant directly above and beyond the
-            fees and costs mentioned herein. In
-            the event that SFE bills the Applicant directly,
-            SFE's billing terms will be as follows: SFE shall invoice the Applicant monthly for
-            all amounts due to SFE pursuant to
-            the Agreement for the applicable billing period.
-            The Applicant shall pay to SFE in full any amounts owing by the due date indicated
-            on the invoice. If the Applicant
-            fails to pay on time, the Applicant shall pay 1%
-            interest per month (12% per annum) on the unpaid amount, from the due date of
-            payment until payment is received. SFE or
-            the Applicant's NGC/EDU is entitled to
-            revise any bill if necessary to account for any reassessment by the Applicant's
-            NGC/EDU. The Applicant's NGC/EDU will
-            determine the amount of Natural Gas and/
-            or Electricity that is delivered to the Service Address(es) and may do so by
-            periodic meter reading, estimation, or
-            allocation and SFE will be entitled to charge based
-            on this information. The Applicant shall be responsible for all costs that relate to
-            any failure to pay, including
-            charges for dishonored checks, and any legal and collection costs. SFE shall be
-            entitled to revise any bill after it is
-            rendered, regardless of payment by the Applicant, to account for any reassessment
-            made by SFE or by the
-            Applicant's NGC/EDU resulting from an actual meter read or consumption adjustment.
-            If the Applicant's NGC/EDU bills the
-            Applicant directly and the Applicant fails
-            to meet any payments for the Applicant's Natural Gas and/or Electricity service(s),
-            the Applicant's service may be
-            terminated in accordance with the NGC/EDU tariffs.
-            If SFE chooses to bill the Applicant directly and the Applicant fails to pay or meet
-            any payments for the Applicant's
-            Natural Gas and/or Electricity, SFE may terminate
-            this Agreement with at least fourteen (14) days' written notice. The Applicant may
-            request from SFE, twice within a
-            twelve-month period, up to twenty-four months
-            of the Applicant's payment history without charge.</li>
-        <li><strong>Pricing.</strong> The Price that the Applicant will pay for Natural Gas
-            and/or Electricity from SFE, is as selected on the first
-            page of the Agreement(s). In addition, SFE may
-            pass through or allocate, as the case may be, any increase or decrease in our costs,
-            or cost components related to the
-            Natural Gas and/or Electricity and related
-            products and services that result from implementation of a new, or changes to
-            (including changes to rate calculation)
-            any law, rule, regulation, ordinance, statute,
-            judicial decision, administrative order, ISO business practice or protocol, NGC/EDU
-            or ISO tariff, rule of any
-            regulatory commission or agency with jurisdiction in the
-            state where the accounts are located. The Price that SFE charges does not include
-            applicable taxes and charges related
-            to NGU/EDU distribution, delivery, service and
-            other related NGC/EDU service. If, due to a change in market conditions, SFE wishes
-            to lower the price per kWh/ccf/Mcf
-            charged to the Applicant under an existing
-            Agreement(s), it may do so without consent provided there are no other changes to
-            the Terms and Conditions to the
-            Agreement(s).
-            Fixed Price for Electricity: If the Applicant selected the Fixed Price, the Price
-            per kWh includes applicable costs for
-            delivery to the applicable Load Bus, excluding
-            applicable state and local tax. In addition to the Price for the SFE program
-            selected, You will pay NGC/ EDU charges.
-            Fixed Price for Natural Gas: If the Applicant selected a Fixed Price, the Price per
-            therm includes applicable costs for
-            transmission and delivery for Natural Gas delivered to Your NGC/EDU's city gate
-            excluding applicable state and local
-            tax. In addition to the Price for the SFE program selected, You will pay NGC/ EDU
-            charges.
-            Variable Price for Electricity: If the Applicant selected the Variable Price, the
-            Price per kWh will be established
-            prior to the month of flow and may vary each month
-            based upon the costs incurred by SFE to provide the service through procurement in
-            RTO-administered and/or other short
-            term markets, as well as the cost for
-            supply and associated products that SFE requires to meet the Applicant's Electricity
-            supply. These associated products
-            may include, but not limited to, energy, imbalance energy, losses, capacity,
-            transmission, ancillary services, alternate
-            and renewable energy requirements, other RTO charges, a margin and applicable taxes.
-            The
-            Variable Price will be set at SFE's discretion.<br>Variable Price for Natural Gas:
-            If the Applicant selected the Variable Price, the Price per Ccf/Mcf/therm/Dth will
-            be
-            established prior to the month of flow and may
-            vary each month based upon Natural Gas market pricing, transportation costs, storage
-            costs, utility charges, balancing
-            costs, loss factors, pooling charges, credit
-            costs, a margin, other market price related factors and applicable taxes. The
-            Variable Price will be set at SFE's
-            discretion.</li>
-        <li><strong>Title.</strong> All Natural Gas and/or Electricity sold under the
-            Agreement(s) shall be delivered to a location considered the
-            “Point of Delivery”, which shall be at the
-            NGC City Gate (located outside of the municipality of the Service Address) or EDU
-            load bus, and shall constitute the
-            point at which title transfers and the sale occurs.
-            SFE will indemnify and hold the Applicant harmless from all taxes, royalties, fees
-            or other charges incurred before
-            title passes with respect to the Natural Gas and/
-            or Electricity provided in these Agreement(s).</li>
-        <li><strong>Cancellation Provision.</strong> Regardless of the Price the Applicant
-            selected, the Applicant is liable for all SFE charges
-            until the Applicant returns to the NGC/EDU default
-            service or the Applicant switches to another supplier. The Applicant may be
-            responsible for a switching fee. Upon
-            cancellation of the Agreement(s), a final bill will
-            be rendered within twenty (20) days after the final scheduled meter reading;
-            however, if a final meter reading is
-            unavailable, an estimate of consumption will be
-            used in the final bill, which will be trued-up subsequent to the final meter
-            reading. Any cancellation will become
-            effective on a date determined by the Applicant's
-            NGC/EDU. If a new provider is not selected upon cancellation of the Agreement(s),
-            the Applicant shall be returned to its
-            NGC/EDU utility supply service. To
-            cancel/rescind the Agreement(s), the Applicant should contact SFE by telephone or in
-            writing at the contact information
-            provided (see Section 14). If the Applicant
-            plans to move to another location, the Applicant may transfer the Agreement(s) by
-            notifying SFE (see Section 14), of the
-            Applicant's new Service Address at least
-            forty-five (45) days in advance of the anticipated relocation date. Upon receipt of
-            such notice, SFE will use reasonable
-            commercial efforts to continue the program
-            contemplated by the Agreement(s) for the remaining Term of the Agreement(s) at the
-            new Service Address. If the
-            Applicant's utility provides SFE with a notification of
-            a change of address within the Applicant's NGC/EDU utility supply service and when
-            SFE receives such notice, it will use
-            reasonable commercial efforts to continue
-            the program contemplated by the Agreement(s) for the remaining Term of the
-            Agreement(s) at the new Service Address.
-            Otherwise, the Agreement(s) shall be
-            automatically cancelled, and if the Applicant selected a Fixed Price, exit fees of
-            $0.18/ccf ($1.80/Mcf) and $0.015 per
-            kWh for the estimated usage of the Natural
-            Gas and/or Electricity supply for the remainder of each Agreement shall apply. If
-            the Applicant switches back to the
-            Applicant's EDU service, there is no guarantee
-            that the Applicant may or may not be served under the same rates, terms, and
-            conditions that apply to other customers
-            served by the EDU. The Applicant also
-            agrees to notify SFE in writing of any other change of information (including a
-            change of account number, contact
-            information or mailing address) at least sixty (60)
-            days prior to such change taking effect or immediately if the change is to take
-            effect in less than sixty (60) days. The
-            Applicant agrees that SFE may terminate the
-            Agreement(s) at any time by providing forty-five (45) days' written notice if SFE is
-            unable or is prevented from
-            complying with any of the obligations it owes to the
-            NGU/EDU or if the NGU/EDU is unable or is prevented from complying with any of the
-            obligations it owes to SFE. If SFE
-            terminates the Fixed Price Agreement(s),
-            unless for a reason out of the Applicant's control, early termination fees of
-            $0.18/ccf ($1.80/Mcf) and $0.015 per kWh
-            for the estimated usage of the Natural Gas
-            and/or Electricity supply for the remainder of each Agreement shall apply.</li>
-        <li><strong>Assignment.</strong> The Applicant may not assign the Applicant's interests
-            in, and/or delegate the Applicant's obligations under
-            the Agreement(s) without the express
-            written consent of SFE. SFE may sell, transfer, pledge, or assign the accounts
-            receivable, revenues, or proceeds hereof,
-            in connection with any financing agreement,
-            purchase of accounts receivables program or billing services agreement, and may
-            assign the Agreement(s) and the rights
-            and obligations thereunder, to another
-            energy supplier, energy services company or other entity as authorized by the PUCO,
-            by providing the Applicant with at
-            least forty-five (45) days' notice.</li>
-        <li><strong>Information Release Authorization.</strong> The Applicant acknowledges and
-            authorizes SFE to obtain and review information
-            regarding the Applicant's credit history
-            from credit reporting agencies and the following information from the NGC/EDU:
-            consumption history; billing
-            determinants; NGC/EDU account number; credit
-            information; and public assistance status. This information will not be disclosed to
-            a third party unless required by
-            law. The Applicant's social security number and/or
-            account number(s) shall not be released without the Applicant's affirmative written
-            consent except where such release is
-            required by court order or by PUCO order
-            or rule. The Applicant's execution of the Agreement(s) shall constitute
-            authorization for the release of this
-            information to SFE. The Applicant consents to provide
-            SFE with a copy of the Applicant's NGC/EDU bill(s) in order to process the
-            Agreement(s) with the NGC/EDU. SFE does not
-            guarantee to provide or return the bill
-            or a copy of the bill to the Applicant. This authorization will remain in effect
-            during the initial Term and any renewal
-            Term of the Agreement(s). The Applicant may
-            rescind this authorization at any time by providing written notice to SFE or by
-            calling SFE at 1-866-255-3844. SFE
-            reserves the right to cancel the Agreement(s) in
-            the event the Applicant rescinds the authorization.</li>
-        <li><strong>Agreement(s) Expiration/Renewal Provisions/Change in Terms:</strong> Fixed
-            Price Agreement(s): If the Applicant selected a Fixed
-            Price, at the end of the initial Term of
-            the Agreement(s), SFE will automatically renew this Agreement(s). If SFE does not
-            receive notice, either written or
-            verbal, from the Applicant at least forty-five (45)
-            days prior to the end of the initial Term of the Agreement(s), the Agreement(s) will
-            continue on a month to month basis
-            at a monthly Variable price per kWh/ccf/
-            Mcf, which is established prior to the month of flow and remains unchanged for the
-            duration of each month.<br>
-            Variable Price Agreement(s): If the Applicant selected a Variable Price and the
-            Applicant wishes to terminate the
-            Agreement(s) at any time, they can do so without
-            penalty by providing SFE with written notice. Once the Applicant has provided SFE
-            with their notice, SFE will return the
-            Applicant to their NGU/EDU supply service
-            at the next available service period.</li>
-        <li><strong>Material Change.</strong> In the event that additional charges, fees, or
-            other costs are incurred or applied by any regulatory
-            body, ISO, NGC/EDU or other entity, as a result
-            of a material change to Applicant's consumption, capacity/transmission obligation,
-            or other components required to serve
-            the Applicant, and SFE incurs material
-            incremental costs required to maintain the same quantity, location or level of
-            services contemplated in this Agreement,
-            SFE may charge the Applicant for the purchase/
-            liquidation of energy or related services bought or sold as a result of said
-            Material Change. SFE shall pass incremental
-            costs along to Applicant at no markup.</li>
-        <li><strong>Warranty.</strong> The Agreement(s) for Natural Gas and/or Electricity,
-            including applicable attachments, constitutes the entire
-            Agreement(s) for the supply of Natural
-            Gas and/or Electricity between the Applicant and SFE. SFE makes no representations
-            or warranties other than those
-            expressly set forth in the Agreement(s), and SFE
-            expressly disclaims all other warranties, express or implied, including
-            merchantability and fitness for a particular
-            use.</li>
-        <li><strong>Force Majeure.</strong> SFE will make commercially reasonable efforts to
-            provide Natural Gas and/or Electricity hereunder but SFE
-            does not guarantee a continuous
-            supply of Natural Gas and/or Electricity to the Applicant. Certain causes and events
-            out of the control of SFE (“Force
-            Majeure Events”) may result in interruptions in
-            service. SFE will not be liable for any such interruptions caused by a Force Majeure
-            Event, and SFE is not and shall not
-            be liable for damages caused by Force Majeure
-            Events. Force Majeure Events shall include but are not limited to acts of God, fire,
-            flood, storm, terrorism, war, civil
-            disturbance, acts of any governmental authority,
-            accidents, strikes, labor disputes or problems, required maintenance work, inability
-            to access the necessary
-            distribution or transmission system, non-performance by the
-            NGC/EDU (including, but not limited to, a facility outage on its Natural Gas and/or
-            Electricity supply distribution
-            lines), changes in laws, rules, or regulations of any
-            governmental authority or any other cause beyond SFE's control.</li>
-        <li><strong>Liability.</strong> The remedy in any claim or suit by the Applicant will be
-            solely limited to direct actual damages. By entering
-            into the Agreement(s), the Applicant waives
-            any right to any other remedy in law or equity. In no event will either SFE or the
-            Applicant be liable for
-            consequential, incidental, indirect, special or punitive
-            damages. These limitations apply without regard to the cause of any liability or
-            damages. There are no third-party
-            beneficiaries to the Agreement(s).</li>
-        <li><strong>Contact Information.</strong> The Applicant may contact SFE's Customer Care
-            at 1-866-255-3844 Monday through Friday 9:00 a.m. -
-            9:00 p.m. and Saturday 12:00 p.m. - 6:00
-            p.m. EST (Customer Care hours subject to change). The Applicant may write to SFE at:
-            P.O. BOX 967, Buffalo, NY,
-            14240-0967 or via email at cs@sfeenergy.com. SFE's
-            fax number is 1-877-425-7010. The Applicant may contact the Applicant's NGC/EDU at:
-            American Electric Power
-            (AEP)-[Columbus Southern Power at Ohio Power] at
-            1-800-672-2231 or at www.aepohio.com; Columbia Gas at 1-800-344-4077 or at
-            www.columbiagasohio.com; Dayton Power & Light
-            at 1-800-433-8500 or at www.
-            dpandl.com; Dominion Energy Ohio at 1-800-362-7557 or at www.dominionenergy.com;
-            Duke Energy at 1-800-544-6900 or at
-            www.duke-energy.com; Ohio Edison
-            at 1-800-633-4766; The Illuminating Company at 1-800-589-3101; Toledo Edison at
-            1-800-447-3333; Vectren at
-            1-800-227-1376 or at www.vectren.com.</li>
-        <li><strong>Dispute Resolution</strong>. In the event of a question or concern, please
-            contact SFE. The Applicant should contact SFE by
-            telephone or in writing at the contact
-            information provided above in Section 14. The parties agree to use their best
-            efforts to resolve any dispute. If the
-            Applicant's complaint is not resolved after the Applicant
-            has called SFE, or for general utility information, business customers may contact
-            the Public Utilities Commission of
-            Ohio (PUCO) for assistance at 1-800-686-7826
-            (toll free) from 8 a.m. to 5 p.m. weekdays, or at www.puco.ohio.gov. Hearing or
-            speech impaired customers may contact
-            the PUCO via 7-1-1 (Ohio relay service).
-        </li>
-        <li><strong>Taxes and Laws.</strong> Except as otherwise provided in the Agreement(s) or
-            provided by law, all taxes of whatsoever kind,
-            nature, and description due and payable
-            with respect to service provided under the Agreement(s), shall be paid by the
-            Applicant, and the Applicant agrees to
-            indemnify SFE and hold SFE harmless from and
-            against any and all such taxes. The Agreement(s) are subject to present and future
-            legislation, orders, rules,
-            regulations, or decisions of a duly constituted governmental
-            authority having jurisdiction over the Agreement(s) or the services to be provided
-            hereunder. If the Applicant is exempt
-            of any taxes it is the Applicant's responsibility
-            to contact SFE Customer Care (see Section 14) to provide such written notification,
-            including written notification of
-            renewed tax exemption. Otherwise, until the
-            Applicant provides such proof, SFE is not required to recognize any exemption or
-            refund/credit previously paid taxes.
-            Tax exemption will only occur on the next meter
-            read bill after such notice is received and acknowledged. The Agreement(s) shall be
-            construed under and shall be
-            governed by the laws of Ohio without regard to
-            the application of its conflicts of law principles.</li>
-        <li><strong>ARBITRATION.</strong> THE PARTIES AGREE THAT, AT THE REQUEST OF EITHER
-            PARTY, ANY DISPUTE, CLAIM, OR CONTROVERSY ARISING OUT OF
-            OR
-            RELATING TO THIS AGREEMENT(S), INCLUDING ITS EXISTENCE, PERFORMANCE, INTERPRETATION,
-            BREACH, VALIDITY, OR TERMINATION,
-            AND
-            WHICH ARE NOT OTHERWISE RESOLVED BY THE PARTIES SHALL BE SUBJECT TO AND FINALLY
-            RESOLVED BY INDIVIDUAL ARBITRATION ONLY,
-            EXCEPT THAT ANY DISPUTE OR CLAIM THAT MAY BE BROUGHT IN SMALL CLAIMS COURT OR ANY
-            CLAIM THAT CANNOT BE ARBITRATED UNDER
-            APPLICABLE LAW SHALL NOT BE SUBJECT TO ARBITRATION. ANY SUCH ARBITRATION SHALL BE
-            THE PARTIES' SOLE AND EXCLUSIVE
-            REMEDY. BY
-            AGREEING TO ARBITRATION, YOU UNDERSTAND THAT ANY SUCH DISPUTE WILL BE DECIDED BY A
-            NEUTRAL THIRD PARTY OUTSIDE OF COURT
-            AND THAT YOU AND SFE ARE WAIVING YOUR RIGHTS TO SUE IN A COURT OF LAW AND TO HAVE A
-            JURYTRIAL REGARDING SUCH DISPUTE.
-            YOU AGREE THAT SUCH ARBITRATION PROVIDES YOU WITH A MEANINGFUL AND AFFORDABLE WAY TO
-            HANDLE DISPUTES RELATED TO THIS
-            AGREEMENT. The arbitration will be administered in accordance with the Rules of
-            Arbitration of the state where the
-            Service Address is located.
-            The arbitrator(s) shall not have authority to join or combine the claims of more
-            than one person or to hear or decide
-            any class, collective or
-            representative action of any kind against You or SFE. The award of the arbitrator
-            shall be final and binding and
-            judgment on it may be entered
-            in any court of competent jurisdiction. The arbitration shall take place in the
-            county seat of the county in which You
-            reside. You and SFE shall
-            each pay their own filing and legal fees and other expenses, unless provided
-            otherwise by law or this Agreement. The
-            interpretation and
-            enforcement of this arbitration provision shall be governed by the Federal
-            Arbitration Act. The arbitrator(s) selected
-            according to the terms set
-            forth herein shall determine the arbitrability of any matter brought to them, and
-            their decision shall be final and
-            binding on the Parties in all
-            respects. This provision shall survive termination of this Agreement.</li>
-        <li><strong>CLASS ACTION WAIVER AND OTHER RESTRICTIONS.</strong> ARBITRATION SHALL
-            PROCEED SOLELY ON AN INDIVIDUAL BASIS WITHOUT THE RIGHT
-            FOR ANY CLAIMS TO BE ARBITRATED ON A CLASS ACTION BASIS OR ON BASES INVOLVING CLAIMS
-            BROUGHT IN A PURPORTED
-            REPRESENTATIVE
-            CAPACITY ON BEHALF OF OTHERS. YOU AND SFE EXPRESSLY WAIVE THE RIGHT TO COMMENCE, BE
-            A PARTY TO, JOIN IN OR BE AN ACTUAL
-            OR
-            PUTATIVE CLASS MEMBER OF ANY CLASS, COLLECTIVE, GROUP, JOINT, OR RE PRESENTATIVE
-            ACTION OF ANY KIND IN ANY FORUM,
-            INCLUDING
-            IN COURT AND ARBITRATION, ARISING FROM OR RELATED TO THIS AGREEMENT. The
-            arbitrator's authority to resolve and make
-            written awards
-            is limited to claims between You and SFE alone. Claims may not be joined or
-            consolidated unless agreed to in writing by
-            all Parties. No arbitration award or decision will have any preclusive effect as to
-            issues or claims in any dispute with
-            anyone who is not a named Party to the arbitration. Notwithstanding any other
-            provision in these Terms and Conditions,
-            and without waiving either Party's right of appeal, if any portion
-            of this “Class Action Waiver and Other Restrictions” provision is deemed invalid or
-            unenforceable, then the entire
-            Arbitration Provision (other
-            than this sentence) shall not apply. This provision shall survive termination of
-            this Agreement.</li>
-        <li><strong>WAIVER OF JURY TRIAL.</strong> SUBJECT TO ANY AGREEMENT TO ARBITRATE BETWEEN
-            YOU AND SFE YOU AND SEF WAIVE THE RIGHT TO A JURY
-            TRIAL IN ANY CLAIM OR DISPUTE ARISING BETWEEN THE PARTIES ARISING FROM OR RELATED TO
-            THIS AGREEMENT THAT PROCEEDS IN
-            COURT,
-            AND AGREE THAT THE CLAIM OR DISPUTE WILL BE HEARD AND DECIDED ONLY BY A JUDGE. This
-            provision shall survive termination
-            of this
-            Agreement.</li>
-        <li><strong>Delay or Failure to Exercise Rights.</strong> No partial performance, delay,
-            or failure on the part of SFE in exercising any
-            rights under the Agreement(s), and no partial
-            or single exercise thereof, shall constitute a waiver of such rights or of any other
-            rights hereunder.</li>
-        <li><strong>Parties Bound.</strong> The Agreement(s) is/are binding upon the parties
-            hereto and their respective successors and legal
-            assigns.</li>
-    </ol>
-    <table style="width: 100%; border-collapse: collapse; page-break-before:always">
+    <table style="margin-top: 10px; border-collapse: collapse;">
         <tr>
-            <td style="text-align: center; border: 1px solid #2F557C;">
-                <h4 style="margin-bottom: 0px;">Environmental Disclosure Information-Quarterly
-                    Comparisons</h4>
+            <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: left">
+                CUSTOMER INFORMATION
+            </th>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse">
+        <tr>
+            <th style="width: 1px; white-space: nowrap; text-align: left;border: 1px solid #444;">Company:</th>
+            <td colspan="2" style="text-align: left; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 1px; white-space: nowrap; text-align: left; border: 1px solid #444;">Billing Address:</th>
+            <td colspan="2" style="text-align: left; border: 1px solid #444;">{{ $contract->customer->billing_address }}</td>
+        </tr>
+        <tr>
+            <th style="width: 1px; white-space: nowrap; text-align: left; border: 1px solid #444; width: 50%;">City:
+            </th>
+            <td style="width: 40%;text-align: left; border: 1px solid #444;">{{ $contract->customer->city }}</td>
+            <td style="text-align: left; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th style="width: 1px; white-space: nowrap; text-align: left; border-right: 1px solid #444;">
+                            State:</th>
+                        <td style="text-align: left; border-right: 1px solid #444;">{{ $contract->customer->state }}</td>
+                        <th style="width: 1px; white-space: nowrap; text-align: left; border-right: 1px solid #444;">
+                            Zip:</th>
+                        <td style="text-align: left;">{{ $contract->customer->zip }}</td>
+                    </tr>
+                </table>
             </td>
         </tr>
         <tr>
-            <td style="text-align: center; border: 1px solid #2F557C;">SFE Energy Ohio, Inc.</td>
+            <th style="width: 1px; white-space: nowrap; text-align: left; border: 1px solid #444;">Contact Phone:</th>
+            <td style="text-align: left; border: 1px solid #444;"></td>
+            <td style="text-align: left; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th style="width: 1px; white-space: nowrap; text-align: left; border-right: 1px solid #444;">
+                            Email:
+                        </th>
+                        <td style="text-align: left;">{{ $contract->customer->email }}</td>
+                    </tr>
+                </table>
+            </td>
         </tr>
         <tr>
-            <td style="text-align: center; border: 1px solid #2F557C;">Projected Data for the 2022
-                Calendar Year</td>
+            <th style="width: 1px; white-space: nowrap; text-align: left; border: 1px solid #444;">Federal Tax ID:</th>
+            <td style="text-align: left; border: 1px solid #444;"></td>
+            <td style="text-align: left; border: 1px solid #444;">
+                <div>Tax Exempt (If “yes” please submit copy of certificate with contract):</div>
+                <input type="checkbox"><span>Yes</span>
+                <input type="checkbox"><span>No</span>
+            </td>
+        </tr>
+    </table>
+    <table style="margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: left">
+                ACCOUNT INFORMATION <small>(if more than 1 account, please complete page 2):</small>
+            </th>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse">
+        <tr>
+            <th style="width: 1px; white-space: nowrap; text-align: left;border: 1px solid #444;">Account #:</th>
+            <td colspan="2" style="text-align: left; border: 1px solid #444;">{{ $contract->account->account_number }}</td>
         </tr>
         <tr>
-            <td style="text-align: center; border: 1px solid #2F557C;">Actual Data for the Period
-                01/01/22 to 03/31/22</td>
+            <th style="width: 1px; white-space: nowrap; text-align: left; border: 1px solid #444;">Service Address:</th>
+            <td colspan="2" style="text-align: left; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 1px; white-space: nowrap; text-align: left; border: 1px solid #444; width: 50%;">City:
+            </th>
+            <td style="width: 40%;text-align: left; border: 1px solid #444;">{{ $contract->customer->city }}</td>
+            <td style="text-align: left; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th style="width: 1px; white-space: nowrap; text-align: left; border-right: 1px solid #444;">
+                            State:</th>
+                        <td style="text-align: left; border-right: 1px solid #444;">{{ $contract->customer->state }}</td>
+                        <th style="width: 1px; white-space: nowrap; text-align: left; border-right: 1px solid #444;">
+                            Zip:</th>
+                        <td style="text-align: left;">{{ $contract->customer->zip }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 1px; white-space: nowrap; text-align: left; border: 1px solid #444;">Mailing
+                Address:</th>
+            <td colspan="2" style="text-align: left; border: 1px solid #444;"></td>
         </tr>
     </table>
-    <table style="width: 100%;border-collapse: collapse;">
-        <tbody>
-            <tr>
-                <td style="width: 20%; padding: 10px; vertical-align: top;border: 1px solid #2F557C">
-                    <strong>Generation
-                        Resource Mix</strong><br><br>
-                    A comparison
-                    between the sources
-                    of generation
-                    projected to be used
-                    to generate this
-                    product and the actual
-                    resources used during
-                    this period.
-                </td>
-                <td style="border: 1px solid #2F557C; padding: 5px">
-                    <img src="images/7362332.jpg" style="width: 100%;">
-                </td>
-                <td style="border: 1px solid #2F557C; padding: 5px">
-                    <img src="images/424343543.jpg" style="width: 100%;">
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%; padding: 10px; vertical-align: top;border: 1px solid #2F557C">
-                    <strong>Generation
-                        Environmental
-                        Characteristics</strong><br><br>
-                    A description of
-                    the characteristics
-                    associated with
-                    each possible
-                    generation resource.
-                </td>
-                <td colspan="2" style="border: 1px solid #2F557C; padding: 20px">
-                    <table style="width: 100%;border-collapse: collapse;">
-                        <tbody>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Biomass Power
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">Air Emissions
-                                    and
-                                    Solid Waste</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Coal Power
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">Air Emissions
-                                    and
-                                    Solid Waste</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Hydro Power
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">Wildlife Impacts
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Natural Gas Power
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">Air Emissions
-                                    and
-                                    Solid Waste</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Nuclear Power
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">Radioactive
-                                    Waste</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Oil Power
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">Air Emissions
-                                    and
-                                    Solid Waste</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Other Sources
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">Unknown Impacts
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Solar Power
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">No Significant
-                                    Impacts
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Unknown Purchased Resources
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">Unknown Impacts
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">
-                                    Wind Power
-                                </td>
-                                <td style="border: 1px solid #2F557C; padding: 2px 4px; font-size: 9px">Wildlife Impacts
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%; padding: 10px; vertical-align: top; border: 1px solid #2F557C">
-                    <strong>Air
-                        Emissions</strong><br><br>
-                    Product-specific
-                    projected and actual
-                    air emissions for this
-                    period compared to
-                    the regional average
-                    air emissions.
-                </td>
-                <td colspan="2" style="border: 1px solid #2F557C; padding: 5px">
-                    <img src="images/5234653.jpg" style="width: 100%;">
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%; padding: 10px; vertical-align: top;border: 1px solid #2F557C">
-                    <strong>Radioactive
-                        Waste</strong><br><br>
-                    Radioactive waste
-                    associated with the
-                    product.
-                </td>
-                <td colspan="2" style="border: 1px solid #2F557C; padding: 10px">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <tr>
-                            <td style="text-align: center;border: 1px solid #2F557C; padding: 2px 4px;"">Type:</td>
-                            <td style=" text-align: center;border: 1px solid #2F557C; padding: 2px 4px;"" colspan="2">
-                                Quantity:</td>
-                        </tr>
-                        <tr>
-                            <td style="border: 1px solid #2F557C; padding: 2px 4px;">High-Level Radioactive
-                                Waste</td>
-                            <td style="border: 1px solid #2F557C; padding: 2px 4px;">Unknown</td>
-                            <td style="border: 1px solid #2F557C; padding: 2px 4px;">Lbs./1,000 kWh</td>
-                        </tr>
-                        <tr>
-                            <td style="border: 1px solid #2F557C; padding: 2px 4px;">Low-Level Radioactive
-                                Waste</td>
-                            <td style="border: 1px solid #2F557C; padding: 2px 4px;">Unknown</td>
-                            <td style="border: 1px solid #2F557C; padding: 2px 4px;">Ft5/1,000 kWh</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3" style="border: 1px solid #2F557C; padding: 10px">
-                    With in-depth analysis, the environmental characteristics of any form of
-                    electric
-                    generation will reveal benefits as
-                    well
-                    as costs. For further information, contact SFE Energy Ohio, Inc. via
-                    email at
-                    cs@sfeenergy.com or by phone at
-                    1-866-255-3844
-                </td>
-            </tr>
-        </tbody>
+    <table style="margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: left">
+                EDC/ELECTRIC UTILITY (CHECK ONE): <small>Pennsylvania Power (Penn Power)</small>
+            </th>
+        </tr>
     </table>
+    <table style="border-collapse: collapse">
+        <tr>
+            <td colspan="2" style="text-align: left; border: 1px solid #444;">
+                <table>
+                    <tr>
+                        <td><input type="checkbox">Duquesne Light Co</td>
+                        <td><input type="checkbox">Metropolitan Edison</td>
+                        <td><input type="checkbox">PECO Energy</td>
+                        <td><input type="checkbox">Penelec</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox">Penn Power</td>
+                        <td><input type="checkbox">PPL Electric</td>
+                        <td><input type="checkbox">West Penn Power</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table style="margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: left">
+                CONTRACT END TERM: {{ $contract->contract_end_date }}
+            </th>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse">
+        <tr>
+            <td colspan="2" style="text-align: left; border: 1px solid #444;">
+                <table style="width: auto;">
+                    <tr>
+                        <td>
+                            <input type="text" style="min-width: 100px;">
+                        </td>
+                        <td style="width: 1px; white-space: nowrap;">Months</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table style="margin-top: 10px;border-collapse: collapse">
+        <tr>
+            <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: left">
+                PRICE STRUCTURE: FIXED
+            </th>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse">
+        <tr>
+            <th style="border: 1px solid #444;">
+                Generation/Supply Price (kWh)* {{ $contract->current_rate }}
+            </th>
+            <th style="border: 1px solid #444;">
+                Contract Start Date (MM/YY)* {{ $contract->contract_start_date }}
+            </th>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #444;">
+                <table style="margin: auto; width: 200px;">
+                    <tr>
+                        <td>
+                            <input type="text">
+                        </td>
+                        <td style="width: 1px; white-space: nowrap;">$/kWh</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="border: 1px solid #444;">
+                <table style="margin: auto; width: 200px;">
+                    <tr>
+                        <td>
+                            <input type="text">
+                        </td>
+                        <td style="width: 1px; white-space: nowrap;">/</td>
+                        <td>
+                            <input type="text">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <p style="margin: 10px 0;font-style: italic;">
+        *The Contract Start Date is an estimate only and shall be determined by your local electric utility in
+        accordance with
+        its
+        rules and practices regarding the switching of customers to suppliers. Energy Harbor has no liability related to
+        the
+        date
+        on which your electric utility switches your service to Energy Harbor. Your service from Energy Harbor will be
+        provided for the contract term indicated above, once your service has been switched to Energy Harbor.</p>
+    <p style="margin: 10px 0;">
+        I hereby agree to purchase electricity from Energy Harbor under the terms and conditions as set forth in the
+        Disclosure
+        Statement that
+        were included and presented with this offer (hereinafter “Terms and Conditions”). I understand and agree to
+        those Terms
+        and
+        Conditions. I affirm that I am an authorized representative of the company listed below and that I have the
+        authority to
+        make decisions
+        on behalf of the company regarding its choice of Energy Harbor for its electric generation supplier. Energy
+        Harbor has
+        my permission
+        to obtain the past and current electric usage data of the company for the accounts listed below.</p>
     <table>
+        <tr>
+            <td colspan="2">
+                <p style="margin-bottom: 5px;">
+                    <strong>Accepted and Agreed to:</strong>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%;">
+                <strong>Customer:</strong>
+                <table>
+                    <tr>
+                        <td style="padding: 0px;width: 1px; white-space: nowrap">Sign:</td>
+                        <td style="vertical-align: bottom; padding: 0px;">
+                            <span style="width: 100%; border-bottom: 1px solid #444; display:block;"></span>
+                        </td>
+                    </tr>
+                </table>
+                <table style="margin-bottom: 5px;">
+
+                    <tr>
+                        <td style="padding: 0px;width: 1px; white-space: nowrap">Print Name:</td>
+                        <td style="vertical-align: bottom; padding: 0px;">
+                            <span style="width: 100%; border-bottom: 1px solid #444; display:block;"></span>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="padding: 0px;width: 1px; white-space: nowrap">Title:</td>
+                        <td style="vertical-align: bottom; padding: 0px;">
+                            <span style="width: 100%; border-bottom: 1px solid #444; display:block;"></span>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+
+                    <tr>
+                        <td style="padding: 0px;width: 1px; white-space: nowrap">Date:</td>
+                        <td style="vertical-align: bottom; padding: 0px;">
+                            <span style="width: 100%; border-bottom: 1px solid #444; display:block;"></span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <strong>Energy Harbor LLC:</strong>
+                <table>
+                    <tr>
+                        <td style="padding: 0px;width: 1px; white-space: nowrap">Sign:</td>
+                        <td style="vertical-align: bottom; padding: 0px;">
+                            <span style="width: 100%; border-bottom: 1px solid #444; display:block;"></span>
+                        </td>
+                    </tr>
+                </table>
+                <table style="margin-bottom: 5px;">
+                    <tr>
+                        <td style="padding: 0px;width: 1px; white-space: nowrap">Print Name:</td>
+                        <td style="vertical-align: bottom; padding: 0px;">
+                            <span style="width: 100%; border-bottom: 1px solid #444; display:block;"></span>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="padding: 0px;width: 1px; white-space: nowrap">Title:</td>
+                        <td style="vertical-align: bottom; padding: 0px;">
+                            <span style="width: 100%; border-bottom: 1px solid #444; display:block;"></span>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td style="padding: 0px;width: 1px; white-space: nowrap">Date:</td>
+                        <td style="vertical-align: bottom; padding: 0px;">
+                            <span style="width: 100%; border-bottom: 1px solid #444; display:block;"></span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table style="width: 100%;page-break-before:always">
         <tbody>
             <tr>
                 <td>
-                    <h5 style="text-align: center; margin-bottom: 30px;">Schedule A - Account Listings</h5>
-                    <table style="width: 100%; border-collapse:collapse">
+                    <table style="width: 100%">
                         <tbody>
-                            <tr>
-                                <th style="border: 1px solid #333; font-size: 8px">Business Name On Bill</th>
-                                <th style="border: 1px solid #333; font-size: 8px">Street Address</th>
-                                <th style="border: 1px solid #333; font-size: 8px">City</th>
-                                <th style="border: 1px solid #333; font-size: 8px">Zipcode</th>
-                                <th style="border: 1px solid #333; font-size: 8px">Service Type</th>
-                                <th style="border: 1px solid #333; font-size: 8px">Account Type</th>
-                                <th style="border: 1px solid #333; font-size: 8px">Utility</th>
-                                <th style="border: 1px solid #333; font-size: 8px">Requested Flow Date</th>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                                <td style="border: 1px solid #333; height: 20px; width: 12%;"></td>
-                            </tr>
+                            <td style="width: 150px">
+                                <img src="images/energy_harbor.jpg" width="100">
+                            </td>
+                            <td style="text-align: center;">
+                                <h4 style="font-size: 14px; margin-bottom: 0px; color: #004270;">Energy Harbor LLC</h4>
+                                <p style="margin-bottom: 10px;color: #004270">Supply Agreement Pricing Attachment –
+                                    Additional Accounts<br>
+                                </p>
+                            </td>
+                            <td style="width: 150px">
+                            </td>
                         </tbody>
-                    </table>
-                    <table style="width: 100%; margin-top: 30px">
-                        <tr>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 1px; white-space: nowrap">
-                                            <label>Representative Name:</label>
-                                        </td>
-                                        <td>
-                                            <input type="text">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 1px; white-space: nowrap">
-                                            <label>Representative Signature:</label>
-                                        </td>
-                                        <td>
-                                            <input type="text">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 1px; white-space: nowrap">
-                                            <label>Customer Signature:</label>
-                                        </td>
-                                        <td>
-                                           <div style="border-bottom: 1px solid #333; width:100%; height:20px;" id="signature"></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 1px; white-space: nowrap">
-                                            <label>Date Signed:</label>
-                                        </td>
-                                        <td>
-                                            <input type="text">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 1px; white-space: nowrap">
-                                            <label>Print Name:</label>
-                                        </td>
-                                        <td>
-                                            <input type="text">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 1px; white-space: nowrap">
-                                            <label>Print Title:</label>
-                                        </td>
-                                        <td>
-                                            <input type="text">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
                     </table>
                 </td>
             </tr>
         </tbody>
     </table>
+    <table style="margin-top: 10px;border-collapse: collapse;">
+        <tr>
+            <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: left">
+                ACCOUNT INFORMATION <small>(Only to be used if more than 1 account from Page 1. Please attach as many
+                    additional pages as
+                    necessary.)</small>:
+            </th>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="width: 100%;page-break-before:always">
+        <tbody>
+            <tr>
+                <td>
+                    <table style="width: 100%">
+                        <tbody>
+                            <td style="width: 150px">
+                                <img src="images/energy_harbor.jpg" width="100">
+                            </td>
+                            <td style="text-align: center;">
+                                <h4 style="font-size: 14px; margin-bottom: 0px; color: #004270;">Energy Harbor LLC</h4>
+                                <p style="margin-bottom: 10px;color: #004270">Supply Agreement Pricing Attachment –
+                                    Additional Accounts<br>
+                                </p>
+                            </td>
+                            <td style="width: 150px">
+                            </td>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="margin-top: 10px;border-collapse: collapse;">
+        <tr>
+            <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: left">
+                ACCOUNT INFORMATION <small>(Only to be used if more than 1 account from Page 1. Please attach as many
+                    additional pages as
+                    necessary.)</small>:
+            </th>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+    <table style="border-collapse: collapse; margin-bottom: 5px; page-break-inside: avoid;">
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Account #:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <th style="width: 15%; text-align: left; white-space: nowrap; border: 1px solid #444;">
+                Service Address:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                City:
+            </th>
+            <td style="width: 35%; border: 1px solid #444;"></td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap; text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            State:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 35%; border: 1px solid #444; padding: 0px;">
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <th
+                            style="width: 1px; white-space: nowrap;text-align: left; white-space: nowrap; border-right: 1px solid #444;">
+                            Zip:
+                        </th>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 15%; text-align: left; white-space: nowrap;border: 1px solid #444;">
+                Mailing
+                Address:
+            </th>
+            <td colspan="3" style="width: 35%; border: 1px solid #444;"></td>
+        </tr>
+    </table>
+
+    <table style="width: 100%;page-break-before:always">
+        <tbody>
+            <tr>
+                <td>
+                    <table style="width: 100%">
+                        <tbody>
+                            <td style="width: 150px">
+                                <img src="images/energy_harbor.jpg" width="100">
+                            </td>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="margin-top: 10px;border-collapse: collapse;">
+        <tr>
+            <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: center">
+                Energy Harbor LLC Electric Generation Supplier Contract Summary
+            </th>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td style="background: #D9D9D9">Electric Generation Supplier (“EGS”) Information</td>
+            <td>Energy Harbor LLC, 168 East Market Street, Akron, OH 44308<br>1-888-254-6359<br>PA License
+                #A-110078<br>www.energyharbor.com</td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9"></td>
+            <td>Energy Harbor LLC supplies the electric generation service portion of your electric bill.</td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9">Price Structure</td>
+            <td><strong>Fixed Price</strong></td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9">Generation/Supply Price</td>
+            <td>0.12691 $/kWh</td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9">Statement Regarding Savings</td>
+            <td>The above price per kWh may not provide savings throughout the entire period this Agreement is in
+                effect.</td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9">Deposit Requirements</td>
+            <td>None</td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9">Incentives</td>
+            <td>None at this time</td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9">Contract Start Date</td>
+            <td>Next available start date as determined by your EDC.</td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9">Contract Duration / Length</td>
+            <td>This contract will continue for an initial period of ___ months after service commences (“Initial
+                Duration”) and then will automatically renew unless cancelled consistent with the terms and conditions
+                set forth in the Disclosure Statement.</td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9">Cancellation / Early Termination Fees (“ETF”)</td>
+            <td>If you terminate this Agreement for any reason other than as expressly provided for herein, or if you
+                fail to make payment as required by this Agreement and the Agreement is cancelled, you will be
+                charged an Early Termination Fee (“ETF”), which will consist of any outstanding accounts payable,
+                costs, and any applicable fees plus the positive difference, if any, of the Generation/Supply Price at
+                the time of execution of the Pricing Attachment, less the market value of your electricity supply,
+                including such difference for the months remaining in the term as determined at the time of
+                termination using standard industry practices. However, if you are a Small Business Customer, you
+                will not be subject to an ETF if you terminate this Agreement during the Rescission Period or within
+                thirty (30) days of the date on which this Agreement is scheduled to expire.
+                End of Contract / Renewal Terms
+                <u>FOR SMALL BUSINESS CUSTOMERS ONLY</u>: If you have a fixed duration contract that will be
+                ending, or whenever Energy Harbor wants to change the contract, you will receive two separate
+                notices before the contract ends or the changes happen. You will receive the first notice 45-60 days
+                before, and the second notice 30 days before the expiration date or the date the change becomes
+                effective. These notices will explain your options going forward, including any automatic renewal
+                terms that may apply.
+            </td>
+        </tr>
+        <tr>
+            <td style="background: #D9D9D9">End of Contract / Renewal Terms - Right of Rescission</td>
+            <td>FOR ALL OTHER CUSTOMERS: See the attached Disclosure Statement.
+                Right of Rescission
+                FOR SMALL BUSINESS CUSTOMERS ONLY: If you are a new or returning customer, you may
+                cancel this Agreement without any fees or charges at any time before midnight of the third Business
+                Day after receiving this Disclosure Statement (“Rescission Period”) by contacting Energy Harbor at 1-
+                888-254-6359.</td>
+        </tr>
+    </table>
+    <table style="width: 100%;page-break-before:always">
+        <tbody>
+            <tr>
+                <td>
+                    <table style="width: 100%">
+                        <tbody>
+                            <td style="width: 150px">
+                                <img src="images/energy_harbor.jpg" width="100">
+                            </td>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="margin-top: 10px;border-collapse: collapse;">
+        <tr>
+            <th style="padding: 5px 10px; background: #C9D1E1; color: #004270; text-align: center">
+                Small Commercial – Electric - Disclosure Statement
+            </th>
+        </tr>
+    </table>
+    <p><strong>ENERGY HARBOR LLC</strong> (“Energy Harbor”) agrees to sell, and you agree to buy, your full requirements
+        for electric generation
+        service for your business at
+        the price and on the terms and conditions as specified in the Contract Summary, Pricing Attachment, and in this
+        Disclosure Statement (collectively,
+        “Agreement”). Price and other terms of this Agreement are subject to change as provided below. Energy Harbor
+        reserves
+        the right to revoke its electric
+        generation offer for any reason at any time prior to this Agreement becoming effective. You acknowledge that the
+        contract start date shall be determined
+        by your EDC in accordance with its rules and practices regarding the switching of customers to suppliers. Energy
+        Harbor
+        has no liability related to the date
+        on which your EDC switches your account. Throughout this Agreement, the words “customer”, “you” and “your” refer
+        to the
+        account(s) for which electric
+        generation service is being requested. The words “we”, “us” and “our” refer to Energy Harbor. <u>Please keep a
+            copy of this
+            Agreement for your records.</u></p>
+    <p><strong>Right of Rescission: FOR SMALL BUSINESS CUSTOMERS ONLY (as defined below):</strong> You may cancel this
+        Agreement without any
+        fees or charges at
+        any time before midnight of the third Business Day after receiving this Disclosure Statement (“Rescission
+        Period”) by
+        contacting Energy Harbor at 1-888-
+        254-6359.</p>
+    <p><strong>Competitive Electric Service:</strong> Energy Harbor (PA License #A-110078) is licensed by the
+        Pennsylvania Public Utility
+        Commission (“PUC”) to offer and
+        supply electric generation services in Pennsylvania. As an Electric Generation Supplier (“EGS”), Energy Harbor
+        will
+        supply the electric generation to your
+        local electric utility (referred to as your electric distribution company (“EDC”)) based on your usage. This
+        electricity
+        is delivered over high voltage transmission
+        lines to your EDC which then distributes or delivers the electricity to you over distribution lines. Generation
+        prices
+        and charges are set by the EGS you have
+        chosen (Energy Harbor). The PUC regulates distribution prices and services. The Federal Energy Regulatory
+        Commission
+        (“FERC”) regulates transmission
+        prices and services. Energy Harbor is not the same company as your EDC; the prices of Energy Harbor are not
+        regulated by
+        the PUC and you are not
+        required to buy electricity or other products from Energy Harbor to receive the same quality of service from
+        your local
+        EDC.</p>
+    <p><strong>Definitions:</strong> <u>Business Days</u> - Monday through Friday (8:00 AM – 5:00 PM Eastern Standard
+        Time (“EST”)), excluding
+        holidays. <u>Contract Summary</u> - The
+        separate, one-page document that summarizes the key terms and conditions of this Disclosure Statement.
+        <u>Distribution
+            Service</u> - The delivery of electricity
+        to your home or business. This includes local wires, transformers, substations and other equipment used to
+        deliver
+        electricity to end-use consumers from
+        the high-voltage transmission lines. <u>Electric Distribution Company (“EDC”)</u> - The public utility that
+        provides facilities
+        for the transmission and distribution of
+        electricity to retail customers. Electric distribution companies are regulated by the PUC. Exceptions include
+        building
+        or facility owners or operators that
+        manage their internal distribution system and supply electric power and electric services to occupants of the
+        building
+        or facility. <u>Generation Charges</u> - Part
+        of the basic service charges on every customer’s bill for producing electricity. Generation service is
+        competitively
+        priced and is not regulated by the Public
+        Utility Commission. This charge depends on the contract between the customer and the supplier. <u>NERC</u> – The
+        North American
+        Reliability Corporation.
+        <u>RTO</u> - Regional Transmission Organization. <u>Small Business Customer</u> - Customer that receives
+        electric service under a
+        small commercial, small industrial
+        or small business rate classification, and whose maximum registered peak load was less than 25 kilowatts (“kW”)
+        within
+        the last twelve months. <u>Transmission
+            Charges</u> - Part of the basic service charges on every customer’s bill for transporting electricity from
+        the source of
+        supply to the electric distribution company.
+        The Federal Energy Regulatory Commission regulates retail transmission prices and services. This charge will
+        vary with
+        your source of supply. Definitions
+        for “generation charges” and “transmission charges” are defined in accordance with the glossary posted on
+        www.papowerswitch.com or another successor
+        media platform as determined by the PUC. These and other industry terms can be found on this website.
+    </p>
+    <p><strong>Eligibility:</strong> Any small commercial customer accounts with annual usage that does not exceed one
+        (1) million annual
+        kilowatt hours (“kWh”) per account and
+        does not exceed two (2) million annual kWh in aggregate for multiple accounts are eligible for this offer from
+        Energy
+        Harbor. Energy Harbor reserves the
+        right to refuse enrollment to any customer with an outstanding balance for past electric service or if your
+        credit
+        standing is otherwise unsatisfactory, as
+        determined solely by Energy Harbor. Energy Harbor also reserves the right to determine if the indicative pricing
+        as
+        provided by Energy Harbor on the
+        Electric Program Enrollment Form is appropriate based on the information Energy Harbor receives from the EDC. If
+        the
+        indicative pricing quote is not
+        appropriate you will be notified that Energy Harbor has not accepted your enrollment request. If Energy Harbor
+        accepts
+        the enrollment request, Energy
+        Harbor will send you a countersigned Pricing Attachment, at which time this Agreement shall become binding on
+        Energy
+        Harbor. You agree that Energy
+        Harbor shall not be liable for any damages that may be caused by its decision to reject an enrollment request.
+    </p>
+    <p><strong>Basic Service Prices and Other Charges:</strong> Throughout the period this Agreement is in effect, you
+        agree to pay Energy
+        Harbor the fixed price indicated in
+        the Contract Summary and in the Pricing Attachment as the “Generation/Supply Price,” which represents the total
+        cost of
+        your electric generation service
+        during the Initial Duration (“Retail Electric Service”). That Generation/Supply Price includes Gross Receipts
+        Tax (GRT),
+        but does not include state and local
+        sales taxes or other taxes which may be assessed by your EDC. In addition to Energy Harbor's charges, you will
+        be
+        charged by your EDC for distribution
+        and various other services.</p>
+    <p><strong>Changes Due to Unforeseen Events:</strong> In the event of any change in any statute, rule, regulation,
+        order, law, or tariff
+        promulgated by any court,
+        governmental authority, utility, Independent System Operator (“ISO”), Regional Transmission Organization (“RTO”)
+        or
+        other service provider, or any change
+        in operating procedure, which alters to the detriment of Energy Harbor its costs to perform under this
+        Agreement, you
+        may receive a notification from Energy Harbor that explains one or more of the situations described above. In
+        such an event, Energy Harbor may offer you
+        modified terms and conditions, including
+        without limitation a change in price, in said notices. <strong>You must indicate your affirmative consent to the
+            modified terms
+            and conditions as specified in
+            the notices.</strong> If you do not contact Energy Harbor to accept the modified terms, this Agreement will
+        terminate on the date
+        specified in the notices, and you
+        will be returned to your EDC for Retail Electric Service, unless you have selected another EGS. Alternatively,
+        Energy
+        Harbor may decide to terminate this
+        Agreement, and you will receive prior written notice of the termination, after which you will be returned to
+        your EDC
+        for Retail Electric Service, unless you
+        have selected another EGS. Whether Energy Harbor offers you new terms or terminates this Agreement under this
+        provision,
+        you will not be responsible
+        for any early termination fees. You must still pay all Energy Harbor charges through the date you are returned
+        to your
+        EDC or switched to another EGS for
+        service.</p>
+    <p><strong>Price to Compare:</strong> Your local EDC’s price to compare may change from time to time. Energy Harbor
+        cannot guarantee savings
+        over the EDC’s rates for
+        the entire period this Agreement is in effect. Any potential savings are limited to a comparison against the
+        EDC’s price
+        to compare applicable at the time
+        you enter into this Agreement.</p>
+    <p><strong>Length and Renewal of Your Agreement:</strong> Except as otherwise provided for herein, your Retail
+        Electric Service from Energy
+        Harbor will commence on
+        the next available meter reading, following the three (3) business day Rescission Period (if applicable), the
+        acceptance
+        of the enrollment request by Energy
+        Harbor (at its discretion and consistent with the terms set forth herein), and the processing of the enrollment
+        by your
+        EDC. Except as otherwise provided
+        for herein, your Retail Electric Service will continue for the number of months indicated in the Contract
+        Summary
+        (“Initial Duration”). Prior to the expiration
+        of the Initial Duration, you will receive notices as outlined in the “Customer Notification of Changes or End of
+        Agreement” Section below. <strong>IF YOU DO NOT
+            AFFIRMATIVELY CANCEL THIS AGREEMENT AS OUTLINED IN ANY RENEWAL NOTIFICATIONS, YOUR RETAIL ELECTRIC SERVICE
+            FROM ENERGY
+            HARBOR WILL
+            AUTOMATICALLY RENEW AS OUTLINED IN SAID NOTICE; HOWEVER, IF YOU ARE A SMALL BUSINESS CUSTOMER, YOU MAY
+            CANCEL YOUR
+            RENEWED AGREEMENT AT ANY
+            TIME WITHOUT PENALTIES OR FEES.</strong></p>
+    <p><strong>Billing:</strong> You will receive a consolidated bill monthly from your EDC for both your Energy Harbor
+        and EDC charges. Energy
+        Harbor does not offer budget
+        billing. If you do not pay your bill by the due date, Energy Harbor may cancel this Agreement as outlined in the
+        “Cancellation / Termination” Section below.
+        Energy Harbor reserves the right to convert you from consolidated billing to dual billing if such a conversion
+        will
+        facilitate more timely billing, collections,
+        and/or payment. Furthermore, your failure to pay EDC charges may result in your electric service being
+        disconnected in
+        accordance with the EDC tariff.</p>
+    <p><strong>Early Termination Fees:</strong> If you terminate this Agreement for any reason other than as expressly
+        provided for herein, or
+        if you fail
+        to make payment as required by this Agreement and the Agreement is cancelled, you will be charged an Early
+        Termination
+        Fee
+        (“ETF”), which will consist of any outstanding accounts payable, costs, and any applicable fees plus the
+        positive
+        difference, if any,
+        of the Generation/Supply Price at the time of execution of the Pricing Attachment, less the market value of your
+        electricity supply,
+        including such difference for the months remaining in the term as determined at the time of termination using
+        standard
+        industry
+        practices. However, if you are a Small Business Customer, you will not be subject to an ETF if you terminate
+        this
+        Agreement
+        during the Rescission Period or within thirty (30) days of the date on which this Agreement is scheduled to
+        expire.</p>
+    <p><strong>Customer Consent and Information Release Authorization:</strong> By entering into this Agreement for
+        Retail Electric Service from
+        Energy Harbor, you
+        understand and agree to the terms and conditions herein. In order to process your enrollment, you authorize
+        Energy
+        Harbor to obtain certain information
+        from your EDC that includes, but is not limited to: account number, billing address and history, payment
+        history,
+        historical and future electricity usage, meter
+        readings, and characteristics of electricity service (referred to herein as “Confidential Information”). Energy
+        Harbor
+        will maintain the confidentiality of
+        Confidential Information, as well as your personal information, such as your name, address and telephone number
+        (referred to herein as “Personal
+        Information”) as required by applicable Commission regulations and Federal and State laws. You authorize Energy
+        Harbor
+        to release Confidential and
+        Personal Information in connection with your Retail Electric Service to Energy Harbor’s employees, affiliates,
+        lenders,
+        counsel, accountants, contractors or
+        advisors on a need to know basis, provided said individuals agree to ensure its confidentiality in accordance
+        with the
+        aforementioned laws and regulations.
+        Your authorization to release both Confidential and Personal Information shall remain in effect throughout the
+        period
+        this Agreement is in effect, unless
+        revoked in part or in its entirety in writing by you.</p>
+    <p><strong>Customer Consent to Communications:</strong> By signing this Agreement, you agree to receive
+        pre-recorded/artificial voice
+        messages calls and/or use of an
+        automatic dialing device, text messages and/or emails from Energy Harbor or its agents/assigns at any phone
+        number or
+        email address. You agree to be
+        responsible for any charges you may receive on that number, including standard telephone, SMS or text message
+        fees. You
+        may revoke this express
+        consent at any time by calling us at 1-888-254-6359. Such revocation has no bearing on your ability to contract
+        with
+        Energy Harbor.</p>
+    <p><strong>Customer Notification of Changes or End of Agreement:</strong></p>
+    <ul style="padding-left: 20px;">
+        <li><strong>FOR SMALL BUSINESS CUSTOMERS ONLY:</strong> If you have a fixed duration contract that will be
+            ending, or whenever Energy Harbor
+            wants to
+            change the contract, you will receive two separate notices before the contract ends or the changes happen.
+            You will
+            receive the first notice 45-60
+            days before, and the second notice 30 days before the expiration date or the date the change becomes
+            effective. These
+            notices will explain your
+            options going forward, including any automatic renewal terms that may apply.</li>
+        <li><strong>FOR ALL OTHER CUSTOMERS:</strong> You will receive a notice of expiration at least forty-five (45)
+            days before your contract is
+            scheduled to expire. At
+            the end of the Initial Duration, and unless otherwise stated in the notice that you receive, this Agreement
+            will
+            automatically renew on a month-tomonth basis (“Renewal Term”) without additional notification, unless you or
+            Energy
+            Harbor affirmatively cancel the Agreement prior to the expiration
+            date set forth in the notice. During the Renewal Term, and unless otherwise stated in the notice that you
+            receive, the
+            Terms
+            and Conditions set forth in this Disclosure Statement shall remain the same except that the
+            Generation/Supply Price
+            shall
+            be a variable price that may be higher or lower each month and will be determined in Energy Harbor’s sole
+            discretion,
+            based
+            upon generally prevailing market and business conditions for electricity in the PJM market (including but
+            not limited to
+            Energy Harbor’s cost to provide service and supply, margin, losses, capacity, ancillary services and other
+            RTO charges)
+            at
+            the applicable EDC load zone or equivalent for the applicable period. Weather fluctuations may impact the
+            variable price
+            during the Renewal Term. During the Renewal Term, you understand there is no limit on how much the variable
+            price may
+            change from one billing month to the next. You are responsible for arranging your Retail Electric Service
+            upon the
+            expiration of this
+            Agreement, or any extension thereof.</li>
+    </ul>
+    <p><strong>If You Move Your Business:</strong> If you move your business to a new service address within your
+        existing EDC’s service
+        territory, and the EDC is able and
+        willing to transfer Energy Harbor’s service, Energy Harbor shall have the sole discretion either to allow this
+        Agreement
+        to continue, or to cancel this
+        Agreement as of the date of your move without prior notice. If you move your business to a new service address
+        that is
+        outside of your existing EDC’s
+        service territory, this Agreement shall be cancelled as of the date of your move without prior notice. You will
+        remain
+        responsible to pay Energy Harbor for
+        any Retail Electric Service used before this Agreement is cancelled.</p>
+    <p><strong>Cancellation / Termination:</strong> Small Business Customers may rescind this Agreement with Energy
+        Harbor during the three (3)
+        business day Rescission
+        Period by calling Energy Harbor at 1-888-254-6359. For all other customers, or if this Agreement is not
+        rescinded during
+        the Rescission Period, enrollment
+        will be sent to your EDC. A confirmation notice of transfer of service will be sent to you by your EDC at which
+        time you
+        may also cancel this Agreement
+        consistent with the instructions provided by your EDC. If you are a renewing customer, your EDC will not send
+        you a
+        confirmation notice, unless otherwise
+        required by law. Energy Harbor may terminate this Agreement for any nonpayment or any other breach of this
+        Agreement
+        upon thirty (30) days’ prior written
+        notice to you of such termination. If you fail to cure any nonpayment or breach of this Agreement within the
+        thirty (30)
+        day notice period, we may terminate
+        the Agreement, even if you subsequently cure the nonpayment or breach after such period has expired. Energy
+        Harbor may
+        also terminate this Agreement
+        upon thirty (30) days’ prior written notice to you if there is an act beyond our reasonable control or if we are
+        no
+        longer able to serve you. We also reserve
+        the right to reject your enrollment or terminate this Agreement if:</p>
+    <ul style="padding-left: 20px;">
+        <li>You fail to meet or maintain satisfactory credit standing as determined solely by us;</li>
+        <li>You fail to meet minimum or maximum threshold consumption levels as determined by us;</li>
+        <li>You fail to be eligible for EDC billing throughout the entire period that this Agreement is in effect;</li>
+        <li>You provide any false, inaccurate or misleading information to Energy Harbor or the EDC;</li>
+        <li>You fail to remain an EDC distribution customer under the applicable rate class throughout the period this
+            Agreement
+            is in effect; or</li>
+        <li>You revoke your authorization for release of Confidential and Personal Information.</li>
+    </ul>
+    <p>Upon termination of this Agreement for any reason, you will return to receiving default supply service from your
+        local
+        EDC, unless you have selected
+        another electric generation supplier. The effective date of any termination will be the next applicable meter
+        read date
+        after expiration of the required notice
+        period. Upon any termination, you will remain responsible for all obligations, including without limitation, any
+        ETF or
+        payment for Retail Electric Service
+        charges incurred under this Agreement prior to the effective date of termination.</p>
+    <h3 style="text-transform: uppercase;">Limitation of Liability: YOU AGREE THAT NEITHER ENERGY HARBOR NOR ANY OF ITS
+        AFFILIATES OR
+        SUBCONTRACTORS WILL BE LIABLE FOR ANY DAMAGES OR CLAIMS FOR MATTERS WITHIN THE CONTROL OF THE EDC, WHICH INCLUDE
+        MAINTENANCE OF TRANSMISSION AND/OR DISTRIBUTION SYSTEMS, SERVICE
+        INTERRUPTIONS, LOSS OR TERMINATION OF SERVICE, DETERIORATION OF RETAIL ELECTRIC SERVICES, METER
+        READINGS OR INJURY TO PERSONS OR DAMAGE TO PROPERTY CAUSED BY THE DELIVERY OR SUPPLY OF
+        ELECTRIC GENERATION SERVICE. NEITHER ENERGY HARBOR NOR ANY OF ITS AFFILIATES OR
+        SUBCONTRACTORS WILL BE RESPONSIBLE FOR ANY FAILURE TO COMMENCE OR TERMINATE RETAIL ELECTRIC
+        SERVICE ON THE DATE SPECIFIED HEREIN DUE TO ANY FAILURE OR DELAY IN ENROLLING YOU WITH THE EDC.
+        ENERGY HARBOR’S LIABILITY WILL BE LIMITED TO DIRECT ACTUAL DAMAGES ONLY, WHICH WILL NOT EXCEED
+        THE AMOUNT OF YOUR SINGLE LARGEST MONTHLY INVOICE DURING THE PRECEDING TWELVE (12) MONTHS. IN
+        NO EVENT WILL ENERGY HARBOR OR ANY OF ITS AFFILIATES OR SUBCONTRACTORS BE LIABLE FOR ANY
+        PUNITIVE, INCIDENTAL, CONSEQUENTIAL, EXEMPLARY, INDIRECT, THIRD-PARTY CLAIMS OR OTHER DAMAGES
+        WHETHER BASED ON AGREEMENT, WARRANTY, TORT, NEGLIGENCE, STRICT LIABILITY OR OTHERWISE, OR FOR
+        LOST PROFITS ARISING FROM ANY BREACH OR NONPERFORMANCE OF THIS AGREEMENT.</h3>
+    <p><strong>Assignment:</strong> Upon 60 days’ prior written notice to you, Energy Harbor may assign, subcontract or
+        delegate all or any part
+        of our rights and/or obligations
+        under this Agreement, including your payment obligations under this Agreement, without your consent. Your
+        assignment
+        notice will include a reminder that
+        your terms and conditions will not change upon assignment. You may not assign any of your rights or obligations
+        under
+        this Agreement without our prior
+        written consent.</p>
+    <p><strong>Dispute Resolution / Class Action and Jury Trial Waiver:</strong> If you have any questions or concerns
+        regarding the terms of
+        service, you may contact us on
+        any Business Day by telephone at 1-888-254-6359 (toll-free) or in writing, any time, at Energy Harbor LLC, Attn:
+        Contract Administration, 168 East Market
+        Street, Akron, OH 44308. Our web address is www.energyharbor.com. BOTH YOU AND ENERGY HARBOR AGREE IRREVOCABLY
+        AND
+        UNCONDITIONALLY TO WAIVE ANY RIGHT TO A TRIAL BY JURY OR TO INITIATE OR BECOME A PARTY TO ANY CLASS ACTION
+        CLAIMS IN
+        RESPECT OF ANY ACTION, SUIT OR PROCEEDING DIRECTLY OR INDIRECTLY ARISING OUT OF OR RELATING TO THIS AGREEMENT.
+        Nothing
+        in this Agreement shall impair your right to make an informal or a formal complaint to the PUC or to a court
+        with
+        appropriate authority to hear the complaint.</p>
+    <p><strong>Questions and Shopping Information:</strong> Contact Energy Harbor with any questions concerning this
+        Agreement. You may also
+        contact the PUC or the
+        Pennsylvania Office of Consumer Advocate (“OCA”) if you have any questions about shopping for an electric
+        generation
+        supplier or other matters involving
+        the electric industry. The contact information for the PUC is as follows: Telephone: 1-800-692-7380 from 8:00 am
+        to 5:00
+        pm (EST) weekdays; Mail: PPUC,
+        400 North Street, Harrisburg, PA 17120. Website: www.puc.pa.gov for general information or
+        www.papowerswitch.com, or
+        other successor media platforms
+        as determined by the PUC, for information on shopping for generation service. The OCA contact information is as
+        follows:
+        Telephone: 800-684-6560;
+        Website: www.oca.state.pa.us.</p>
+    <p><strong>Miscellaneous:</strong> You have the right to request from Energy Harbor, twice within a twelve (12)
+        month period, up to
+        twenty-four (24) months of payment
+        history, without charge and to the extent such information is available. Information on energy generation
+        sources,
+        energy efficiency, and environmental
+        impacts is available upon customer request</p>
+    <h3 style="max-width: 80%;margin: auto; text-transform: uppercase;">IN THE EVENT OF AN EMERGENCY OR POWER OUTAGE,
+        YOU SHOULD IMMEDIATELY CALL YOUR LOCAL
+        ELECTRIC DISTRIBUTION COMPANY.</h3>
 </body>
 
 </html>
