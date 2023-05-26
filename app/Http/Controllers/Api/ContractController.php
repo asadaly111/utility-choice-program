@@ -225,7 +225,7 @@ class ContractController extends Controller
         $composite_templates = [$composite_template];
         $envelope_definition = new EnvelopeDefinition([
             'composite_templates' => $composite_templates,
-            'email_subject' => 'Please sign',
+            'email_subject' => 'Contract for ' . $contract->account->commodity . ' - ' . $contract->account->utility,
             'status' => 'sent',
         ]);
 
