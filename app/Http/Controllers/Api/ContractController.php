@@ -72,8 +72,15 @@ class ContractController extends Controller
             // 'flag' => $commercialRate->customer_id,
         ]);
 
+        if(in_array($commercialRate->supplier, ['SFE Energy'])){
 
-        $this->generateDownload($contract->id);
+            $this->generateDownload($contract->id);
+
+            return response()->json([
+                'message' => 'Contract successfully created.',
+                'contract' => $contract,
+            ], 200);
+        }
 
         return response()->json([
             'message' => 'Contract successfully created.',
