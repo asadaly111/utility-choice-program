@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use PDF;
 use App\Models\Account;
 use App\Models\Contract;
 use App\Models\Customer;
-use PDF;
 use Illuminate\Http\Request;
 use App\Models\CommercialRate;
 use DocuSign\eSign\Model\Tabs;
 use DocuSign\eSign\Model\Signer;
-use DocuSign\eSign\Configuration;
 use DocuSign\eSign\Model\SignHere;
 use App\Http\Controllers\Controller;
 use DocuSign\eSign\Client\ApiClient;
@@ -19,11 +18,10 @@ use App\Http\Resources\ContractResource;
 use DocuSign\eSign\Model\InlineTemplate;
 use DocuSign\eSign\Model\CompositeTemplate;
 use DocuSign\eSign\Model\EnvelopeDefinition;
-use DocuSign\eSign\Api\EnvelopesApi\EnvelopesApi;
+use DocuSign\eSign\Api\EnvelopesApi;
 
 class ContractController extends Controller
 {
-
     private $config;
 
     private $signer_client_id = 1000;
@@ -33,14 +31,16 @@ class ContractController extends Controller
     //
     public function index(Request $request)
     {
+
         $contracts = Contract::query()
             ->with('customer', 'account', 'user')
             ->applyFilters($request)
             ->when($request->perPage, function ($query, $perPage) {
                 return $query->orderByDesc('id')->paginate($perPage);
             }, function ($query) {
-                return $query->orderByDesc('id')->get();
-            });
+            return $query->orderByDesc('id')->get();
+        });
+
         return ContractResource::collection($contracts);
     }
 
@@ -72,6 +72,9 @@ class ContractController extends Controller
             // 'flag' => $commercialRate->customer_id,
         ]);
 
+
+        $this->generateDownload($contract->id);
+
         return response()->json([
             'message' => 'Contract successfully created.',
             'contract' => $contract,
@@ -87,15 +90,16 @@ class ContractController extends Controller
     public function update(Request $request, Contract $contract)
     {
         $contract->update($request->all());
+
         return new ContractResource($contract);
     }
 
     public function destroy(Contract $contract)
     {
         $contract->delete();
+
         return response()->json(null, 204);
     }
-
 
     public function sendContractForSignature(Request $request, $contractId)
     {
@@ -105,14 +109,12 @@ class ContractController extends Controller
         ]);
         $contract->load('customer', 'account');
         $this->sendEnvelopeForSignature($contract);
+
         return response()->json([
             'message' => 'Contract successfully sent.',
             'contract' => $contract,
         ], 200);
     }
-
-
-
 
     public function sendEnvelopeForSignature($contract)
     {
@@ -122,6 +124,8 @@ class ContractController extends Controller
         try {
             $accessToken = $this->getToken($apiClient);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
+
         }
 
         $userInfo = $apiClient->getUserInfo($accessToken);
@@ -132,7 +136,7 @@ class ContractController extends Controller
             $envelopeApi = new EnvelopesApi($apiClient);
             $result = $envelopeApi->createEnvelope($accountInfo[0]->getAccountId(), $envelopeDefenition);
         } catch (\Throwable $th) {
-            // dd($th->getMessage());
+            dd($th->getMessage());
             // return back()->withError($th->getMessage())->withInput();
         }
     }
@@ -152,38 +156,40 @@ class ContractController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+
         return $accessToken;
     }
 
     private function buildEnvelope($contract): EnvelopeDefinition
     {
 
-        $demo_docs_path = asset('World_Wide_Corp_lorem.pdf');
+        $contractPdf = asset('storage/contracts/' . $contract->id . '-contract.pdf');
 
-        $arrContextOptions = array(
-            "ssl" => array(
-                "verify_peer" => false,
-                "verify_peer_name" => false,
-            ),
-        );
+        $arrContextOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ],
+        ];
 
-        $content_bytes = file_get_contents($demo_docs_path, false, stream_context_create($arrContextOptions));
+        $content_bytes = file_get_contents($contractPdf, false, stream_context_create($arrContextOptions));
         // dd($content_bytes);
         $base64_file_content = base64_encode($content_bytes);
-        # Create the document model
-        $document = new \DocuSign\eSign\Model\Document ([# create the DocuSign document object
+        // Create the document model
+        $document = new \DocuSign\eSign\Model\Document([ // create the DocuSign document object
             'document_base64' => $base64_file_content,
-            'name' => 'Contract', # can be different from actual file name
-            'file_extension' => 'pdf', # many different document types are accepted
-            'document_id' => 1, # a label used to reference the doc
+            'name' => 'Contract',
+            // can be different from actual file name
+            'file_extension' => 'pdf',
+            // many different document types are accepted
+            'document_id' => 1, // a label used to reference the doc
         ]);
 
-
         $sign_here_tab = new SignHere([
-            'anchor_string' => "**Please Sign Here**",
-            'anchor_units' => "pixels",
-            'anchor_x_offset' => "100",
-            'anchor_y_offset' => "0",
+            'anchor_string' => '**Customer Signature**',
+            'anchor_units' => 'pixels',
+            'anchor_x_offset' => '100',
+            'anchor_y_offset' => '0',
         ]);
         $sign_here_tabs = [$sign_here_tab];
         $tabs1 = new Tabs([
@@ -192,7 +198,7 @@ class ContractController extends Controller
         $signer = new Signer([
             'email' => $contract->customer->email,
             'name' => $contract->customer->name,
-            'recipient_id' => "1",
+            'recipient_id' => '1',
             'tabs' => $tabs1,
         ]);
         $signers = [$signer];
@@ -201,43 +207,53 @@ class ContractController extends Controller
         ]);
         $inline_template = new InlineTemplate([
             'recipients' => $recipients,
-            'sequence' => "1",
+            'sequence' => '1',
         ]);
         $inline_templates = [$inline_template];
         $composite_template = new CompositeTemplate([
-            'composite_template_id' => "1",
+            'composite_template_id' => '1',
             'document' => $document,
             'inline_templates' => $inline_templates,
         ]);
         $composite_templates = [$composite_template];
         $envelope_definition = new EnvelopeDefinition([
             'composite_templates' => $composite_templates,
-            'email_subject' => "Please sign",
-            'status' => "sent",
+            'email_subject' => 'Please sign',
+            'status' => 'sent',
         ]);
 
         return $envelope_definition;
 
     }
 
-
     // contractDownload
-    public function contractDownload(Request $request,  $contractId)
+    public function generateDownload($contractId)
     {
-        $contract = Contract::find($contractId);
-        $pdf = PDF::loadView('pdf.contract', compact('contract'));
 
-// create folder if not exists
-if (!file_exists(storage_path('app/public/contracts'))) {
-    mkdir(storage_path('app/public/contracts'), 0777, true);
-}
+        $contract = Contract::with('customer','account')->find($contractId);
+        $pdf = \App::make('dompdf.wrapper');
+        // $pdf->loadView('welcome');
+        $pdf->setOption('fontDir', public_path('/fonts'));
+
+        $pdf = $pdf->loadView('pdf.energy_harbor_contract', compact('contract'));
+
+        if (!file_exists(storage_path('app/public/contracts'))) {
+            mkdir(storage_path('app/public/contracts'), 0777, true);
+        }
 
         // store pdf file
-        $pdf->save(storage_path('app/public/contracts/'.$contract->id.'-contract.pdf'));
+        $pdf->save(storage_path('app/public/contracts/' . $contract->id . '-contract.pdf'));
 
-        return $pdf->download($contract->id.'-contract.pdf');
+        // return $pdf->download($contract->id . '-contract.pdf');
 
     }
 
+    // contractDownload
+    public function contractDownload(Request $request, $contractId)
+    {
 
+        // download pdf from storage
+        return response()->download(storage_path('app/public/contracts/' . $contractId . '-contract.pdf'));
+
+    }
 }

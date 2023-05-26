@@ -1,0 +1,39 @@
+html {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+small {
+    font-size: 0.80em;
+}
+
+#wrapper {
+    width: 90%;
+    margin: 0 auto;
+    min-width: 600px;
+    max-width: 1200px;
+}
+
+.table {
+    margin-bottom: 0px;
+}
+
+.form-group .form-control {
+    height: auto;
+    padding: 4px;
+    line-height: 1;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #004270;
+    display: block;
+}
+
+.form-group .form-control:focus {
+    box-shadow: none;
+}

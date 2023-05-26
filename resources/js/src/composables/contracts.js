@@ -253,9 +253,9 @@ export default function useContracts() {
     }
   }
 
-  const getCustomer = async id => {
+  const getContract = async id => {
     const response = await axios.get(route('contracts.show', id))
-    customer.value = response.data.data
+    return response
   }
 
   const downloadContractPdf = async id => {
@@ -381,7 +381,7 @@ export default function useContracts() {
     customer,
     contracts,
     respResult,
-    getCustomer,
+    getContract,
     refetchData,
     currentPage,
     refListTable,

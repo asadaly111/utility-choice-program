@@ -1,0 +1,21 @@
+html,
+body {
+    font-size: 10px;
+}
+#wrapper {
+    width: 100%;
+}
+@page {
+    @top-center {
+      content: element(pageHeader);
+    }
+}
+#pageHeader{
+position: running(pageHeader);
+}
+#wrapper > .table {
+    -fs-table-paginate: paginate;
+}
+thead, tfoot {
+    display: table-row-group
+}

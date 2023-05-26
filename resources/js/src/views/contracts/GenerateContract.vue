@@ -59,6 +59,7 @@
                 /> View Contracts
               </b-button>
               <b-button
+              v-show="visibleContract"
                 variant="primary"
                 class="mr-2"
                 @click="sendViaDocuSign"
@@ -82,6 +83,7 @@
                 variant="primary"
                 class="mr-2"
                 @click="downloadContract"
+                v-show="visibleContract"
               >
                 <feather-icon
                   icon="DownloadIcon"
@@ -98,7 +100,7 @@
 </template>
 
 <script>
-import { ref } from '@vue/composition-api'
+import { ref, onMounted } from '@vue/composition-api'
 import 'vue-select/dist/vue-select.css'
 
 import {
@@ -134,9 +136,21 @@ export default {
     const {
       busy,
       respResult,
+      getContract,
       downloadContractPdf,
       sendContractViaDocuSign,
     } = useContracts()
+
+    const visibleContract = ref(false)
+
+    // get contract details from server
+
+    onMounted(async () => {
+      const response = await getContract(root.$route.query.contractId)
+      if (response.data && response.data.data.supplier && ['SFE Energy'].includes(response.data.data.supplier)) {
+        visibleContract.value = true
+      }
+    })
 
 
     const sendViaDocuSign = async () => {
@@ -145,7 +159,9 @@ export default {
 
     // download contract pdf file from server
     const downloadContract = async () => {
-      downloadContractPdf(root.$route.query.contractId)
+      // downloadContractPdf(root.$route.query.contractId)
+      // download pdf on new tab
+      window.open(`/contract/download/${root.$route.query.contractId}`, '_blank')
     }
 
 
@@ -154,6 +170,7 @@ export default {
       downloadContract,
       generateContract,
       sendViaDocuSign,
+      visibleContract,
     }
   },
 }

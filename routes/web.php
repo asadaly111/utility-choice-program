@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Api\ContractController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/login');
 });
+
+// donwload pdf contract from storage
+Route::get('/contract/download/{id}', [ContractController::class, 'contractDownload'])->name('download');
 
 Route::get('/{vue?}', function () {
     return view('application');
