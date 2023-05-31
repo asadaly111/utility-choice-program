@@ -41,7 +41,7 @@ export default [
   },
   {
     id: 9,
-    title: 'Energy Harbor (Vistra owned)',
+    title: 'Energy Harbor',
     slug: 'energyharbor',
   },
   {

@@ -73,9 +73,7 @@ class ContractController extends Controller
         ]);
 
         if (in_array($commercialRate->supplier, ['SFE Energy', 'Energy Harbor'])) {
-
             $supplier = $commercialRate->supplier;
-
             $this->generateDownload($contract->id, $supplier);
         }
 
