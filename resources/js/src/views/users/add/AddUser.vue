@@ -420,12 +420,8 @@ export default {
         value: 'admin',
       },
       {
-        name: 'Client',
-        value: 'client',
-      },
-      {
-        name: 'Employee',
-        value: 'employee',
+        name: 'Agent',
+        value: 'agent',
       },
     ])
 

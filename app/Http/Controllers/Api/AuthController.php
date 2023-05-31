@@ -69,17 +69,21 @@ class AuthController extends Controller
                     ],
                 ];
                 break;
-            case 'client':
+            case 'agent':
                 return [
                     'role' => $role,
                     'abilities' => [
                         'dashboard-view',
                         'orders-view',
+                        'new-order',
                         'new-invoice',
                         'invoices-view',
                         'my-profile-view',
                         'password-view',
                         'my-account-view',
+                        'commercial-view',
+                        'customers-view',
+                        'contracts-view',
                     ],
                 ];
                 break;
@@ -90,6 +94,7 @@ class AuthController extends Controller
                         'dashboard-view',
                         'orders-view',
                         'new-order',
+                        'commercial-view',
                         'my-profile-view',
                         'password-view',
                         'my-account-view',
